@@ -21,7 +21,7 @@ MapsBe::Application.routes.draw do
         post 'getSectionDetail'
         post 'setFieldDetails'
         post 'setSectionName'
-        post 'setFieldDetails'
+        post 'saveCard'
       end
 
     end

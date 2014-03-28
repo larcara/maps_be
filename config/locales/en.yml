@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    models:
+      card_template_field: Sezioni Predefinite
+      template_field: Campi Predefiniti
+      museum_field: Campi Schede Musei
+      museum: Musei
+      user: Utenti Musei
