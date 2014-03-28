@@ -17,6 +17,7 @@ MapsBe::Application.routes.draw do
         get 'getSectionDetail'
         post 'createCatalog'
         post 'createSection'
+        post 'addFieldToSection'
         post 'getSectionDetail'
         post 'setFieldDetails'
         post 'setSectionName'

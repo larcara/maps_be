@@ -107,7 +107,8 @@ class API::MuseumsController < ApplicationController
     field=@museum.availables_custom_fields.first
     errors=[]
     errors << "non ci sono campi custom disponibili" if field.blank?
-    errors << "il nome della sezione e' già utilizzato " if @museum.sections.flatten.include? (section)
+    errors << "il nome della sezione e' già utilizzato " if @museum.sections(catalog).flatten.include? (section)
+    Rails.logger.info @museum.sections.flatten
     if errors.any?
       render json: {error: errors }
       return
@@ -125,6 +126,35 @@ class API::MuseumsController < ApplicationController
     end
 
   end
+
+  def addFieldToSection
+    #toDO se il nome è di default da nascondere
+    catalog=params[:catalog].presence
+    section=params[:section].presence
+    field=@museum.availables_custom_fields.first
+    errors=[]
+    errors << "non ci sono campi custom disponibili" if field.blank?
+    errors << "il nome della sezione non è definito " unless @museum.sections(catalog).flatten.include? (section)
+    Rails.logger.info @museum.sections.flatten
+    if errors.any?
+      render json: {error: errors }
+      return
+    end
+
+    @field=@museum.museum_fields.build(
+        form_name: catalog, section_name: section, section_label: section , template_field_id:field.id , label:field.field_label,
+        enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil)
+
+
+    if @field.save
+      render json: {error: nil, data: @field}
+    else
+      render json: {error: @field.errors.full_messages}
+    end
+
+  end
+
+
   def deleteSection
 
   end
