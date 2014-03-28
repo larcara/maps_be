@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: cards
+#
+#  id          :integer          not null, primary key
+#  museum_id   :integer
+#  colore      :string(255)
+#  descrizione :string(255)
+#  oggetto     :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  museum_id: 1
+  colore: 
+  descrizione: MyString
+  oggetto: MyString
+
+two:
+  museum_id: 1
+  colore: 
+  descrizione: MyString
+  oggetto: MyString

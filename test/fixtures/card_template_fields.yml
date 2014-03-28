@@ -1,0 +1,43 @@
+# == Schema Information
+#
+# Table name: card_template_fields
+#
+#  id                :integer          not null, primary key
+#  section_name      :string(255)
+#  section_label     :string(255)
+#  template_field_id :string(255)
+#  label             :string(255)
+#  enabled           :boolean
+#  hidden            :boolean
+#  position          :integer
+#  mobile            :integer
+#  open_data         :integer
+#  mandatory         :boolean
+#  options           :string(255)
+#  option_key        :string(255)
+#  field_type        :string(255)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_template_id: 1
+  field_id: 1
+  label: MyString
+  enabled: false
+  hidden: false
+  position: 1
+  mandatory: false
+  chooses: MyString
+  field_type: MyString
+
+two:
+  card_template_id: 1
+  field_id: 1
+  label: MyString
+  enabled: false
+  hidden: false
+  position: 1
+  mandatory: false
+  chooses: MyString
+  field_type: MyString

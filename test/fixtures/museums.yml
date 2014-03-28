@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: museums
+#
+#  id         :integer          not null, primary key
+#  museo_id   :string(255)
+#  name       :string(255)
+#  city       :string(255)
+#  address    :string(255)
+#  telephone  :string(255)
+#  logo       :string(255)
+#  website    :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  citta: MyString
+
+two:
+  nome: MyString
+  citta: MyString
