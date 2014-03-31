@@ -176,7 +176,7 @@ User.create(email: "larcara+m2@gmail.com", password: "password", museum_id:2)
 Museum.find(1).initMuseum
 Museum.find(2).initMuseum
 
-
+load 'db/card.rb'
 #  position      :integer
 #  enabled       :boolean
 #  created_at    :datetime

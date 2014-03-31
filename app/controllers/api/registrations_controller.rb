@@ -1,4 +1,4 @@
-class API::RegistrationsController < Api::BaseController
+class API::RegistrationsController < ApplicationController
 
 
     respond_to :json

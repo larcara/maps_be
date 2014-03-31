@@ -28,5 +28,5 @@ class MuseumField < ActiveRecord::Base
 
   scope :sections , lambda {|section_name, form_name='default' | where(form_name: form_name,section_name: section_name)}
   belongs_to :museum
-
+  #belongs_to :template_field
 end

@@ -14,5 +14,6 @@ class TemplateField < ActiveRecord::Base
 
 
   has_many :card_template_fields
+  #has_many :museum_fields
 
 end
