@@ -7,6 +7,7 @@ class CreateTemplateFields < ActiveRecord::Migration
       t.string :field_label
       t.string :field_description
       t.string :field_data_type
+      t.boolean :custom
       
 
 

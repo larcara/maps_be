@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CardTemplateTest < ActiveSupport::TestCase
+class MuseumSectionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

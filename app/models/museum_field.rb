@@ -26,7 +26,12 @@
 class MuseumField < ActiveRecord::Base
 
 
-  scope :sections , lambda {|section_name, form_name='default' | where(form_name: form_name,section_name: section_name)}
-  belongs_to :museum
+  #scope :sections , lambda {|section_name, form_name='default' | where(form_name: form_name,section_name: section_name)}
+  belongs_to :museum_section
+  scope :custom_fields , -> { where(custom: true)}
+
   #belongs_to :template_field
+  #def sections(section_name, form_name='default')
+  #  self.museum_section.where(form_name: form_name,section_name: section_name)
+  #end
 end

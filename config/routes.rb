@@ -8,13 +8,18 @@ MapsBe::Application.routes.draw do
     devise_for :users,   module: "api"
     resource :museums do
       collection do
-        post 'createCatalog'
-        post 'createUser'
-        post 'updateUser'
-        post 'getMuseumData'
+        get 'getMuseumData'
         get 'getCatalogs'
         get 'getSections'
         get 'getSectionDetail'
+
+        post 'createCatalog'
+        post 'createUser'
+        post 'destroyUser'
+        post 'updateUser'
+
+
+
         post 'createCatalog'
         post 'createSection'
         post 'addFieldToSection'
@@ -22,13 +27,14 @@ MapsBe::Application.routes.draw do
         post 'setFieldDetails'
         post 'setSectionName'
         post 'saveCard'
+        post 'deleteCard'
       end
 
     end
     resource :config
 
-    get "config/getFieldDetail"
-    get "config/getSectionFieldDetail"
+    match "config/getSections", via: [:get, :post]
+    match "config/getSectionFieldDetail", via: [:get, :post]
   end
 
 
@@ -44,7 +50,7 @@ MapsBe::Application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
+  # Example resource route (maps HTTP verbs to controllers actions automatically):
   #   resources :products
 
   # Example resource route with options:

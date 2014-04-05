@@ -14,6 +14,8 @@ class CreateCardTemplateFields < ActiveRecord::Migration
       t.string  :options
       t.string  :option_key
       t.string  :field_type
+      t.boolean :custom
+
     end
   end
 end

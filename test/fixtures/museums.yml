@@ -16,10 +16,10 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  nome: MyString
-  citta: MyString
-
-two:
-  nome: MyString
-  citta: MyString
+#one:
+#  nome: MyString
+#  citta: MyString
+#
+#two:
+#  nome: MyString
+#  citta: MyString

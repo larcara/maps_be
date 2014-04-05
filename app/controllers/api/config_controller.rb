@@ -3,20 +3,21 @@ class API::ConfigController < ApplicationController
   before_filter :allow_cross_domain_access
   def getSections
     @section=CardTemplateField.select(:section_name)
-    respond_to do |format|
-      format.json {render json: @section}
-    end
-
-  end
-
-  def getFieldDetail
+    render json: {error: nil, data: @section}
   end
 
   def getSectionFieldDetail
-    @fields=CardTemplateField.where(section_name: params[:section_name])
-    respond_to do |format|
-      format.json {render json: @fields}
-    end
+    begin
 
+      section=params.require :section_name
+
+      @fields=CardTemplateField.where(section_name: section)
+      render   json: {error: nil, data: @fields}
+
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e}, data: nil}
+    rescue RuntimeError => e
+      render json:{error: e, data: nil}
+    end
   end
 end

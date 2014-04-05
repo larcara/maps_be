@@ -20,24 +20,24 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  card_template_id: 1
-  field_id: 1
-  label: MyString
-  enabled: false
-  hidden: false
-  position: 1
-  mandatory: false
-  chooses: MyString
-  field_type: MyString
-
-two:
-  card_template_id: 1
-  field_id: 1
-  label: MyString
-  enabled: false
-  hidden: false
-  position: 1
-  mandatory: false
-  chooses: MyString
-  field_type: MyString
+#one:
+#  card_template_id: 1
+#  field_id: 1
+#  label: MyString
+#  enabled: false
+#  hidden: false
+#  position: 1
+#  mandatory: false
+#  chooses: MyString
+#  field_type: MyString
+#
+#two:
+#  card_template_id: 1
+#  field_id: 1
+#  label: MyString
+#  enabled: false
+#  hidden: false
+#  position: 1
+#  mandatory: false
+#  chooses: MyString
+#  field_type: MyString
