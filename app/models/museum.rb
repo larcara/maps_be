@@ -16,18 +16,34 @@
 
 class Museum < ActiveRecord::Base
 
-has_many :museum_sections
-has_many :museum_fields, through: :museum_sections
-has_many :cards
-has_many :users
+has_many :museum_sections, dependent: :destroy
+#has_many :museum_fields, through: :museum_sections
+has_many :cards, dependent: :nullify
+has_many :users, dependent: :destroy
 
 
 def sections(catalog="default")
   museum_sections.where(form_name: catalog).select(:section_name, :section_label).distinct.map{|x| [x.section_name,x.section_label]}
 end
 
-def availables_custom_fields
-  free_custom_fields = TemplateField.custom_fields.where(["id not in (?)",self.museum_fields.custom_fields.map(&:template_field_id)])
+def catalog(catalog="default")
+  museum_sections.where(form_name: catalog)
+end
+def museum_fields(catalog="default", section="")
+  if section==""
+    MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, form_name: catalog})
+  else
+    MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, section_name: section, form_name: catalog})
+  end
+end
+
+def availables_custom_fields(catalog="default")
+  ids_utilizzati=self.museum_fields(catalog).custom_fields.map(&:template_field_id)
+  if ids_utilizzati.any?
+    free_custom_fields = TemplateField.custom_fields.where(["id not in (?)",ids_utilizzati])
+  else
+    free_custom_fields = TemplateField.custom_fields
+  end
 
   free_custom_fields
 end
@@ -52,7 +68,7 @@ end
 def  section_fields(section_name, form_name='default')
   section=museum_sections.where(form_name: form_name,section_name: section_name).first
   if section
-    return section.fields
+    return section.museum_fields
   else
     return false
   end

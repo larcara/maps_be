@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   validates_inclusion_of :role, in: ['amministratore','operatore','operatore_base'], allow_nil: true
+  validates_uniqueness_of :email
 
   belongs_to :museum
 

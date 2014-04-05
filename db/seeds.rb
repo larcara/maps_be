@@ -168,7 +168,7 @@ sezioni_campi.each_line do |l|
                            enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom: false)
 end
 15.times do |i|
-  TemplateField.create(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar")
+  TemplateField.create(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar",  custom: true)
 end
 
 User.create(email: "larcara+m1@gmail.com", password: "password", museum_id:1)

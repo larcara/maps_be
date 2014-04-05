@@ -12,9 +12,9 @@ class API::MuseumsController < ApplicationController
   def createUser
     begin
     p=params.require(:user).permit(:email,:password,:role)
-    email=p[:email].presence
-    password=p[:password].presence
-    role=p[:role].presence
+    email=p.require :email
+    password=p.require :password
+    role=p.require :role
     @new_user= @museum.users.build(email:email, password:password,role:role)
     if @new_user.save
       render json: {error: nil, data: @new_user}
@@ -22,14 +22,27 @@ class API::MuseumsController < ApplicationController
       render json: {error:@new_user.errors, data: @new_user}
     end
     rescue ActionController::ParameterMissing => e
-      render json: {error: {missing_parameter: e}, data: nil}
+      render json: {error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
+    end
+  end
+  def getUsers
+    begin
+      raise "utente non abilitato " unless @user.is_admin?
+      @users= @museum.users
+      render json: {error: nil, data: @users}
+    rescue ActionController::ParameterMissing => e
+      render json: {error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
     end
   end
 
   def updateUser
     begin
       p=params.require(:user).permit(:email,:password,:role)
-      email=p[:email].presence
+      email=p.require :email
       password=p[:password].presence
       role=p[:role].presence
       @new_user= @museum.users.where(email:email).first
@@ -40,30 +53,34 @@ class API::MuseumsController < ApplicationController
         render json: {error:@new_user.errors, data: @new_user}
       end
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s.message}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
     end
+
   end
 
   def destroyUser
     begin
       p=params.require(:user).permit(:email,:confirm_email)
-      email=p[:email].presence
-      confirm_email=p[:confirm_email].presence
-      raise RuntimeError("le email non coincidono") unless confirm_email.equal?(email)
-      raise RuntimeError("utente non abilitato ") unless @user.is_admin?
+      email=p.require :email
+      confirm_email=p.require :confirm_email
+      raise "le email non coincidono" unless confirm_email.eql?(email)
+      raise "utente non abilitato " unless @user.is_admin?
+
       @new_user= @museum.users.where(email:email).first
 
-      if @new_user.destroy
+      if @new_user.destroy!
         render json: {error: nil, data: "utente #{email} eliminato"}
       else
-        render json: {error:@new_user.errors, data: nil}
+        render json: {error:@new_user.errors.full_messages, data: nil}
       end
 
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
-      rescue  RuntimeError => e
-      render json:{error: e, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
     end
   end
   def getCatalogs
@@ -77,7 +94,9 @@ class API::MuseumsController < ApplicationController
       @museum.initMuseum(catalog)
       getSections
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
     end
   end
 
@@ -85,7 +104,9 @@ class API::MuseumsController < ApplicationController
     begin
       render json: {error: nil, data: @museum}
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.to_s, data: nil}
     end
   end
   def setMuseumData
@@ -98,10 +119,25 @@ class API::MuseumsController < ApplicationController
       @sections=@museum.sections(catalog)
       render json: {error: nil, data: @sections}
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     end
 
   end
+  def getCard
+    begin
+      id=params.require(:id)
+      @card=@museum.cards.find(id)
+      render json: {error: nil, data: @card}
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.to_s, data: nil}
+    end
+
+    end
+
 
   def getSectionDetail
     begin
@@ -111,7 +147,7 @@ class API::MuseumsController < ApplicationController
       raise "Nessuna sezione con questi parametri" if @fields.blank?
       render json: {error: nil, data: @fields}
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
@@ -119,18 +155,23 @@ class API::MuseumsController < ApplicationController
 
   def setSectionName
     begin
-    catalog=params.require :catalog
-    section=params.require :section
-    new_label=params.require :new_label
-    if success=@museum.museum_fields.sections(section,catalog).update_all(  section_label: new_label)
-        @fields=@museum.museum_fields.sections(section,catalog)
-    else
-        @errors = @museum.errors.full_messages
-    end
-    render  json: {error: @errors, data: @fields}
+      catalog=params.require :catalog
+      section=params.require :section
+      new_label=params.require :new_label
+      @section=@museum.museum_sections.where(form_name: catalog, section_name: section).first
+      raise "Sezione non disponibile nel catalogo indicato" if @section.blank?
+      @section.section_label= new_label
+      if @section.save
+        render  json: {error: nil, data: @section}
+      else
+        render  json: {error: @section.errors.full_messages, data: @section}
+      end
+
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue RuntimeError => e
+      render json:{error: e.message, data: nil}
     end
   end
 
@@ -143,18 +184,17 @@ class API::MuseumsController < ApplicationController
 
       raise "non ci sono campi custom disponibili" if field.blank?
       raise "il nome della sezione e' già utilizzato " if @museum.sections(catalog).flatten.include? (section)
-
-      @field=@museum.museum_fields.build(
-          form_name: catalog, section_name: section, section_label: section , template_field_id:field.id , label:field.field_label,
-              enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil)
-      if @field.save
-        render json: {error: nil, data: @field}
+      @section=@museum.museum_sections.build(form_name: catalog, section_name: section, section_label: section, custom: true, visible:true)
+      @field=@section.museum_fields.build(template_field_id:field.id , label:field.field_label,
+              enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom:true)
+      if @section.save
+        render json: {error: nil, data: {section: section, field: @field}}
       else
-        render json: {error: @field.errors.full_messages, data: @field}
+        render json: {error: {section: @section.errors.full_messages,  field:@field.errors.full_messages}, data: {section: section, field: @field}}
       end
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
@@ -165,17 +205,23 @@ class API::MuseumsController < ApplicationController
     begin
       catalog=params.require :catalog
       section=params.require :section
-      position=params.fetch(:position, 1)
-      options=params.fetch(:options, "")
-      option_key=params.fetch(:option_key, nil)
 
-      field=@museum.availables_custom_fields.first
+
+      field=@museum.availables_custom_fields(catalog).first
+
       raise "non ci sono campi custom disponibili" if field.blank?
       raise "il nome della sezione non è definito " unless @museum.sections(catalog).flatten.include? (section)
 
-      @field=@museum.museum_fields.build(
-          form_name: catalog, section_name: section, section_label: section , template_field_id:field.id , label:field.field_label,
-          enabled: true, hidden: false, position: position, mobile: true, open_data: true, mandatory: false, options: options, option_key: option_key, custom:true)
+      @section=@museum.museum_sections.where(form_name: catalog, section_name: section).first
+
+      position=params.fetch(:position, 1)
+      options=params.fetch(:options, nil)
+      option_key=params.fetch(:option_key, nil)
+      field_label=params.fetch(:field_label, field.field_label)
+
+      @field=@section.museum_fields.build(template_field_id:field.id , label:field_label,
+                                          enabled: true, hidden: false, position: position, mobile: true, open_data: true,
+                                          mandatory: false, options: options, option_key: option_key, custom: true)
 
       if @field.save
         render json: {error: nil, data: @field}
@@ -184,7 +230,7 @@ class API::MuseumsController < ApplicationController
       end
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
@@ -198,7 +244,7 @@ class API::MuseumsController < ApplicationController
       field=params.require :section
 
       @field=@museum.museum_fields.custom_fields.where(section_name: section, template_field_id:field).first
-      raise "il campo richiesto non esiste nella scheda specificata" if field.blank?
+      raise "il campo richiesto non esiste nella scheda specificata" if @field.blank?
       raise "l'utente non è abilitato " unless @user.is_admin?
 
 
@@ -209,7 +255,7 @@ class API::MuseumsController < ApplicationController
       end
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
@@ -221,7 +267,7 @@ class API::MuseumsController < ApplicationController
       section=params.require :section
       render json:{error: nil, data: "funzione da implementare"}
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e, data: nil}
     end
@@ -231,10 +277,12 @@ class API::MuseumsController < ApplicationController
     begin
       catalog=params.require :catalog
       section=params.require :section
-      field=params.require :field
+      field_id=params.require :field_id
       data=params.require :data
-      @field=@museum.museum_fields.where(template_field_id: field).first
+      @field=@museum.museum_fields(catalog).where(template_field_id: field_id).first
+      raise "il campo richiesto non esiste nella scheda specificata" if @field.blank?
       data=params[:data]
+@field=MuseumField.find(@field.id)
       @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key))
       if @field.save
         render json: {error: nil, data: @field}
@@ -242,7 +290,7 @@ class API::MuseumsController < ApplicationController
         render json: {error: @field.errors.full_messages, data: @field}
       end
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
@@ -251,22 +299,27 @@ class API::MuseumsController < ApplicationController
   def saveCard
     begin
       data=params.require :data
-      id=params.require :id
-      @card=@museum.cards.find_by_id(id)
+      id=params.fetch :id, 0
+      errors=[]
+      @card=@museum.cards.find_by_id(id.to_i)
       @card||=@museum.cards.build
-      data.each do |k,v| # 1: valore1
-        attribute=TemplateField.find(k)
-        @card.update_attribute(attribute.field_name.downcase.to_sym, v)
+      data.each do |k,v| # nome_campo_db: valore1
+        attribute="#{k.downcase.to_sym}=".to_sym
+        if @card.respond_to?( attribute)
+          @card.send(attribute, v)
+        else
+          errors << "il campo #{attribute} non esite"
+        end
       end
       if @card.save
-        render json: {error: nil, data: @card}
+        render json: {error: errors, data: @card}
       else
-        render json: {error: @card.errors.full_messages, data: @card}
+        render json: {error: [errors, @card.errors.full_messages], data: @card}
       end
 
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e, data: nil}
     end
@@ -287,7 +340,7 @@ class API::MuseumsController < ApplicationController
 
 
     rescue ActionController::ParameterMissing => e
-      render json:{error: {missing_parameter: e}, data: nil}
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end

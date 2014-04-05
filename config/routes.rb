@@ -9,23 +9,23 @@ MapsBe::Application.routes.draw do
     resource :museums do
       collection do
         get 'getMuseumData'
-        get 'getCatalogs'
-        get 'getSections'
-        get 'getSectionDetail'
-
-        post 'createCatalog'
         post 'createUser'
         post 'destroyUser'
         post 'updateUser'
+        get 'getUsers'
 
 
-
+        get 'getCatalogs'
         post 'createCatalog'
+
+        get 'getSections'
+        get 'getSectionDetail'
         post 'createSection'
         post 'addFieldToSection'
-        post 'getSectionDetail'
         post 'setFieldDetails'
         post 'setSectionName'
+
+        get 'getCard'
         post 'saveCard'
         post 'deleteCard'
       end

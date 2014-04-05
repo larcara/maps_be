@@ -13,5 +13,7 @@
 
 class Card < ActiveRecord::Base
 
+  validates_presence_of :id_codscheda
+  validates_uniqueness_of :id_codscheda, scope: :museum_id
   belongs_to :museum
 end

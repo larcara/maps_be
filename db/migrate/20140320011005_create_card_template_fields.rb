@@ -3,7 +3,7 @@ class CreateCardTemplateFields < ActiveRecord::Migration
     create_table :card_template_fields do |t|
       t.string  :section_name
       t.string  :section_label
-      t.string  :template_field_id
+      t.integer  :template_field_id
       t.string  :label
       t.boolean :enabled
       t.boolean :hidden
