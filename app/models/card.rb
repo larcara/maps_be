@@ -2,13 +2,162 @@
 #
 # Table name: cards
 #
-#  id          :integer          not null, primary key
-#  museum_id   :integer
-#  colore      :string(255)
-#  descrizione :string(255)
-#  oggetto     :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                        :integer          not null, primary key
+#  museum_id                 :integer          not null
+#  colore                    :string(255)
+#  descrizione               :string(255)
+#  oggetto                   :string(255)
+#  id_codscheda              :string(255)      not null
+#  abito                     :string(255)
+#  ad_cristo                 :string(255)
+#  altezza                   :float
+#  altra_categoria           :string(255)
+#  altra_def_oggetto         :string(255)
+#  altro_cod                 :string(255)
+#  biblio_foto               :string(255)
+#  binomio1                  :string(255)
+#  binomio2                  :string(255)
+#  binomio3                  :string(255)
+#  binomio4                  :string(255)
+#  capacita                  :string(255)
+#  cassettiera               :string(255)
+#  categoria_pricipale       :string(255)
+#  circonferenza             :string(255)
+#  classe                    :string(255)
+#  cod_univoco_scavo_iccd    :string(255)
+#  id_univoco_reperto        :string(255)
+#  id_num_inventario         :string(255)
+#  collocazione_opera_finale :string(255)
+#  coloreb                   :string(255)
+#  coloreg                   :string(255)
+#  colorer                   :string(255)
+#  contesto_ritrovamento     :string(255)
+#  continente                :string(255)
+#  coor_asse_x               :string(255)
+#  coor_asse_y               :string(255)
+#  costruttore               :string(255)
+#  creato_da                 :string(255)
+#  cronologia_generica       :string(255)
+#  cronologia_uso            :string(255)
+#  definizione               :string(255)
+#  denominazione             :string(255)
+#  denominazione_scavo       :string(255)
+#  desc_collocazione         :string(255)
+#  desc_intervento           :string(255)
+#  dest_prestito             :string(255)
+#  diametro                  :float
+#  dimensione_base           :float
+#  dimensione_max            :float
+#  dimensionex               :float
+#  dimensioney               :float
+#  dimensionez               :float
+#  diocesi                   :string(255)
+#  disponibilita             :string(255)
+#  dt_a                      :string(255)
+#  dt_acquisizione           :string(255)
+#  dt_assoluta               :string(255)
+#  dt_creazione              :string(255)
+#  dt_da                     :string(255)
+#  dt_esatta_acquisizione    :string(255)
+#  dt_modifica               :string(255)
+#  dt_restauro               :string(255)
+#  dt_scavo                  :string(255)
+#  ente_finanziatore_rest    :string(255)
+#  ente_responsabile_rest    :string(255)
+#  ente_responsabile_scavo   :string(255)
+#  epoca                     :string(255)
+#  espositore                :string(255)
+#  famiglia                  :string(255)
+#  fascia_cronologia_rif     :string(255)
+#  fenomeni_ottici           :string(255)
+#  fluor                     :boolean
+#  foglio_data               :string(255)
+#  fornitore                 :string(255)
+#  fosfo                     :boolean
+#  funzione                  :string(255)
+#  geminato                  :boolean
+#  genere                    :string(255)
+#  gruppo                    :string(255)
+#  ingombro                  :string(255)
+#  inprestito                :string(255)
+#  larghezza                 :string(255)
+#  loc_estera                :string(255)
+#  localita                  :string(255)
+#  localita_antica           :string(255)
+#  localizz_comune_catasto   :string(255)
+#  lunghezza                 :string(255)
+#  luogo_acquisizione        :string(255)
+#  magnetico                 :boolean
+#  materia_tecnica           :string(255)
+#  metodo_scavo              :string(255)
+#  mod_conservazione         :string(255)
+#  mod_uso                   :string(255)
+#  modificato_da             :string(255)
+#  motivo                    :string(255)
+#  nazione                   :string(255)
+#  nome_acquisizione         :text
+#  note_acquisizione         :text
+#  note_generiche            :text
+#  num_campione              :integer
+#  num_fogli                 :integer
+#  num_frammenti             :integer
+#  num_inventario_scavo      :string(255)
+#  oldlocalita               :string(255)
+#  oldregione                :string(255)
+#  oldstato                  :string(255)
+#  opera_finale_originale    :string(255)
+#  pacco                     :string(255)
+#  paese_antico              :string(255)
+#  particelle                :string(255)
+#  peso                      :float
+#  piano                     :string(255)
+#  posizione                 :string(255)
+#  potenza                   :string(255)
+#  profondita                :string(255)
+#  provincia                 :string(255)
+#  pseudom                   :boolean
+#  quantita                  :string(255)
+#  quota                     :string(255)
+#  radio                     :boolean
+#  regione                   :string(255)
+#  resp_scientifico_scavo    :string(255)
+#  restauri                  :string(255)
+#  ripiano                   :string(255)
+#  sala                      :string(255)
+#  secolo                    :string(255)
+#  sistema                   :string(255)
+#  sottoclasse               :string(255)
+#  specie                    :string(255)
+#  specifiche_materiale      :string(255)
+#  specifiche_scavo          :string(255)
+#  spessore                  :string(255)
+#  stato_conservazione       :string(255)
+#  stima                     :string(255)
+#  tipo                      :string(255)
+#  tipo_acquisizione         :string(255)
+#  unita_misura              :string(255)
+#  url_sito_scavo            :string(255)
+#  valida                    :string(255)
+#  visibile                  :string(255)
+#  zonato                    :string(255)
+#  stato                     :string(255)
+#  studiato                  :boolean
+#  txtspecie                 :string(255)
+#  txtitalia                 :string(255)
+#  sinonimi                  :string(255)
+#  varieta                   :string(255)
+#  screditato                :string(255)
+#  formula                   :string(255)
+#  lt                        :string(255)
+#  tallone                   :string(255)
+#  calco                     :boolean
+#  primasegnalazione         :string(255)
+#  collezione                :string(255)
+#  erboserie                 :string(255)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  bibliografia              :text
+#  studio                    :text
 #
 
 class Card < ActiveRecord::Base
@@ -16,4 +165,5 @@ class Card < ActiveRecord::Base
   validates_presence_of :id_codscheda
   validates_uniqueness_of :id_codscheda, scope: :museum_id
   belongs_to :museum
+  has_many :museum_images, dependent: :destroy
 end

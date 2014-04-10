@@ -3,10 +3,7 @@
 # Table name: museum_fields
 #
 #  id                     :integer          not null, primary key
-#  museum_id              :integer
-#  form_name              :string(255)
-#  section_name           :string(255)
-#  section_label          :string(255)
+#  museum_section_id      :integer
 #  card_template_field_id :integer
 #  template_field_id      :string(255)
 #  label                  :string(255)
@@ -16,6 +13,7 @@
 #  mobile                 :integer
 #  open_data              :integer
 #  mandatory              :boolean
+#  custom                 :boolean
 #  options                :string(255)
 #  option_key             :string(255)
 #  field_type             :string(255)

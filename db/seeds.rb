@@ -8,8 +8,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-m_mineralogia=Museum.create(museo_id: "RMSMUS15", name: "Museo di mineralogia", city: "Roma")
-m_origini=Museum.create(museo_id: "RMSMUS09", name: "Museo delle Origini", city: "Roma")
+Museum.create!([
+                   {museo_id: "RMSMUS15", name: "Museo di mineralogia", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
+                   {museo_id: "RMSMUS06", name: "Museo del Vicino Oriente", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
+                   {museo_id: "RMSMUS09", name: "Museo delle Origini", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
+                   {museo_id: "RMSMUS12", name: "Erbario", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
+                   {museo_id: "RMSMUS14", name: "Museo di Storia della Medicina", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil}
+               ])
+
 
 sezioni_campi='colori	Colore	  colore	Colore
 colori	Colore	  coloreb	Colore B
@@ -171,12 +177,14 @@ end
   TemplateField.create(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar",  custom: true)
 end
 
-User.create(email: "larcara+m1@gmail.com", password: "password", museum_id:1)
-User.create(email: "larcara+m2@gmail.com", password: "password", museum_id:2)
+User.create(email: "larcara+m1@gmail.com", password: "password", museum_id:1, role: "amministratore")
+User.create(email: "larcara+m2@gmail.com", password: "password", museum_id:2, role: "amministratore")
 Museum.find(1).initMuseum
 Museum.find(2).initMuseum
 
 load 'db/card.rb'
+
+Card.first.museum_images.create(label: "test", link:"test")
 #  position      :integer
 #  enabled       :boolean
 #  created_at    :datetime

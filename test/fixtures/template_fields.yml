@@ -2,10 +2,12 @@
 #
 # Table name: template_fields
 #
-#  field_name        :string(255)      primary key
+#  id                :integer          not null, primary key
+#  field_name        :string(255)
 #  field_label       :string(255)
 #  field_description :string(255)
 #  field_data_type   :string(255)
+#  custom            :boolean
 #  created_at        :datetime
 #  updated_at        :datetime
 #

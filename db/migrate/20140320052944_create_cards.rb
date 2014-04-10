@@ -154,6 +154,11 @@ class CreateCards < ActiveRecord::Migration
       t.string :tallone
       t.string :oggetto
       t.boolean :calco
+      t.string :primasegnalazione
+      t.string :collezione
+      t.string :erboserie
+      t.string :tipologia
+
       t.timestamps
     end
     add_index :cards, [:id_codscheda, :museum_id], unique: true, name: :cards_index_1

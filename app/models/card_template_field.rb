@@ -5,7 +5,7 @@
 #  id                :integer          not null, primary key
 #  section_name      :string(255)
 #  section_label     :string(255)
-#  template_field_id :string(255)
+#  template_field_id :integer
 #  label             :string(255)
 #  enabled           :boolean
 #  hidden            :boolean
@@ -16,6 +16,7 @@
 #  options           :string(255)
 #  option_key        :string(255)
 #  field_type        :string(255)
+#  custom            :boolean
 #
 
 class CardTemplateField < ActiveRecord::Base

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405134924) do
+ActiveRecord::Schema.define(version: 20140410110401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(version: 20140405134924) do
   create_table "card_template_fields", force: true do |t|
     t.string  "section_name"
     t.string  "section_label"
-    t.integer  "template_field_id"
+    t.integer "template_field_id"
     t.string  "label"
     t.boolean "enabled"
     t.boolean "hidden"
@@ -371,6 +371,9 @@ ActiveRecord::Schema.define(version: 20140405134924) do
     t.string   "lt"
     t.string   "tallone"
     t.boolean  "calco"
+    t.string   "primasegnalazione"
+    t.string   "collezione"
+    t.string   "erboserie"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "bibliografia"
@@ -398,6 +401,19 @@ ActiveRecord::Schema.define(version: 20140405134924) do
     t.datetime "updated_at"
   end
 
+  create_table "museum_images", force: true do |t|
+    t.integer  "card_id"
+    t.string   "label"
+    t.string   "link"
+    t.integer  "num_prog"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
   create_table "museum_sections", force: true do |t|
     t.integer  "museum_id"
     t.string   "form_name"
@@ -419,6 +435,10 @@ ActiveRecord::Schema.define(version: 20140405134924) do
     t.string   "website"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "template_fields", force: true do |t|

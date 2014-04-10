@@ -15,13 +15,22 @@
 #
 
 class Museum < ActiveRecord::Base
+  has_many :museum_sections, dependent: :destroy
+  #has_many :museum_fields, through: :museum_sections
+  has_many :cards, dependent: :nullify
+  has_many :users, dependent: :destroy
 
-has_many :museum_sections, dependent: :destroy
-#has_many :museum_fields, through: :museum_sections
-has_many :cards, dependent: :nullify
-has_many :users, dependent: :destroy
+
+  has_attached_file :image
+  do_not_validate_attachment_file_type :image
 
 
+  before_save :update_logo
+
+
+  def update_logo
+    self.logo=image.url if self.image && self.image_file_name
+  end
 def sections(catalog="default")
   museum_sections.where(form_name: catalog).select(:section_name, :section_label).distinct.map{|x| [x.section_name,x.section_label]}
 end
