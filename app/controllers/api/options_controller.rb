@@ -45,11 +45,7 @@ class API::OptionsController < ApplicationController
     begin
       option_id=params.require(:id)
       option_data=params.require(:option).permit(:name, :key, :value)
-      if @museum
-        @option=Option.museum_options(@museum.id).find(option_id)
-      else
-        @option=Option.generic_options().find(option_id)
-      end
+      @option=Option.museum_options(@museum.id).find(option_id)
 
       if @option.update_attributes(option_data)
         render json: {error: nil, data: @option}
@@ -68,11 +64,8 @@ class API::OptionsController < ApplicationController
     begin
       option_id=params.require(:id)
       raise "utente non abilitato" unless @user.is_admin?
-      if @museum
-        @option=Option.museum_options(@museum.id).find(option_id)
-      else
-        @option=Option.generic_options().find(option_id)
-      end
+
+      @option=Option.museum_options(@museum.id).find(option_id)
       raise "identificativo scheda non corretto o museo non abilitato" if @option.blank?
 
       if @option.destroy
