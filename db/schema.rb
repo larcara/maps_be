@@ -406,6 +406,7 @@ ActiveRecord::Schema.define(version: 20140410110401) do
     t.string   "label"
     t.string   "link"
     t.integer  "num_prog"
+    t.string   "tipologia"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"

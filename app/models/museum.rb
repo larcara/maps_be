@@ -16,7 +16,7 @@
 
 class Museum < ActiveRecord::Base
   has_many :museum_sections, dependent: :destroy
-  #has_many :museum_fields, through: :museum_sections
+  has_many :fields, source: :museum_fields,  through: :museum_sections
   has_many :cards, dependent: :nullify
   has_many :users, dependent: :destroy
 
@@ -38,6 +38,7 @@ end
 def catalog(catalog="default")
   museum_sections.where(form_name: catalog)
 end
+
 def museum_fields(catalog="default", section="")
   if section==""
     MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, form_name: catalog})

@@ -29,7 +29,7 @@ MapsBe::Application.routes.draw do
         post 'addFieldToSection'
         post 'removeFieldFromSection'
         post 'setFieldDetails'
-        post 'setSectionName'
+        post 'updateSection'
 
         get 'getCard'
         post 'saveCard'

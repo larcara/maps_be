@@ -5,6 +5,7 @@ class CreateMuseumImages < ActiveRecord::Migration
       t.string :label
       t.string :link
       t.integer :num_prog
+      t.string :tipologia
 
       t.timestamps
     end

@@ -157,7 +157,7 @@ class CreateCards < ActiveRecord::Migration
       t.string :primasegnalazione
       t.string :collezione
       t.string :erboserie
-      t.string :tipologia
+
 
       t.timestamps
     end

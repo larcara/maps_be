@@ -166,22 +166,23 @@ class API::MuseumsController < ApplicationController
       end
 
       raise "Nessuna sezione con questi parametri" if @fields.blank?
-      render json: {error: nil, data: @fields.as_json(except: [:created_at, :updated_at])}
+      render json: {error: nil, data: @fields.as_json(except: [:created_at, :updated_at], include: :museum_section)}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
       render json:{error: e.message, data: nil}
     end
   end
-  def setSectionName
+
+  def updateSection
     begin
       catalog=params.require :catalog
       section=params.require :section
-      new_label=params.require :new_label
+      data=params.require(:data).permit(:section_label, :visible)
       @section=@museum.museum_sections.where(form_name: catalog, section_name: section).first
       raise "Sezione non disponibile nel catalogo indicato" if @section.blank?
-      @section.section_label= new_label
-      if @section.save
+
+      if @section.update_attributes(data)
         render  json: {error: nil, data: @section.as_json(except: [:created_at, :updated_at])}
       else
         render  json: {error: @section.errors.full_messages, data: @section.as_json(except: [:created_at, :updated_at])}
@@ -250,9 +251,9 @@ class API::MuseumsController < ApplicationController
       field=@museum.availables_custom_fields(catalog).first
 
       raise "non ci sono campi custom disponibili" if field.blank?
-      raise "il nome della sezione non è definito " unless @museum.sections(catalog).flatten.include? (section)
-
       @section=@museum.museum_sections.where(form_name: catalog, section_name: section).first
+      raise "il nome della sezione non è definito " if @section.blank?
+
 
       position=params.fetch(:position, 1)
       options=params.fetch(:options, nil)
@@ -264,7 +265,7 @@ class API::MuseumsController < ApplicationController
                                           mandatory: false, options: options, option_key: option_key, custom: true)
 
       if @field.save
-        render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
+        render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at], include: :museum_section)}
       else
         render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
@@ -282,17 +283,19 @@ class API::MuseumsController < ApplicationController
       section=params.require :section
       field_id=params.require :field_id
 
-      @field=@museum.museum_fields(catalog,section).custom_fields.where(template_field_id:field_id).first
+      @field=@museum.museum_fields(catalog,section).custom_fields.where(id:field_id).first
       raise "l'utente non è abilitato " unless @user.is_admin?
       raise "il campo custom richiesto non esiste nella scheda specificata" if @field.blank?
 
+      @field=@museum.fields.find(field_id)
 
       if @field.destroy
         render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
         render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
-
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "l'id specificatonon è valido", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
@@ -306,16 +309,18 @@ class API::MuseumsController < ApplicationController
       section=params.require :section
       field_id=params.require :field_id
       data=params.require :data
-      @field=@museum.museum_fields(catalog).where(template_field_id: field_id).first
+      @field=@museum.museum_fields(catalog).where(id: field_id).first
       raise "il campo richiesto non esiste nella scheda specificata" if @field.blank?
       data=params[:data]
-      @field=MuseumField.find(@field.id)
+      @field=@museum.fields.find(@field.id)
       @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key))
       if @field.save
         render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
         render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "l'id specificatonon è valido", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
@@ -325,8 +330,16 @@ class API::MuseumsController < ApplicationController
 
   def getCard
     begin
-      id=params.require(:id)
-      @card=@museum.cards.find(id)
+      id_card=params.fetch(:id, nil)
+      id_codscheda=params.fetch(:id_codscheda, nil)
+      raise "e' necessario un id o un codice_scheda " if id_card.blank? && id_codscheda.blank?
+
+      if id_card
+        @card=@museum.cards.where(id:id_card)
+      else
+        @card=@museum.cards.where(id_codscheda: id_codscheda).first
+      end
+      raise "le chiavi di ricerca specificate non corrispondono ad alcuna scheda del museo" if @card.blank?
 
       render json: {error: nil, data: @card.as_json(include: :museum_images)}
     rescue ActiveRecord::RecordNotFound => e
@@ -390,31 +403,25 @@ class API::MuseumsController < ApplicationController
   def saveImage
     begin
       card_id=params.require :card_id
-      image_id=params.fetch :image_id, 0
-      label=params.require :label
-      link=params.fetch :link, ""
-      image=params.fetch :image, nil
 
-      errors=[]
+      image_data=params.require(:image_data).permit(:label, :link, :id, :tipologia)
+      image_file=params.fetch :image_file, nil
+
+
 
       @card=@museum.cards.find(card_id)
-      @image=@card.museum_images.find_by_id(image_id)
+      @image=@card.museum_images.find_by_id(image_data[:id])
 
-      @image||=@card.museum_images.build(label: label)
-      if image
-        @image.image=image
-        #data = StringIO.new(Base64.decode64(params[:account][:avatar][:data]))
-        #data.class.class_eval { attr_accessor :original_filename, :content_type }
-        #data.original_filename = params[:account][:avatar][:filename]
-        #data.content_type = params[:account][:avatar][:content_type]
-        #params[:account][:avatar] = data
+      @image||=@card.museum_images.build(label: image_data[:label], tipologia: image_data[:tipologia])
+      if image_file
+        @image.image=image_file
       else
-        @image.link=link
+        @image.link=image_data[:link]
       end
       if @image.save
-        render json: {error: errors, data: @image}
+        render json: {error: nil, data: @image}
       else
-        render json: {error: [errors, @image.errors.full_messages], data: @image}
+        render json: {error: @image.errors.full_messages, data: @image}
       end
 
 
