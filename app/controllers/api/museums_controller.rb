@@ -139,7 +139,7 @@ class API::MuseumsController < ApplicationController
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
-      render json:{error: e, data: nil}
+      render json:{error: e.message, data: nil}
     end
   end
 
@@ -350,7 +350,28 @@ class API::MuseumsController < ApplicationController
       render json:{error: e.to_s, data: nil}
     end
 
+  end
+  def findCard
+    begin
+      filter=params.require(:filter)
+      if filter
+        @cards=@museum.cards.search(filter).result()
+      end
+      if @cards
+        render json: {error: nil, data: @cards.as_json(include: :museum_images)}
+      else
+        render json: {error: "nessuna scheda con i filtri indicati", data: nil}
+      end
+
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.to_s, data: nil}
     end
+
+  end
   def saveCard
     begin
       data=params.require :data
@@ -376,7 +397,7 @@ class API::MuseumsController < ApplicationController
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
-      render json:{error: e, data: nil}
+      render json:{error: e.message, data: nil}
     end
   end
   def deleteCard
@@ -430,14 +451,18 @@ class API::MuseumsController < ApplicationController
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
-      render json:{error: e, data: nil}
+      render json:{error: e.message, data: nil}
     end
   end
 
 
-  def authenticate_museum
-    @museum=@user.museum
+
+
+
+  def printCard
+
+    Prawn::Document.generate("card.pdf") do
+
+    end
   end
-
-
 end

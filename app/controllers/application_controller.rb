@@ -30,4 +30,7 @@ class ApplicationController < ActionController::Base
       render json: { success: false, message: "Error with token #{auth_token.to_s} login or password"}, status: :unauthorized
     end
   end
+  def authenticate_museum
+    @museum=@user.museum
+  end
 end

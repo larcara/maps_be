@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Museum:
+  = @option.museum_id
+%p
+  %b Name:
+  = @option.name
+%p
+  %b Key:
+  = @option.key
+%p
+  %b Value:
+  = @option.value
+
+= link_to 'Edit', edit_option_path(@option)
+\|
+= link_to 'Back', options_path

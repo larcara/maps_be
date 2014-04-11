@@ -1,10 +1,12 @@
 MapsBe::Application.routes.draw do
+
   #get "registrations/create"
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   namespace :api, defaults: {format: :json} do
+
     devise_for :users,   module: "api"
     resource :museums do
       collection do
@@ -32,6 +34,7 @@ MapsBe::Application.routes.draw do
         post 'updateSection'
 
         get 'getCard'
+        post 'findCard'
         post 'saveCard'
         post 'deleteCard'
         post 'saveImage'
@@ -39,7 +42,7 @@ MapsBe::Application.routes.draw do
 
     end
     resource :config
-
+    resources :options
     match "config/getSections", via: [:get, :post]
     match "config/getSectionFieldDetail", via: [:get, :post]
   end

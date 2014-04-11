@@ -140,14 +140,44 @@ echo;echo;echo "Start saveImage - image2 ##############################"
 curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[label]="immagine allegata" -F image_file=@img2.gif
 echo;echo;echo "Start saveImage - update data ##############################"
 curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[id]=1 image_data[label]="nuovo testo" -F image_file=@img1.gif
-curl -s http://127.0.0.1:3000/api/museums/getCard?auth_token=$auth_token&id=$card_id -H "Content-Type: application/json" -X GET -d '{ }'
 echo;echo;echo "Start getCard per id_codscheda ##############################"
+curl -s http://127.0.0.1:3000/api/museums/getCard?auth_token=$auth_token&id=$card_id -H "Content-Type: application/json" -X GET -d '{ }'
 echo "Start deleteCard ##############################"
 curl -s "http://127.0.0.1:3000/api/museums/deleteCard?auth_token=${auth_token}&id=${card_id}" -H "Content-Type: application/json" -X POST -d '{ }'
+echo "Start findCard ##############################"
+curl -s "http://127.0.0.1:3000/api/museums/findCard?auth_token=${auth_token}&id=${card_id}" -H "Content-Type: application/json" -X POST -d '{"filter":{
+"regione_eq":"Siberia", "magnetico_false":"1" , "fornitore_eq":"Spada", "note_generiche_cont":"compatto"}}'
+
 
 echo
 read -e -p "################## END Card- PRESS ANY KEY TO CONTINUE ######################"
 clear
+
+echo "##### OPTIONS API - START Card:"; echo
+
+echo;echo;echo "Start list all options - ##############################"
+curl -s http://127.0.0.1:3000/api/options?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"filter":{"name_present":1}  }'
+echo;echo;echo "Start list all province  - ##############################"
+curl -s http://127.0.0.1:3000/api/options?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"filter":{"name_eq":"provincie"} }'
+echo;echo;echo "Start inser new option - ##############################"
+curl -s http://127.0.0.1:3000/api/options?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"option":{"name":"nuova_lista", "key":"l1", "value":"value1"} }'
+echo;echo;echo "Start inser new option - ##############################"
+curl -s http://127.0.0.1:3000/api/options?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"option":{"name":"nuova_lista", "key":"l2", "value":"value2"} }'
+echo;echo;echo "Start list all nuova_lista  - ##############################"
+curl -s http://127.0.0.1:3000/api/options?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"filter":{"name_eq":"nuova_lista"} }'
+echo;echo;echo "Start update option - ##############################"
+curl -s http://127.0.0.1:3000/api/options/10?auth_token=$auth_token -H "Content-Type: application/json" -X PUT -d '{"option":{"name":"update", "key":"l2", "value":"value2"} }'
+echo;echo;echo "Start delete option - ##############################"
+curl -s http://127.0.0.1:3000/api/options/10?auth_token=$auth_token -H "Content-Type: application/json" -X DELETE -d '{}'
+
+echo
+read -e -p "################## END Card- PRESS ANY KEY TO CONTINUE ######################"
+clear
+
+
+exit
+
+
 
 echo
 echo "########## FINE TEST ###########"
