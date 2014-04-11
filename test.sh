@@ -1,5 +1,5 @@
 #!/bin/bash
-TOT=27
+TOT=41
 c=0
 
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}' 
@@ -59,6 +59,7 @@ echo -n "$c/$TOT Start getSectionFieldDetail ############################## Pres
 read -n 1 key
 curl  -s http://127.0.0.1:3000/api/config/getSectionFieldDetail?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "section_name":"geodati_reperto"}'
 
+
 echo
 c=$(($c + 1))
 echo -n "$c/$TOT Start getMuseumData ############################## Press any key to start: "
@@ -88,6 +89,20 @@ c=$(($c + 1))
 echo -n "$c/$TOT Start getSectionDetail ############################## Press any key to start: "
 read -n 1 key
 curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"default", "section":"ubicazione_reperto"}'
+
+echo
+c=$(($c + 1))
+echo -n "$c/$TOT Start getSectionDetail FILTERED ############################## Press any key to start: "
+read -n 1 key
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"default","section":"geodati_reperto", "filter":{"label_cont":"col"}}'
+
+echo
+c=$(($c + 1))
+echo -n "$c/$TOT Start getSectionDetail ALL FIELD FILTERED ############################## Press any key to start: "
+read -n 1 key
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"catalog":"default", "section":"*", "filter":{"label_cont":"col"}}'
+
+
 
 echo
 c=$(($c + 1))

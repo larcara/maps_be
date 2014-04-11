@@ -195,6 +195,7 @@ DEPENDENCIES
   paperclip (~> 4.1)
   pg
   rails (= 4.0.4)
+  ransack
   sass-rails (~> 4.0.2)
   sdoc
   seed_dump

@@ -6,7 +6,7 @@ class API::MuseumsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json {render json:  {error: nil, data: @museum}}
+      format.json {render json:  {error: nil, data: @museum.as_json(except: [:created_at, :updated_at])}}
     end
   end
 
@@ -20,7 +20,7 @@ class API::MuseumsController < ApplicationController
     if @new_user.save
       render json: {error: nil, data: @new_user}
     else
-      render json: {error:@new_user.errors, data: @new_user}
+      render json: {error:@new_user.errors, data: @new_user.as_json(except: [:created_at, :updated_at])}
     end
     rescue ActionController::ParameterMissing => e
       render json: {error: {missing_parameter: e.to_s}, data: nil}
@@ -32,7 +32,7 @@ class API::MuseumsController < ApplicationController
     begin
       raise "utente non abilitato " unless @user.is_admin?
       @users= @museum.users
-      render json: {error: nil, data: @users}
+      render json: {error: nil, data: @users.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
       render json: {error: {missing_parameter: e.to_s}, data: nil}
     rescue  RuntimeError => e
@@ -48,9 +48,9 @@ class API::MuseumsController < ApplicationController
       @new_user= @museum.users.where(email:email).first
       @new_user.update_attributes(p)
       if @new_user.save
-        render json: {error: nil, data: @new_user}
+        render json: {error: nil, data: @new_user.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error:@new_user.errors, data: @new_user}
+        render json: {error:@new_user.errors, data: @new_user.as_json(except: [:created_at, :updated_at])}
       end
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s.message}, data: nil}
@@ -84,7 +84,7 @@ class API::MuseumsController < ApplicationController
   end
 
   def getCatalogs
-    catalogs=@museum.museum_fields.select("distinct form_name").to_a
+    catalogs=@museum.museum_sections.select("distinct form_name").to_a
     render json: {error: nil, data: catalogs}
 
   end
@@ -102,7 +102,7 @@ class API::MuseumsController < ApplicationController
 
   def getMuseumData
     begin
-      render json: {error: nil, data: @museum}
+      render json: {error: nil, data: @museum.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue  RuntimeError => e
@@ -128,9 +128,9 @@ class API::MuseumsController < ApplicationController
       end
 
       if @museum.save
-        render json: {error: nil, data: @museum}
+        render json: {error: nil, data: @museum.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error: @museum.errors.full_messages, data: @museum}
+        render json: {error: @museum.errors.full_messages, data: @museum.as_json(except: [:created_at, :updated_at])}
       end
 
 
@@ -148,7 +148,7 @@ class API::MuseumsController < ApplicationController
       params.require(:catalog)
       catalog=params[:catalog].presence
       @sections=@museum.sections(catalog)
-      render json: {error: nil, data: @sections}
+      render json: {error: nil, data: @sections.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     end
@@ -158,9 +158,15 @@ class API::MuseumsController < ApplicationController
     begin
       catalog=params.require :catalog
       section=params.require :section
+      filter=params[:filter].presence
+
       @fields=@museum.section_fields(section,catalog)
+      if filter
+        @fields=@fields.search(filter).result()
+      end
+
       raise "Nessuna sezione con questi parametri" if @fields.blank?
-      render json: {error: nil, data: @fields}
+      render json: {error: nil, data: @fields.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e
@@ -176,9 +182,9 @@ class API::MuseumsController < ApplicationController
       raise "Sezione non disponibile nel catalogo indicato" if @section.blank?
       @section.section_label= new_label
       if @section.save
-        render  json: {error: nil, data: @section}
+        render  json: {error: nil, data: @section.as_json(except: [:created_at, :updated_at])}
       else
-        render  json: {error: @section.errors.full_messages, data: @section}
+        render  json: {error: @section.errors.full_messages, data: @section.as_json(except: [:created_at, :updated_at])}
       end
 
 
@@ -201,9 +207,9 @@ class API::MuseumsController < ApplicationController
       @field=@section.museum_fields.build(template_field_id:field.id , label:field.field_label,
                                           enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom:true)
       if @section.save
-        render json: {error: nil, data: {section: section, field: @field}}
+        render json: {error: nil, data: {section: section, field: @field.as_json(except: [:created_at, :updated_at])}}
       else
-        render json: {error: {section: @section.errors.full_messages,  field:@field.errors.full_messages}, data: {section: section, field: @field}}
+        render json: {error: {section: @section.errors.full_messages,  field:@field.errors.full_messages}, data: {section: section.as_json(except: [:created_at, :updated_at]), field: @field.as_json(except: [:created_at, :updated_at])}}
       end
 
     rescue ActionController::ParameterMissing => e
@@ -223,7 +229,7 @@ class API::MuseumsController < ApplicationController
       if @section.destroy
         render json:{error: nil, data: "sezione eliminata con success"}
       else
-        render json:{error: @section.errors.full_messages, data: @section}
+        render json:{error: @section.errors.full_messages, data: @section.as_json(except: [:created_at, :updated_at])}
       end
 
     rescue ActionController::ParameterMissing => e
@@ -258,9 +264,9 @@ class API::MuseumsController < ApplicationController
                                           mandatory: false, options: options, option_key: option_key, custom: true)
 
       if @field.save
-        render json: {error: nil, data: @field}
+        render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error: @field.errors.full_messages, data: @field}
+        render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
 
     rescue ActionController::ParameterMissing => e
@@ -282,9 +288,9 @@ class API::MuseumsController < ApplicationController
 
 
       if @field.destroy
-        render json: {error: nil, data: @field}
+        render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error: @field.errors.full_messages, data: @field}
+        render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
 
     rescue ActionController::ParameterMissing => e
@@ -293,6 +299,7 @@ class API::MuseumsController < ApplicationController
       render json:{error: e.message, data: nil}
     end
   end
+
   def setFieldDetails
     begin
       catalog=params.require :catalog
@@ -305,9 +312,9 @@ class API::MuseumsController < ApplicationController
       @field=MuseumField.find(@field.id)
       @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key))
       if @field.save
-        render json: {error: nil, data: @field}
+        render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error: @field.errors.full_messages, data: @field}
+        render json: {error: @field.errors.full_messages, data: @field.as_json(except: [:created_at, :updated_at])}
       end
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}

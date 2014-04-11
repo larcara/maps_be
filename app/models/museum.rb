@@ -32,7 +32,7 @@ class Museum < ActiveRecord::Base
     self.logo=image.url if self.image && self.image_file_name
   end
 def sections(catalog="default")
-  museum_sections.where(form_name: catalog).select(:section_name, :section_label).distinct.map{|x| [x.section_name,x.section_label]}
+  museum_sections.where(form_name: catalog)
 end
 
 def catalog(catalog="default")
@@ -75,11 +75,11 @@ def initMuseum(catalog="default")
 end
 
 def  section_fields(section_name, form_name='default')
-  section=museum_sections.where(form_name: form_name,section_name: section_name).first
-  if section
-    return section.museum_fields
+
+  if section_name=="*"
+    museum_fields(form_name)
   else
-    return false
+    museum_fields(form_name,section_name)
   end
 end
 
