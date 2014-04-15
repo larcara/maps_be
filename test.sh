@@ -6,7 +6,6 @@ curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/js
 echo
 read -e -p "Copy auth_token to contnue: " -i "YyYxrgKHcdHiPyeknU9L" auth_token
 
-
 clear
 
 echo "##### CONFIG API:"
@@ -38,7 +37,7 @@ curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -
 echo;echo;echo   "Start createUser ##############################"
 curl  -s http://127.0.0.1:3000/api/museums/createUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"test@nomail.com", "password":"password", "role":"operatore"}}'
 echo;echo;echo  "Start updateUser ##############################"
-curl  -s http://127.0.0.1:3000/api/museums/updateUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"test@nomail.com" , "role":"amministratore"}}'
+curl  -s http://127.0.0.1:3000/api/museums/updateUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"id":18, "email":"test@nomail.com" , "role":"amministratore"}}'
 echo;echo;echo  "Start getUsers ##############################"
 curl  -s http://127.0.0.1:3000/api/museums/getUsers?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{}'
 echo;echo;echo  "Start destroyUser ##############################"

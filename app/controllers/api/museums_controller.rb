@@ -41,17 +41,21 @@ class API::MuseumsController < ApplicationController
   end
   def updateUser
     begin
-      p=params.require(:user).permit(:email,:password,:role)
-      email=p.require :email
+      raise "utente non abilitato " unless @user.is_admin?
+      p=params.require(:user).permit(:id,:email,:password,:role)
+      id=p.require :id
       password=p[:password].presence
       role=p[:role].presence
-      @new_user= @museum.users.where(email:email).first
+      @new_user= @museum.users.find(id)
+
       @new_user.update_attributes(p)
       if @new_user.save
         render json: {error: nil, data: @new_user.as_json(except: [:created_at, :updated_at])}
       else
         render json: {error:@new_user.errors, data: @new_user.as_json(except: [:created_at, :updated_at])}
       end
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "l'id specificatonon è valido", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s.message}, data: nil}
     rescue  RuntimeError => e
