@@ -12,7 +12,7 @@ class API::MuseumsController < ApplicationController
 
   def createUser
     begin
-    p=params.require(:user).permit(:email,:password,:role)
+    p=params.require(:user).permit(:email,:password,:role,:nome, :cognome, :titolo_di_studio, :facolta, :nascita_data, :nascita_luogo, :residenza_indirizzo, :residenza_citta, :telefono)
     email=p.require :email
     password=p.require :password
     role=p.require :role
@@ -41,12 +41,17 @@ class API::MuseumsController < ApplicationController
   end
   def updateUser
     begin
-      raise "utente non abilitato " unless @user.is_admin?
-      p=params.require(:user).permit(:id,:email,:password,:role)
+
+
+      p=params.require(:user).permit(:email,:password,:role,:nome, :cognome, :titolo_di_studio, :facolta, :nascita_data, :nascita_luogo, :residenza_indirizzo, :residenza_citta, :telefono)
       id=p.require :id
+
       password=p[:password].presence
       role=p[:role].presence
+
       @new_user= @museum.users.find(id)
+
+      raise "utente non abilitato " unless @user.is_admin? ||  @new_user.id === @user.id
 
       @new_user.update_attributes(p)
       if @new_user.save
@@ -115,7 +120,7 @@ class API::MuseumsController < ApplicationController
   end
   def setMuseumData
     begin
-      data=params.require(:museum).permit(:museo_id,:name,:city,:address,:telephone,:logo,:website)
+      data=params.require(:museum).permit(:museo_id,:name,:city,:address,:telephone,:logo,:website, :curatore, :edificio, :fax, :email, :orario, :descrizione)
       image=params.fetch :image, nil
       delete_image=params.fetch :delete_image, false
 

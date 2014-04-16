@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140411125655) do
+ActiveRecord::Schema.define(version: 20140416070657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -440,6 +440,12 @@ ActiveRecord::Schema.define(version: 20140411125655) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "curatore"
+    t.string   "edificio"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "orario"
+    t.string   "descrizione"
   end
 
   create_table "options", force: true do |t|
@@ -479,6 +485,15 @@ ActiveRecord::Schema.define(version: 20140411125655) do
     t.integer  "museum_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nome"
+    t.string   "cognome"
+    t.string   "titolo_di_studio"
+    t.string   "facolta"
+    t.date     "nascita_data"
+    t.string   "nascita_luogo"
+    t.string   "residenza_indirizzo"
+    t.string   "residenza_citta"
+    t.string   "telefono"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
