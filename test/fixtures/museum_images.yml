@@ -7,6 +7,7 @@
 #  label              :string(255)
 #  link               :string(255)
 #  num_prog           :integer
+#  tipologia          :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #  image_file_name    :string(255)

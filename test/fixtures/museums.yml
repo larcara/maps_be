@@ -2,16 +2,26 @@
 #
 # Table name: museums
 #
-#  id         :integer          not null, primary key
-#  museo_id   :string(255)
-#  name       :string(255)
-#  city       :string(255)
-#  address    :string(255)
-#  telephone  :string(255)
-#  logo       :string(255)
-#  website    :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer          not null, primary key
+#  museo_id           :string(255)
+#  name               :string(255)
+#  city               :string(255)
+#  address            :string(255)
+#  telephone          :string(255)
+#  logo               :string(255)
+#  website            :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
+#  curatore           :string(255)
+#  edificio           :string(255)
+#  fax                :string(255)
+#  email              :string(255)
+#  orario             :string(255)
+#  descrizione        :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

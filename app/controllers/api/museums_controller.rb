@@ -156,7 +156,13 @@ class API::MuseumsController < ApplicationController
     begin
       params.require(:catalog)
       catalog=params[:catalog].presence
+      filter=params[:filter].presence
+
       @sections=@museum.sections(catalog)
+      if filter
+        @sections=@sections.search(filter).result()
+      end
+
       render json: {error: nil, data: @sections.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}

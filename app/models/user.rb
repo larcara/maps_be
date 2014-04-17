@@ -18,6 +18,15 @@
 #  museum_id              :integer
 #  created_at             :datetime
 #  updated_at             :datetime
+#  nome                   :string(255)
+#  cognome                :string(255)
+#  titolo_di_studio       :string(255)
+#  facolta                :string(255)
+#  nascita_data           :date
+#  nascita_luogo          :string(255)
+#  residenza_indirizzo    :string(255)
+#  residenza_citta        :string(255)
+#  telefono               :string(255)
 #
 
 class User < ActiveRecord::Base
