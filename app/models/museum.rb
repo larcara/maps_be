@@ -57,19 +57,20 @@ def availables_custom_fields(catalog="default")
 
   free_custom_fields
 end
+
 def initMuseum(catalog="default")
   return if self.museum_sections.where(form_name: catalog).count > 0
 
   CardTemplateField.enabled.each do |t|
     attrib=t.attributes.clone
     attrib.delete("id")
-    self.museum_sections.find_or_initialize_by(form_name: catalog, section_name: attrib.delete("section_name")) do |section|
-      section.section_label=attrib.delete("section_label")
-      section.custom=false
-      section.visible=true
-      f=section.museum_fields.build( attrib)
-      f.card_template_field_id=t.id
-    end
+    section = self.museum_sections.find_or_initialize_by(form_name: catalog, section_name: attrib.delete("section_name"))
+    section.section_label=attrib.delete("section_label")
+    section.custom=false
+    section.visible=true
+    section.save
+    f=section.museum_fields.build( attrib)
+    f.card_template_field_id=t.id
 
   end
   self.save
