@@ -28,7 +28,16 @@ class MuseumField < ActiveRecord::Base
   belongs_to :museum_section
   scope :custom_fields , -> { where(custom: true)}
 
-  #belongs_to :template_field
+  belongs_to :template_field
+  def field_name
+    template_field.field_name
+  end
+
+  def as_json(options = { })
+    h = super(options)
+    h[:field_name]   = field_name if field_name
+    h
+  end
   #def sections(section_name, form_name='default')
   #  self.museum_section.where(form_name: form_name,section_name: section_name)
   #end

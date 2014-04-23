@@ -7,7 +7,6 @@ echo
 read -e -p "Copy auth_token to contnue: " -i "PGh_tZsJbiJ_PR6Z-rAM" auth_token
 
 
-
 clear
 
 echo "##### CONFIG API:"

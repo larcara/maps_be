@@ -16,6 +16,7 @@ class TemplateField < ActiveRecord::Base
 
 
   has_many :card_template_fields
+  has_many :museum_fields
 
   scope :custom_fields , -> { where(custom: true)}
   #has_many :museum_fields
