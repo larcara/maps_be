@@ -29,5 +29,21 @@ namespace :maps do
     f.close
 
   end
+  desc "export da CARDS"
+  task :export => :environment do
+    f=File.open("db/card2.rb", "w")
+    f.write("# encoding: UTF-8\r\n")
+    Card.where("1=1").each do |s|
+        attrs=s.attributes.dup
+        attrs_final={}
+        attrs.each do |k,v|
+          attrs_final[k.to_s.downcase.to_sym]=v unless v.blank?
+        end
+        f.write("Card.create(#{attrs_final})\r\n")
+      end
+
+    f.close
+
+  end
 
 end

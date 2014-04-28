@@ -43,7 +43,7 @@ class API::MuseumsController < ApplicationController
     begin
 
 
-      p=params.require(:user).permit(:email,:password,:role,:nome, :cognome, :titolo_di_studio, :facolta, :nascita_data, :nascita_luogo, :residenza_indirizzo, :residenza_citta, :telefono)
+      p=params.require(:user).permit(:id,:email,:password,:role,:nome, :cognome, :titolo_di_studio, :facolta, :nascita_data, :nascita_luogo, :residenza_indirizzo, :residenza_citta, :telefono)
       id=p.require :id
 
       password=p[:password].presence
@@ -193,7 +193,7 @@ class API::MuseumsController < ApplicationController
     begin
       catalog=params.require :catalog
       section=params.require :section
-      data=params.require(:data).permit(:section_label, :visible)
+      data=params.require(:data).permit(:section_label, :visible, :position)
       @section=@museum.museum_sections.where(form_name: catalog, section_name: section).first
       raise "Sezione non disponibile nel catalogo indicato" if @section.blank?
 
@@ -215,17 +215,16 @@ class API::MuseumsController < ApplicationController
     begin
       catalog=params.require :catalog
       section=params.require :section
-      field=@museum.availables_custom_fields.first
+      #field=@museum.availables_custom_fields.first
 
-      raise "non ci sono campi custom disponibili" if field.blank?
+      #raise "non ci sono campi custom disponibili" if field.blank?
       raise "il nome della sezione e' già utilizzato " if @museum.sections(catalog).flatten.include? (section)
       @section=@museum.museum_sections.build(form_name: catalog, section_name: section, section_label: section, custom: true, visible:true)
-      @field=@section.museum_fields.build(template_field_id:field.id , label:field.field_label,
-                                          enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom:true)
+      #@field=@section.museum_fields.build(template_field_id:field.id , label:field.field_label,enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom:true)
       if @section.save
-        render json: {error: nil, data: {section: section, field: @field.as_json(except: [:created_at, :updated_at])}}
+        render json: {error: nil, data: section}
       else
-        render json: {error: {section: @section.errors.full_messages,  field:@field.errors.full_messages}, data: {section: section.as_json(except: [:created_at, :updated_at]), field: @field.as_json(except: [:created_at, :updated_at])}}
+        render json: {error: @section.errors.full_messages, data: section.as_json(except: [:created_at, :updated_at])}
       end
 
     rescue ActionController::ParameterMissing => e

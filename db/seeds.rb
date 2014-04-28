@@ -182,18 +182,5 @@ User.create(email: "larcara+m2@gmail.com", password: "password", museum_id:2, ro
 Museum.find(1).initMuseum
 Museum.find(2).initMuseum
 
-load 'db/card.rb'
+load 'db/card2.rb'
 load 'db/images.rb'
-
-Card.first.museum_images.create(label: "test", link:"test")
-#  position      :integer
-#  enabled       :boolean
-#  created_at    :datetime
-#  updated_at    :datetime
-
-#  address    :string(255)
-#  telephone  :string(255)
-#  logo       :string(255)
-#  website    :string(255)
-#  created_at :datetime
-#  updated_at :datetime)
