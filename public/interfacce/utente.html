@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<html>
+ <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  <title>login Museo</title>
+  	<!-- Fogli di stile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+ 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  
+  
+  
+  <style type="text/css">
+  body,td,th {
+	color: #999999;
+}
+  </style>
+  
+  
+  <!-- Modernizr -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+ <script>
+     var modify = false;
+
+     function urlParams(name){
+         var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+         if (!results) {
+             return 0;
+         }
+         return results[1] || 0;
+     };
+
+     function mail(){
+         var id = urlParams('id');
+         if(id>0){
+             modify=true;
+             modifyUser(id);
+         }else{
+             modify=false;
+         }
+     }
+
+     function vai(mail,id){
+         onload(location.href='utente.html?key=' + urlParams('key')+'&mail='+mail+'&id='+id);
+     }
+
+     function createUser(){
+         $.ajax({
+         type: "POST",
+         url: "/api/museums/createUser",
+         data:{auth_token:urlParams('key'),user:{nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo").val(),
+             facolta:$("#facolta").val(), nascita_data:$("#bday").val(),nascita_luogo:$("#luogo").val(),
+             residenza_citta:$("#citta").val(), residenza_indirizzo:$("#indirizzo").val(),telefono:$("#telefono").val(),
+             email:$("#email").val(), password:$("#password").val(),role:$("#role").val()}},
+         dataType: "json",
+         success: function(data){//alert(data.error);
+                 alert("inserito");
+             onload(location.href='utente.html?key=' + urlParams('key'));
+         },
+         error: function(data){
+            // alert(JSON.stringify(data));
+             alert("Chiamata fallita, si prega di riprovare...");
+            // alert(data.error);
+             //alert(JSON.stringify(data));
+         }
+     });
+
+     }
+
+     function showUsers(){
+
+         $.ajax({
+             type: "GET",
+             url: "/api/museums/getUsers",
+             data:{auth_token:urlParams('key')},
+             dataType: "json",
+             success: function(data){
+	     	if(data.error !=null){
+		//alert(data.error);
+		}
+		else{	
+		var fields = '';
+                 $.each(data.data,
+                         function (i, object) {
+                            fields += "<tr><td id='nome"+i+"'>"+object.nome + "</td>";
+                            fields += "<td id='cognome"+i+"'>"+object.cognome + "</td>";
+                            fields += "<td id='bday"+i+"'>"+object.bday + "</td>";
+                            fields += "<td id='telefono"+i+"'>"+object.telefono + "</td>";
+                            fields += "<td id='email"+i+"'>"+object.email + "</td>";
+                            fields += "<td id='role"+i+"'>"+object.role + "</td>";
+                            fields += "<td align= 'center'><a href='#' onclick='vai("+ JSON.stringify(object.email) + "," + JSON.stringify(object.id) +")'><span class='glyphicon glyphicon-pencil'></span></a>";
+                            fields += "<td align= 'center'><a href='#' onclick='removeUser("+ JSON.stringify(object.email) +")'><span class='glyphicon glyphicon-remove'></span></a>";
+                            fields +="</tr>";
+
+
+                         }
+                 );
+
+                 $('#tabella').html(fields);}},
+
+             error: function(){
+                 alert("Chiamata fallita, si prega di riprovare...");}
+			         
+	});
+	
+     }
+
+     function removeUser(mail){
+         $.ajax({
+             type: "POST",
+             url: "/api/museums/destroyUser",
+             data:{auth_token:urlParams('key'), user:{email:mail, confirm_email:mail}},
+             dataType: "json",
+             success: function(data){//alert(data.error);
+                 alert(mail+" è stato eliminato");
+                 showUsers();
+             },
+             error: function(){
+                 alert("Chiamata fallita, si prega di riprovare...");}
+         });
+     }
+
+     function modifyUser(id){
+         $.ajax({
+             type: "GET",
+             url: "/api/museums/getUsers",
+             data:{auth_token:urlParams('key')},
+             dataType: "json",
+             success: function(data){
+
+                    $.each(data.data, function (i, object) {
+                        if(object.id==id){
+
+                            $.each(object, function (j,value) {
+
+                                $('#'+j).val(value);
+                            });
+                        }
+                    });
+                // alert($('#id').val());
+             },
+             error: function(){
+                alert("Chiamata fallita, si prega di riprovare...");
+             }
+         });
+     }
+
+     function modifyUser2(){
+         var idUt = $('#id').val();
+         $.ajax({
+             type: "POST",
+             url: "/api/museums/updateUser",
+             data:{auth_token:urlParams('key'),user:{id: idUt, nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo").val(),
+                 facolta:$("#facolta").val(), nascita_data:$("#bday").val(),nascita_luogo:$("#luogo").val(),
+                 residenza_citta:$("#citta").val(), residenza_indirizzo:$("#indirizzo").val(),telefono:$("#telefono").val(),
+                 email:$("#email").val(), password:$("#password").val(),role:$("#role").val()}},
+             dataType: "json",
+             success: function(data){
+                 alert("L'utente è stato modificato");
+                 //location.href="utente.html?key="+urlParams('key');
+                 //modify=false;
+             },
+             error: function(data){
+                // alert(JSON.stringify(data));
+                 alert("Chiamata fallita, si prega di riprovare...");
+             }
+         });
+     }
+
+ </script>
+
+
+ </head>
+ <body onload="mail()">
+ <div class="containermuseum">
+
+  <img src="images/banner.jpg" class="img-responsive">
+  
+  <div class="lineb"></div>
+  <div class="linec"></div>
+  
+   <!-- inizio  menu mobile -->
+   <!-- visible-xs  -->
+
+    <div class="btn-group visible-xs">
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
+            <li><a href="#tab2" data-toggle="tab">Lista</a></li>
+        </ul>
+    </div>
+   
+  
+  
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav nav-tabs hidden-xs">
+    	<li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
+    	<li><a href="#tab2" data-toggle="tab" onclick="showUsers()">Lista Utenti</a></li>
+    </ul>
+  
+     
+     	<div class="col-lg-10">
+     	</div>
+     	<div class="col-lg-2" style="top:-25px; position:relative" align="right">
+        	<a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    	</div>
+   
+        
+     <div class="tab-content">
+    	<div class="tab-pane active" id="tab1">
+           <p>
+		   
+			<div class="well well-large">
+			
+
+
+	      <div class="form-group">
+          	
+	       		<div class="row">
+                <div class="col-sm-5 col-lg-5">
+                    <p class="testotext">Inserisci nome</p>
+                <div style="margin-bottom: 25px" class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                	<input type="text" class="form-control" id="nome" placeholder="Inserisci nome">
+                	<input type="hidden" class="form-control" id="id">
+             	</div>
+                </div>
+            	</div>   
+	      </div>
+	      <div class="form-group">
+	       		<div class="row">
+                <div class="col-sm-5 col-lg-5">
+                    <p class="testotext">Inserisci cognome</p>
+                <div style="margin-bottom: 25px" class="input-group">
+	       			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	       			<input type="text" class="form-control" id="cognome" placeholder="Inserisci cognome">
+             	</div>
+                </div>
+                </div>
+	      </div>
+          <div class="form-group">
+	       		<div class="row">
+                <div class="col-sm-5 col-lg-5">
+                    <p class="testotext">Inserisci titolo di studio</p>
+                <div style="margin-bottom: 25px" class="input-group">
+	       			<span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+	       			<input type="text" class="form-control" id="titolo" placeholder="Inserisci titolo di studio">
+             	</div>
+                </div>
+                </div>
+	      </div>
+          <div class="form-group">
+	       	
+	       		<div class="row">
+                <div class="col-sm-5 col-lg-5">
+                    <p class="testotext">Inserisci la facoltà</p>
+                <div style="margin-bottom: 25px" class="input-group">
+                	<span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+	       			<input type="text" class="form-control" id="facolta" placeholder="Inserisci la facoltà">
+             	</div>
+                </div>
+                </div>
+	      </div>
+          <div class="form-group">               
+                	<div class="row">
+                    <div class="col-sm-2 col-lg-2">
+                        <p class="testotext">Data di nascita</p>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input id="bday" type="date" class="form-control" >
+                    </div>
+                    </div>
+                    </div>
+
+            </div>
+          
+	      <div class="form-group">
+	       <div class="row">
+           <div class="col-sm-5 col-lg-5">
+               <p class="testotext">Inserisci luogo di nascita</p>
+           <div style="margin-bottom: 25px" class="input-group">
+	       		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+	      		<input type="text" class="form-control" id="luogo" placeholder="Inserisci luogo di nascita">
+	       </div>
+           </div>
+           </div> 
+          </div>
+          
+	      <div class="form-group">
+	       	<div class="row">
+            <div class="col-sm-5 col-lg-5">
+                <p class="testotext">Inserisci città di residenza</p>
+            <div style="margin-bottom: 25px" class="input-group">
+	       		<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	       		<input type="text" class="form-control" id="citta" placeholder="Inserisci città di residenza">
+		   </div>
+           </div>
+           </div>		      
+          </div>
+          
+           <div class="form-group">
+	       	<div class="row">
+            <div class="col-sm-5 col-lg-5">
+                <p class="testotext">Inserisci indirizzo di residenza</p>
+            <div style="margin-bottom: 25px" class="input-group">
+	       		<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	       		<input type="text" class="form-control" id="indirizzo" placeholder="Inserisci indirizzo di residenza">
+		   	</div>
+            </div>
+            </div>		      
+          </div>
+          
+	       <div class="form-group">
+	       	<div class="row">
+            <div class="col-sm-5 col-lg-5">
+                <p class="testotext">Inserisci telefono</p>
+            <div style="margin-bottom: 25px" class="input-group">
+	       		<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+	       		<input type="text" class="form-control" id="telefono" placeholder="Inserisci telefono">
+            </div>
+            </div>
+            </div>
+	      </div>
+          
+          <div class="form-group">
+	       	<div class="row">
+            <div class="col-sm-5 col-lg-5">
+                <p class="testotext">Inserisci indirizzo mail</p>
+            <div style="margin-bottom: 25px" class="input-group">
+	       		<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+	       		<input type="text" class="form-control" id="email" placeholder="Inserisci indirizzo mail">
+            </div>
+            </div>
+            </div>
+	      </div>
+
+             <div class="form-group">
+                 <div class="row">
+                     <div class="col-sm-5 col-lg-5">
+                         <p class="testotext">Inserisci password</p>
+                         <div style="margin-bottom: 25px" class="input-group">
+                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                             <input type="text" class="form-control" id="password" placeholder="Inserisci password">
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+            <div class="form-group" >
+                <div class="row">
+                    <div class="col-sm-5 col-lg-5">
+                        <select class="form-control" id="role">
+                            <option value="operatore">Operatore</option>
+                            <option value="operatore_base">Operatore base</option>
+                            <option value="amministratore">Amministratore</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-7 col-lg-7">
+                    *L'amministratore può compiere tutte le azioni previste dal software.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7 col-lg-7">
+                    *L'operatore è abilitato a compiere le azioni previste nella sezione reperto.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7 col-lg-7">
+                    *L'operatore base può inserire un nuovo reperto senza abilitare la scheda.
+                </div>
+            </div>
+           <br>
+
+	      <button type="button" class="btn btn-primary " onclick="javascript: if(modify==true){modifyUser2();}else{createUser();}">Submit</button>
+
+
+		   
+	   </div>
+	 </p>
+            
+      </div><!-- /tab1 -->
+           
+<div class="tab-pane" id="tab2">
+       
+   <p>
+    <div class="table-responsive">
+  		<table class="table table-striped">
+	   		<thead><strong><tr><td><strong>Nome</strong></td><td><strong>Cognome</strong></td><td><strong>Data di Nascita</strong></td><td><strong>Telefono</strong></td>
+                <td><strong>Email</strong></td><td><strong>Permesso</strong></td></strong><td align="center"><strong >Modifica</strong></td><td align="center"><strong>Elimina</strong></td></tr></thead>
+            <tbody id="tabella">
+
+
+            <!--<tr><td colspan='8'><a class='testol' href='#' onclick="javascript: location.href='utente.html?key='+ urlParams('key') ">Nuovo Utente</a></td></tr>-->
+		</tbody></table>
+	</div>
+  </p>
+       
+       
+</div><!-- /tab2 -->   		
+    		
+
+    		
+ </div>
+ </div>
+ <div><!-- fine class="container" -->
+ 
+ <!-- jQuery e plugin JavaScript  -->
+
+</body>
+</html>

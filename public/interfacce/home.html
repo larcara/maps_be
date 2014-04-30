@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<html>
+ <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <title>Home</title>
+	<!-- Fogli di stile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+ 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
+
+    <script>
+        function urlParams(name){
+            var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (!results) {
+                return 0;
+            }
+            return results[1] || 0;
+        };
+        var nome;
+        function nomeMuseo(){
+
+            $.ajax({
+                type: "GET",
+                url: "/api/museums/getMuseumData",
+                data:{ auth_token: urlParams('key')},
+                dataType: "json",
+                success: function(data){
+                    nome = data.data.name;
+                    scrivi();
+                },
+                error: function(){
+                    alert("Chiamata fallita, si prega di riprovare...");}
+            });
+            scrivi();
+        };
+
+        function scrivi(){
+            var f='<strong><label style="font-size:25px; color:#781C27; font-family: Arial Black, Gadget, sans-serif">'+nome+'</label></strong>';
+            $('#mus').html(f);
+        };
+
+        function getMuseum(){$.ajax({
+            type: "GET",
+            url: "/api/museums/getMuseumData",
+            data:{ auth_token: urlParams('key')},
+            dataType: "json",
+            success: function(data){//alert(data.error);
+                var fields = '';
+                $.each(data.data, function (i, object) {
+                    $('#'+i).val(object);
+                });
+            },
+            error: function(){
+                alert("Chiamata fallita, si prega di riprovare...");}
+        });
+        };
+    </script>
+    
+</head>
+<body onload="nomeMuseo()">
+  <div class="containermuseum">
+    <img src="images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+    <div class="linec"></div>
+    <p>
+    <div class="well well-lg">
+    	<div class="row">
+ 			
+            <div class="col-sm-4">
+                <div class="img-responsive">
+                </div>
+ 			</div>
+		  	
+            <div class="col-sm-4">
+                <div align="center" id="mus">
+
+                </div>
+                <div align="center">
+                    <em><label style="font-size:12px; color:#781C27; font-family:Georgia, 'Times New Roman', Times, serif" onclick="scrivi()">Catalog Management</label></em>
+                </div>
+                <div style="line-height:10px">
+                        	&nbsp;
+            	</div> 
+       			<ul class="nav nav-pills nav-stacked" style="text-align:center;" >
+                    <li class="active"><a href="#" onclick="javascript: location.href='museo.html?key=' + urlParams('key')">MUSEO</a></li>
+                </ul>
+                <div style="line-height:5px">
+                        	&nbsp;
+            	</div> 
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='utente.html?key=' + urlParams('key')">GESTIONE UTENTI</a></li>
+                </ul>
+                <div style="line-height:5px">
+                        	&nbsp;
+            	</div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='stampa.html?key=' + urlParams('key')">CONFIGURAZIONE STAMPE</a></li>
+                </ul>
+                <div style="line-height:5px">
+                        	&nbsp;
+            	</div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='reperti.html?key=' + urlParams('key')">GESTIONE REPERTI</a></li>
+                </ul>
+                <div style="line-height:5px">
+                        	&nbsp;
+            	</div>  
+            </div>
+ 			
+            <div class="col-sm-4">
+  
+ 			</div>
+	    </div>  
+    	
+     </div>
+    </p> 
+  </div>
+
+<!-- jQuery e plugin JavaScript  -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

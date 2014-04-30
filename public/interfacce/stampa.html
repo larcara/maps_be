@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html>
+ 
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+<title>Stampe</title>
+<!-- Fogli di stile -->
+<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/museo.css" rel="stylesheet" media="screen">
+
+<!-- Modernizr -->
+<script src="js/modernizr.custom.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#flip1c").click(function(){$("#panel1c").slideToggle("fast");});
+	$("#flip2c").click(function(){$("#panel2c").slideToggle("fast");});
+
+});
+</script>
+</head>
+
+<body>
+<div class="containermuseum">
+
+<img src="images/banner.jpg" class="img-responsive">
+<div class="lineb"></div>
+<div class="linec"></div>
+
+<p>	 
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav responsive nav-tabs">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Configurazione</a></li>
+        <li><a href="#tab_2" data-toggle="tab">Anteprima</a></li>
+    </ul>
+    
+     	<div class="col-lg-10">
+     	</div>
+     	<div class="col-lg-2" style="top:-25px; position:relative"; align="right">		
+        	<a class="testol" href="home.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    	</div>
+        
+    <div c<div class="tab-pane active" id="tab_1">
+    <p>
+        <div class="well well-lg">
+        <div style="line-height:20px">
+           	&nbsp;
+        </div>
+        	<div class="row">
+            	<div class="col-sm-6">
+                	<div class="row">
+                		<div class="col-sm-6">
+							<label style="color: #781C27;">
+                            <input type="radio" id="cartellino" name="conf" checked="checked">
+                            Configurazione cartellino
+                            </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="color: #781C27;">
+                            <input type="radio" id="etichetta" name="conf">
+                            Configurazione etichetta
+                            </label>
+                		</div>
+                	</div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="row">
+            	<div class="col-sm-6">
+                		<div class="form-group" >
+            				<div class="flip" id="flip1c" >
+            					<label style="font-weight: normal; color: #781C27;" >Dati Descrittivi</label>
+	                        </div>
+                        </div>
+            
+            			<div class="form-group" >
+            				<div class="panel1" id="panel1c">
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" id="c_codice_reperto" value="">
+                                    Codice reperto
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" id="c_inventario" value="">
+                                    Codice inventario
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" id="c_nome_reperto" value="">
+                                    Nome reperto
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" id="c_descrizione" value="">
+                                    Descrizione
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" id="c_stato_reperto" value="">
+                                    Stato reperto
+                                    </label>
+                            	</div>
+                 
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_note_reperto" value="">
+                                Note reperto
+                                </label>
+                             </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_costruttore"value="">
+                                Costruttore
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_originale" value="">
+                                Originale
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_pos_originale" value="">
+                                Posizione originale
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_collezioni" value="">
+                                Collezioni
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_restauri" value="">
+                                Restauri
+                                </label>
+                             </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_materiale" value="">
+                                Materiale
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_tecnica" value="">
+                                Tecnica di lavorazione
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_data_ass" value="">
+                                Datazione assoluta
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_disponibilita" value="">
+                                Disponibilità
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_gruppo" value="">
+                                Gruppo
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_classe" value="">
+                                Classe
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_sottoclasse" value="">
+                                Sottoclasse
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_specie" value="">
+                                Specie
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_tipo" value="">
+                                Tipo
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_fornitore" value="">
+                                Fornitore
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_campione" value="">
+                                Numero Campione
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_valore" value="">
+                                Valore economico
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_pseudo" value="">
+                                Pseudomorfosi
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_gemin" value="">
+                                Geminazione
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_zona" value="">
+                                Zonatura
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_fosfo" value="">
+                                Fosforescenza
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_fluor" value="">
+                                Fluorescenza
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_radioatt" value="">
+                                Valore radioattività
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_magne" value="">
+                                Magnetismo
+                                </label>
+                            </div>
+                             <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_bin1" value="">
+                                Binomio1
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_bin2" value="">
+                                Binomio2
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_bin3" value="">
+                                Binomio3
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_bin3" value="">
+                                Binomio4
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_bin4" value="">
+                                Famiglia
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_genere" value="">
+                                Genere
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_gruppo" value="">
+                                Grupppo
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Numero fogli
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                            <button type="submit" class="btn btn-primary ">Submit</button>
+                            </div>
+                        </div>
+                        </div>
+                      
+                </div>
+            </div>
+
+			<div class="row">
+            	<div class="col-sm-6">
+					<div class="form-group" >
+                        <div class="flip" id="flip2c" >
+                        <label style="font-weight: normal; color: #781C27;">Datazione</label></div>
+                        </div>
+                        <div class="form-group" >
+                        <div class="panel1" id="panel2c">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_epoca" value="">
+                                Epoca
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Datazione
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Data d'ingresso
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Data di ritrovamento/raccolta
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Da anno
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                A anno
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" id="c_num_fogli" value="">
+                                Datazione assoluta
+                                </label>
+                            </div>
+                            <div class="form-group">
+                            <button type="submit" class="btn btn-primary ">Submit</button>
+                            </div>
+                        
+                        </div>
+                        </div><!-- Datazione -->
+			 	</div>
+            </div>
+        </div>    
+	</div>
+    
+    </div>
+</p>
+<body>
+</body>
+</html>

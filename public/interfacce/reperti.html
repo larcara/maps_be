@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Gestione reperti</title>
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+    <script>
+        function urlParams(name){
+            var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (!results) {
+                return 0;
+            }
+            return results[1] || 0;
+        };
+    </script>
+
+</head>
+<body>
+<div class="containermuseum">
+    <img src="images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+    <div class="linec"></div>
+    <br>
+    <div class="col-lg-10">
+    </div>
+    <div class="col-lg-2" style="top:-25px; position:relative" align="right">
+        <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    </div>
+    <div class="well well-lg">
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="img-responsive">
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div align="center">
+                    <strong><label style="font-size:25px; color:#781C27; font-family: 'Arial Black', Gadget, sans-serif">Menù reperto</label></strong>
+                    <br>
+                </div>
+                <div style="line-height:10px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;" >
+                    <li class="active"><a href="#" onclick="javascript: location.href='reperto.html?key=' + urlParams('key')">REPERTO</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='reperto.html?key=' + urlParams('key')">MODIFICA</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='reperto.html?key=' + urlParams('key')">RICERCA AVANZATA</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+
+    </div>
+    </p>
+</div>
+
+<!-- jQuery e plugin JavaScript  -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
