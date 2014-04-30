@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.4'
 gem 'activeadmin', github: 'gregbell/active_admin'
 #gem 'pg'
-gem "mysql"
+#gem "mysql"
+gem 'sqlite3'
 gem 'haml-rails'
 gem 'devise'
 gem "paperclip", "~> 4.1"
