@@ -48,6 +48,6 @@ end
 # gem 'capistrano', group: :development
 gem 'annotate', group: :development
 gem 'seed_dump', group: :development
-
+gem "thin"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
