@@ -2,49 +2,48 @@ class CreateCards < ActiveRecord::Migration
   def change
     create_table :cards do |t|
       t.integer :museum_id,  null: false
-      t.string :colore
-      t.string :descrizione
-      t.string :oggetto
-      t.string :id_codscheda,  null: false
+      t.string :colore, limit: 50
+      t.text :descrizione
+      t.text :oggetto
+      t.string :id_codscheda,  null: false, limit: 50
       t.string :abito
-      t.string :ad_cristo
-      t.float  :altezza
+      t.string :ad_cristo, limit: 50
+      t.float  :altezza, limit: 50
       t.string :altra_categoria
       t.string :altra_def_oggetto
-      t.string :altro_cod
-      t.string :biblio_foto
+      t.string :altro_cod, limit: 50
+      t.string :biblio_foto, limit: 50
       t.string :bibliografia
       t.string :binomio1
       t.string :binomio2
       t.string :binomio3
       t.string :binomio4
-      t.string :capacita
-      t.string :cassettiera
+      t.string :capacita, limit: 50
+      t.string :cassettiera, limit: 50
       t.string :categoria_pricipale
-      t.string :circonferenza
+      t.string :circonferenza, limit: 50
       t.string :classe
-      t.string :cod_univoco_scavo_iccd
-      t.string :id_univoco_reperto
-      t.string :id_num_inventario
+      t.string :cod_univoco_scavo_iccd, limit: 50
+      t.string :id_univoco_reperto, limit: 50
+      t.string :id_num_inventario, limit: 50
       t.string :collocazione_opera_finale
-      t.string :colore
-      t.string :coloreb
-      t.string :coloreg
-      t.string :colorer
+      t.string :coloreb, limit: 5
+      t.string :coloreg, limit: 5
+      t.string :colorer, limit: 5
       t.string :contesto_ritrovamento
       t.string :continente
-      t.string :coor_asse_x
-      t.string :coor_asse_y
+      t.string :coor_asse_x, limit: 50
+      t.string :coor_asse_y, limit: 50
       t.string :costruttore
       t.string :creato_da
       t.string :cronologia_generica
       t.string :cronologia_uso
       t.string :definizione
-      t.string :denominazione
-      t.string :denominazione_scavo
-      t.string :desc_collocazione
-      t.string :desc_intervento
-      t.string :descrizione
+      t.text :denominazione
+      t.text :denominazione_scavo
+      t.text :desc_collocazione
+      t.text :desc_intervento
+      t.text :descrizione
       t.string :dest_prestito
       t.float :diametro
       t.float :dimensione_base
@@ -52,17 +51,17 @@ class CreateCards < ActiveRecord::Migration
       t.float :dimensionex
       t.float :dimensioney
       t.float :dimensionez
-      t.string :diocesi
+      t.string :diocesi, limit: 50
       t.string :disponibilita
-      t.string :dt_a
-      t.string :dt_acquisizione
-      t.string :dt_assoluta
-      t.string :dt_creazione
-      t.string :dt_da
-      t.string :dt_esatta_acquisizione
-      t.string :dt_modifica
-      t.string :dt_restauro
-      t.string :dt_scavo
+      t.string :dt_a, limit: 20
+      t.string :dt_acquisizione, limit: 20
+      t.string :dt_assoluta, limit: 20
+      t.string :dt_creazione, limit: 20
+      t.string :dt_da, limit: 20
+      t.string :dt_esatta_acquisizione, limit: 20
+      t.string :dt_modifica, limit: 20
+      t.string :dt_restauro, limit: 20
+      t.string :dt_scavo, limit: 20
       t.string :ente_finanziatore_rest
       t.string :ente_responsabile_rest
       t.string :ente_responsabile_scavo
@@ -79,23 +78,23 @@ class CreateCards < ActiveRecord::Migration
       t.boolean :geminato
       t.string :genere
       t.string :gruppo
-      t.string :ingombro
+      t.string :ingombro, limit: 50
       t.string :inprestito
       t.string :larghezza
       t.string :loc_estera
       t.string :localita
       t.string :localita_antica
       t.string :localizz_comune_catasto
-      t.string :lunghezza
+      t.string :lunghezza, limit: 50
       t.string :luogo_acquisizione
       t.boolean :magnetico
       t.string :materia_tecnica
-      t.string :metodo_scavo
-      t.string :mod_conservazione
+      t.string :metodo_scavo, limit: 50
+      t.string :mod_conservazione, limit: 50
       t.string :mod_uso
-      t.string :modificato_da
+      t.string :modificato_da, limit: 50
       t.string :motivo
-      t.string :nazione
+      t.string :nazione, limit: 50
       t.text   :nome_acquisizione
       t.text   :note_acquisizione
       t.text   :note_generiche
@@ -108,42 +107,42 @@ class CreateCards < ActiveRecord::Migration
       t.string :oldstato
       t.string :opera_finale_originale
       t.string :pacco
-      t.string :paese_antico
-      t.string :particelle
+      t.string :paese_antico, limit: 50
+      t.string :particelle, limit: 50
       t.float :peso
       t.string :piano
-      t.string :posizione
+      t.string :posizione, limit: 50
       t.string :potenza
       t.string :profondita
-      t.string :provincia
+      t.string :provincia, limit: 50
       t.boolean :pseudom
-      t.string :quantita
+      t.string :quantita, limit: 50
       t.string :quota
       t.boolean :radio
-      t.string :regione
+      t.string :regione, limit: 50
       t.string :resp_scientifico_scavo
       t.string :restauri
       t.string :ripiano
-      t.string :sala
-      t.string :secolo
+      t.string :sala, limit: 50
+      t.string :secolo, limit: 50
       t.string :sistema
       t.string :sottoclasse
       t.string :specie
       t.string :specifiche_materiale
       t.string :specifiche_scavo
-      t.string :spessore
-      t.string :stato_conservazione
-      t.string :stima
-      t.string :tipo
+      t.string :spessore, limit: 50
+      t.string :stato_conservazione, limit: 50
+      t.string :stima, limit: 50
+      t.string :tipo, limit: 50
       t.string :tipo_acquisizione
-      t.string :unita_misura
+      t.string :unita_misura, limit: 50
       t.string :url_sito_scavo
-      t.string :valida
-      t.string :visibile
-      t.string :zonato
-      t.string :stato
+      t.string :valida, limit: 50
+      t.string :visibile, limit: 50
+      t.string :zonato, limit: 50
+      t.string :stato, limit: 50
       t.boolean :studiato
-      t.string :studio
+      t.string :studio, limit: 50
       t.string :txtspecie
       t.string :txtitalia
       t.string :sinonimi

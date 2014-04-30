@@ -11,6 +11,7 @@
 #  visible       :boolean
 #  created_at    :datetime
 #  updated_at    :datetime
+#  position      :integer
 #
 
 class MuseumSection < ActiveRecord::Base

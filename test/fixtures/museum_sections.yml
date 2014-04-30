@@ -11,6 +11,7 @@
 #  visible       :boolean
 #  created_at    :datetime
 #  updated_at    :datetime
+#  position      :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
