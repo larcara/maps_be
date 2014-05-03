@@ -21,7 +21,7 @@
         }
         function renderFieldSearch(){$.ajax({
             type: "GET",
-            url: "http://127.0.0.1:3000/api/museums/getSectionDetail",
+            url: "/api/museums/getSectionDetail",
             data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
             dataType: "json",
             success: function(data){
@@ -78,7 +78,7 @@
             }
             $.ajax({
             type: "POST",
-                    url: "http://127.0.0.1:3000/api/museums/findCard",
+                    url: "/api/museums/findCard",
                     data:{auth_token: urlParams('key'),filter:objFilter},
             dataType: "json",
                     success: function(data){
