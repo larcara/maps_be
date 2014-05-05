@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 gem 'activeadmin', github: 'gregbell/active_admin'
-#gem 'pg'
+gem 'pg'
 #gem "mysql"
-gem 'sqlite3'
+#gem 'sqlite3'
 gem 'haml-rails'
 gem 'devise'
 gem "paperclip", "~> 4.1"
