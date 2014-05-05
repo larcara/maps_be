@@ -18,8 +18,8 @@ development:
   encoding: unicode
   database: maps_development
   pool: 5
-  username: postgres
-  password: postgres
+  username: maps_usr
+  password: 123acaro136
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -44,8 +44,8 @@ test:
   encoding: unicode
   database: maps_test
   pool: 5
-  username: postgres
-  password: postgres
+  username: maps_usr
+  password: 123acaro136
   host: localhost
   port: 5432
 production:
@@ -53,7 +53,7 @@ production:
   encoding: unicode
   database: maps_production
   pool: 5
-  username: postgres
-  password: postgres
+  username: maps_usr
+  password: 123acaro136
   host: localhost
   port: 5432
