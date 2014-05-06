@@ -8,7 +8,7 @@ namespace :maps do
     f=File.open("db/card.rb", "w")
     f.write("# encoding: UTF-8\r\n")
     Museum.all.each do |m|
-    Scheda.where(idmuseo: m.museo_id).limit(1000).each do |s|
+    Scheda.where(idmuseo: m.museo_id).each do |s|
         attrs=s.attributes.dup
 
         attrs.delete("idmuseo")

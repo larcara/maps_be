@@ -182,5 +182,5 @@ User.create(email: "larcara+m2@gmail.com", password: "password", museum_id:2, ro
 Museum.find(1).initMuseum
 Museum.find(2).initMuseum
 
-load 'db/card2.rb'
+load 'db/card.rb'
 load 'db/images.rb'
