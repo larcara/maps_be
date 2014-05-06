@@ -117,9 +117,13 @@ read -e -p "################## PRESS ENTER KEY TO CONTINUE #####################
 echo;echo;echo  "Start getSections per MOBILE##############################"
 curl -s http://127.0.0.1:3000/api/museums/getSections?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"mobile"}'
 echo;echo;echo  "Start addFieldToSection ##############################"
+curl -s http://127.0.0.1:3000/api/museums/addFieldToSection?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "catalog":"default", "section":"geodati_reperto", "stampa_a":"2", stampa_b:"","position":"3", "options":"test_options", "option_key":"test_option_key", "field_label":"mio campo"}'
+echo;echo;echo  "Start addFieldToSection ##############################"
 curl -s http://127.0.0.1:3000/api/museums/addFieldToSection?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "catalog":"mobile", "section":"nuova_sezione", "position":"3", "options":"test_options", "option_key":"test_option_key", "field_label":"mio campo"}'
 echo;echo;echo  "Start addFieldToSection ##############################"
 curl -s http://127.0.0.1:3000/api/museums/addFieldToSection?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "catalog":"mobile", "section":"nuova_sezione", "position":"3", "options":"test_options", "option_key":"test_option_key", "field_label":"mio campo"}'
+echo;echo;echo  "Start addFieldToSection whit STAMPA##############################"
+curl -s http://127.0.0.1:3000/api/museums/addFieldToSection?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "catalog":"default", "section":"geodati_reperto", "stampa_a":"2", "stampa_b":"","position":"3", "options":"test_options", "option_key":"test_option_key", "field_label":"mio campo"}'
 echo
 read -e -p "################## PRESS ENTER KEY TO CONTINUE ######################"
 echo;echo;echo  "Start getSectionDetail ALL FIELD FILTERED ##############################"
@@ -129,7 +133,7 @@ read -e -p "Insert field_id: " -i "1" field_id
 curl -s "http://127.0.0.1:3000/api/museums/removeFieldFromSection?auth_token=${auth_token}&field_id=${field_id}" -H "Content-Type: application/json" -X POST -d '{ "catalog":"mobile", "section":"nuova_sezione"}'
 echo;echo;echo  "Start setFieldDetails ##############################"
 read -e -p "Insert field_id: " -i "1" field_id
-curl -s "http://127.0.0.1:3000/api/museums/setFieldDetails?auth_token=${auth_token}&field_id=${field_id}"  -H "Content-Type: application/json" -X POST -d '{ "catalog":"mobile", "section":"nuova_sezione" , "data":{"position":20,"mobile":"true", "open_data":"false", "mandatory":"true","options":"opzioni varie"} }'
+curl -s "http://127.0.0.1:3000/api/museums/setFieldDetails?auth_token=${auth_token}&field_id=${field_id}"  -H "Content-Type: application/json" -X POST -d '{ "catalog":"default", "section":"geodati_reperto" , "data":{"stampa_b":"","mobile":"true", "open_data":"false", "mandatory":"true","options":"opzioni varie"} }'
 echo
 read -e -p "################## END SectionDetail & Field- PRESS ANY KEY TO CONTINUE ######################"
 clear

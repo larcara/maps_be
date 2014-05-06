@@ -274,9 +274,24 @@ class API::MuseumsController < ApplicationController
       option_key=params.fetch(:option_key, nil)
       field_label=params.fetch(:field_label, field.field_label)
 
-      @field=@section.museum_fields.build(template_field_id:field.id , label:field_label,
-                                          enabled: true, hidden: false, position: position, mobile: true, open_data: true,
-                                          mandatory: false, options: options, option_key: option_key, custom: true)
+      data=params.permit(:field_label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c)
+      data[:label]=data.delete(:field_label) if data[:field_label]
+      data[:template_field_id]=field.id
+      data[:enabled]||=true
+      data[:mobile]||=true
+      data[:custom]=true
+      data[:open_data]||=true
+      data[:hidden]||=false
+      data[:mandatory]||=false
+
+
+
+
+      #@field=@section.museum_fields.build(template_field_id:field.id , label:field_label,
+      #                                    enabled: true, hidden: false, position: position, mobile: true, open_data: true,
+      #                                    mandatory: false, options: options, option_key: option_key, custom: true)
+
+      @field=@section.museum_fields.build(data)
 
       if @field.save
         render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at], include: :museum_section)}
@@ -327,7 +342,7 @@ class API::MuseumsController < ApplicationController
       raise "il campo richiesto non esiste nella scheda specificata" if @field.blank?
       data=params[:data]
       @field=@museum.fields.find(@field.id)
-      @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key))
+      @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c))
       if @field.save
         render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
@@ -473,10 +488,5 @@ class API::MuseumsController < ApplicationController
 
 
 
-  def printCard
 
-    Prawn::Document.generate("card.pdf") do
-
-    end
-  end
 end
