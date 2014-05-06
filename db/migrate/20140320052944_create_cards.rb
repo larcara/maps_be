@@ -11,8 +11,8 @@ class CreateCards < ActiveRecord::Migration
       t.float  :altezza, limit: 50
       t.string :altra_categoria
       t.string :altra_def_oggetto
-      t.string :altro_cod, limit: 50
-      t.string :biblio_foto, limit: 50
+      t.string :altro_cod
+      t.string :biblio_foto
       t.string :bibliografia
       t.string :binomio1
       t.string :binomio2
@@ -111,7 +111,7 @@ class CreateCards < ActiveRecord::Migration
       t.string :particelle, limit: 50
       t.float :peso
       t.string :piano
-      t.string :posizione, limit: 50
+      t.string :posizione
       t.string :potenza
       t.string :profondita
       t.string :provincia, limit: 50
