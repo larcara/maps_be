@@ -16,7 +16,7 @@ class API::MuseumsController < ApplicationController
     email=p.require :email
     password=p.require :password
     role=p.require :role
-    @new_user= @museum.users.build(email:email, password:password,role:role)
+    @new_user= @museum.users.build(p)
     if @new_user.save
       render json: {error: nil, data: @new_user}
     else
@@ -51,7 +51,7 @@ class API::MuseumsController < ApplicationController
 
       @new_user= @museum.users.find(id)
 
-      raise "utente non abilitato " unless @user.is_admin? ||  @new_user.id === @user.id
+      raise "utente non abilitato " if (!@user.is_admin? ||  @new_user.id === @user.id)
 
       @new_user.update_attributes(p)
       if @new_user.save
@@ -60,7 +60,7 @@ class API::MuseumsController < ApplicationController
         render json: {error:@new_user.errors, data: @new_user.as_json(except: [:created_at, :updated_at])}
       end
     rescue ActiveRecord::RecordNotFound => e
-      render json:{error: "l'id specificatonon è valido", data: nil}
+      render json:{error: [e.message,"l'id specificato non è valido"], data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s.message}, data: nil}
     rescue  RuntimeError => e
@@ -77,7 +77,7 @@ class API::MuseumsController < ApplicationController
       raise "utente non abilitato " unless @user.is_admin?
 
       @new_user= @museum.users.where(email:email).first
-
+      raise "utente non trovato " if @new_user.blank?
       if @new_user.destroy!
         render json: {error: nil, data: "utente #{email} eliminato"}
       else

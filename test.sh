@@ -4,11 +4,9 @@ clear
 read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}' 
 echo
-read -e -p "Copy auth_token to contnue: " -i "PGh_tZsJbiJ_PR6Z-rAM" auth_token
-
+read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
 
 clear
-
 echo "##### CONFIG API:"
 echo
 
@@ -36,14 +34,13 @@ echo;echo;echo  "Start setMuseumData - cancellazione dell'immagine allegata  ###
 curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"museum": { "name":"nuovo nome", "city":"Frattocchie", "website":"http://xxxxx" , "logo":"http://www.google.com"}, "delete_image":true}'
 
 echo;echo;echo   "Start createUser ##############################"
-curl  -s http://127.0.0.1:3000/api/museums/createUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"test@nomail.com", "password":"password", "role":"operatore"}}'
+curl  -s http://127.0.0.1:3000/api/museums/createUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"test@nomail.com", "password":"password", "role":"operatore", "cognome":"arcara", "nome":"luca", "facolta":"facolta1", "nascita_data":"1976-10-16", "nascita_luogo":"Roma","residenza_citta":"Roma","residenza_indirizzo":"via roma","telefono":"06123456","titolo_di_studio":"diploma"}}'
 echo;echo;echo  "Start updateUser ##############################"
-curl  -s http://127.0.0.1:3000/api/museums/updateUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"id":18, "email":"test@nomail.com" , "role":"amministratore"}}'
+curl  -s http://127.0.0.1:3000/api/museums/updateUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"id":"6", "email":"test@nomail.com" , "role":"amministratore" , "password":"", "role":"operatore", "cognome":"arcara", "nome":"luca", "facolta":"facolta1", "nascita_data":"1976-10-16", "nascita_luogo":"Roma","residenza_citta":"Roma","residenza_indirizzo":"via roma","telefono":"06123456","titolo_di_studio":"diploma"}}'
 echo;echo;echo  "Start getUsers ##############################"
 curl  -s http://127.0.0.1:3000/api/museums/getUsers?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{}'
 echo;echo;echo  "Start destroyUser ##############################"
-curl  -s http://127.0.0.1:3000/api/museums/destroyUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"test@nomail.com", "confirm_email":"test@nomail.com"}}'
-
+curl  -s http://127.0.0.1:3000/api/museums/destroyUser?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "user":{"email":"stest@nomail.com", "confirm_email":"stest@nomail.com"}}'
 
 echo; read -e -p "################## END MUSEUM - PRESS ANY KEY TO CONTINUE ######################"
 clear
