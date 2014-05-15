@@ -39,6 +39,9 @@ class API::MuseumsController < ApplicationController
       render json:{error: e.message, data: nil}
     end
   end
+  def getProfile
+    render json: {error: nil, data: @user}
+  end
   def updateUser
     begin
 

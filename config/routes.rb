@@ -17,6 +17,7 @@ MapsBe::Application.routes.draw do
         post 'destroyUser'
         post 'updateUser'
         get 'getUsers'
+        get 'getProfile'
 
 
         get 'getCatalogs'

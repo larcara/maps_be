@@ -68,8 +68,8 @@ dati_descrittivi	Dati Descrittivi	genere	Genere
 dati_descrittivi	Dati Descrittivi	gruppo	Gruppo
 dati_descrittivi	Dati Descrittivi	id_num_inventario	Numero Inventario
 dati_descrittivi	Dati Descrittivi	id_univoco_reperto	Numero Reperto
-dati_anagrafici	Dati Anagrafici	idCodScheda	Codice Scheda
-dati_anagrafici	Dati Anagrafici	idmuseo	CodiceMuseo
+dati_anagrafici	Dati Anagrafici	id_codscheda	Codice Scheda
+dati_anagrafici	Dati Anagrafici	museum_id	CodiceMuseo
 dati_descrittivi	Dati Descrittivi	inprestito	Prestato
 dati_descrittivi	Dati Descrittivi	magnetico	Magnetico
 dati_descrittivi	Dati Descrittivi	materia_tecnica	Materia/Tecnica
