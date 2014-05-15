@@ -384,7 +384,7 @@ class API::MuseumsController < ApplicationController
     begin
       filter=params.require(:filter)
       if filter
-        @cards=@museum.cards.search(filter).result()
+        @cards=@museum.cards.search(filter).result().limit(100)
       end
       if @cards
         render json: {error: nil, data: @cards.as_json(include: :museum_images)}

@@ -7,6 +7,19 @@ echo
 read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
 
 clear
+read -e -p "Insert card_id: " -i "127" id_codscheda
+curl -s "http://127.0.0.1:3000/api/museums/getCard?auth_token=${auth_token}&id_codscheda=${id_codscheda}" -H "Content-Type: application/json" -X GET -d '{ }'
+echo;echo;echo "Start saveImage - link_only ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"70904", "image_data":{"label":"test immagine", "link":"http://xxxxx", "tipologia":"tipologia di test"}}'
+echo;echo;echo "Start saveImage - image ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=70904 -F image_data[label]="immagine allegata" -F image_file=@img1.png
+echo;echo;echo "Start saveImage - image2 ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=70904 -F image_data[label]="immagine allegata" -F image_file=@img2.gif
+echo;echo;echo "Start saveImage - update data ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=70904 -F image_data[id]=1 image_data[label]="nuovo testo" -F image_file=@img1.gif
+echo;echo;echo "Start getCard per id_codscheda ##############################"
+curl -s http://127.0.0.1:3000/api/museums/getCard?auth_token=$auth_token&id=$card_id -H "Content-Type: application/json" -X GET -d '{ }'
+exit
 echo "##### CONFIG API:"
 echo
 

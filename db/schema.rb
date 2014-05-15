@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140506175819) do
+ActiveRecord::Schema.define(version: 20140506175900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -229,7 +229,6 @@ ActiveRecord::Schema.define(version: 20140506175819) do
   create_table "cards", force: true do |t|
     t.integer  "museum_id",                 null: false
     t.string   "colore"
-    t.string   "descrizione"
     t.string   "oggetto"
     t.string   "id_codscheda",              null: false
     t.string   "abito"
@@ -355,7 +354,6 @@ ActiveRecord::Schema.define(version: 20140506175819) do
     t.string   "specifiche_materiale"
     t.string   "specifiche_scavo"
     t.string   "spessore"
-    t.string   "stato_conservazione"
     t.string   "stima"
     t.string   "tipo"
     t.string   "tipo_acquisizione"
@@ -382,6 +380,8 @@ ActiveRecord::Schema.define(version: 20140506175819) do
     t.datetime "updated_at"
     t.text     "bibliografia"
     t.text     "studio"
+    t.text     "stato_conservazione"
+    t.text     "descrizione"
   end
 
   add_index "cards", ["id_codscheda", "museum_id"], name: "cards_index_1", unique: true, using: :btree
