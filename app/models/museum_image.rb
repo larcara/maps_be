@@ -22,9 +22,10 @@ class MuseumImage < ActiveRecord::Base
   do_not_validate_attachment_file_type :image
   belongs_to :card
 
-  before_save :update_link
+  after_save :update_link
 
   def update_link
-    self.link=image.url if image
+    self.update_column(:link, image.url) unless self.image.blank?
+
   end
 end

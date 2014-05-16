@@ -469,6 +469,7 @@ class API::MuseumsController < ApplicationController
       if image_file
         @image.image=image_file
       else
+        @image.image=nil
         @image.link=image_data[:link]
       end
       if @image.save
