@@ -30,7 +30,7 @@ class API::MuseumsController < ApplicationController
   end
   def getUsers
     begin
-      raise "utente non abilitato " unless @user.is_admin?
+      #raise "utente non abilitato " unless @user.is_admin?
       @users= @museum.users
       render json: {error: nil, data: @users.as_json(except: [:created_at, :updated_at])}
     rescue ActionController::ParameterMissing => e
@@ -54,7 +54,7 @@ class API::MuseumsController < ApplicationController
 
       @new_user= @museum.users.find(id)
 
-      raise "utente non abilitato " if (!@user.is_admin? ||  @new_user.id === @user.id)
+      #raise "utente non abilitato " if (!@user.is_admin? ||  @new_user.id === @user.id)
 
       @new_user.update_attributes(p)
       if @new_user.save
