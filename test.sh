@@ -7,7 +7,7 @@ echo
 read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
 
 clear
-read -e -p "Insert card_id: " -i "127" id_codscheda
+
 curl -s "http://127.0.0.1:3000/api/museums/getCard?auth_token=${auth_token}&id_codscheda=${id_codscheda}" -H "Content-Type: application/json" -X GET -d '{ }'
 echo;echo;echo "Start saveImage - link_only ##############################"
 curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"70904", "image_data":{"label":"test immagine", "link":"http://xxxxx", "tipologia":"tipologia di test"}}'
