@@ -51,7 +51,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: maps_development
+  database: maps_production
   pool: 5
   username: maps_usr
   password: 123acaro136
