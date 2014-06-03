@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140506175900) do
+ActiveRecord::Schema.define(version: 20140601140332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -382,6 +382,21 @@ ActiveRecord::Schema.define(version: 20140506175900) do
     t.text     "studio"
     t.text     "stato_conservazione"
     t.text     "descrizione"
+    t.string   "custom_1"
+    t.string   "custom_2"
+    t.string   "custom_3"
+    t.string   "custom_4"
+    t.string   "custom_5"
+    t.string   "custom_6"
+    t.string   "custom_7"
+    t.string   "custom_8"
+    t.string   "custom_9"
+    t.string   "custom_10"
+    t.string   "custom_11"
+    t.string   "custom_12"
+    t.string   "custom_13"
+    t.string   "custom_14"
+    t.string   "custom_15"
   end
 
   add_index "cards", ["id_codscheda", "museum_id"], name: "cards_index_1", unique: true, using: :btree

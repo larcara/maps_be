@@ -277,7 +277,7 @@ class API::MuseumsController < ApplicationController
       option_key=params.fetch(:option_key, nil)
       field_label=params.fetch(:field_label, field.field_label)
 
-      data=params.permit(:field_label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c)
+      data=params.permit(:field_label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c, :pubblico)
       data[:label]=data.delete(:field_label) if data[:field_label]
       data[:template_field_id]=field.id
       data[:enabled]||=true
@@ -345,7 +345,7 @@ class API::MuseumsController < ApplicationController
       raise "il campo richiesto non esiste nella scheda specificata" if @field.blank?
       data=params[:data]
       @field=@museum.fields.find(@field.id)
-      @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c))
+      @field.update_attributes(data.permit(:label, :enabled, :hidden, :position,:mobile, :open_data, :mandatory,:options,:option_key,:stampa_a, :stampa_b, :stampa_c,:pubblico))
       if @field.save
         render json: {error: nil, data: @field.as_json(except: [:created_at, :updated_at])}
       else
