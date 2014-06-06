@@ -1,29 +1,41 @@
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
 
-<html>
- 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stampe</title>
-<!-- Fogli di stile -->
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/museo.css" rel="stylesheet" media="screen">
+    <title>Stampe</title>
 
-<!-- Modernizr -->
-<script src="js/modernizr.custom.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
 <script>
+
 $(document).ready(function(){
 	$("#flip1c").click(function(){$("#panel1c").slideToggle("fast");});
 	$("#flip2c").click(function(){$("#panel2c").slideToggle("fast");});
 
 });
+
 </script>
 </head>
 
@@ -34,20 +46,34 @@ $(document).ready(function(){
 <div class="lineb"></div>
 <div class="linec"></div>
 
-<p>	 
-<div class="tabbable"> <!-- Only required for left/right tabs -->
-    <ul class="nav responsive nav-tabs">
+<p>
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav nav-tabs visible-lg">
         <li class="active"><a href="#tab_1" data-toggle="tab">Configurazione</a></li>
         <li><a href="#tab_2" data-toggle="tab">Anteprima</a></li>
     </ul>
-    
-     	<div class="col-lg-10">
-     	</div>
-     	<div class="col-lg-2" style="top:-25px; position:relative"; align="right">		
-        	<a class="testol" href="home.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
-    	</div>
-        
-    <div c<div class="tab-pane active" id="tab_1">
+
+    <ul class="nav nav-pills nav-stacked hidden-lg" style="text-align: center;">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Configurazione</a></li>
+        <li><a href="#tab_2" data-toggle="tab">Anteprima</a></li>
+    </ul>
+
+    <div class="col-lg-6">
+    </div>
+    <br class="hidden-lg">
+    <p class="hidden-lg"></p>
+    <div class="col-lg-3 col-md-9 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+        <em><label class="testol"></label></em>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="top: -25px; position:relative" align="right" id="nomeLogin">
+        <em><label class="testol"></label></em>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3" style="top:-25px; position:relative" align="right">
+        <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    </div>
+
+
+    <div class="tab-pane active" id="tab_1">
     <p>
         <div class="well well-lg">
         <div style="line-height:20px">
@@ -386,6 +412,6 @@ $(document).ready(function(){
     
     </div>
 </p>
-<body>
+</div>
 </body>
 </html>

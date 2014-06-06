@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>login Museo</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
+
+
+<script>
+
+    $(document).ready(function() {
+        //attach keypress event listener to the quantity field
+        $('#id_username').keypress(function(event){
+            //Check if the key pressed is ENTER key using the keyCode=13
+            if(event.keyCode == 13){
+                //alert('Enter premuto');
+                validateForm();
+            }
+        });
+
+        $('#id_password').keypress(function(event){
+            //Check if the key pressed is ENTER key using the keyCode=13
+            if(event.keyCode == 13){
+                //alert('Enter premuto');
+                validateForm();
+            }
+        });
+    });
+
+    function validateForm() {
+            //Controllo che i campi siano valorizzati
+            if (($('#id_username').val().length == 0) && ($('#id_password').val().length == 0)) {
+                alert("Inserire i dati di login");
+            } else if(($('#id_username').val().length > 0)){
+                if (validateEmail($('#id_username').val())) {
+                    //alert('Email valida!');
+                    if(($('#id_password').val().length > 0)) {
+                        login();
+                    } else {
+                        alert("Inserire una password");
+                    }
+                } else {
+                    alert('Inserira una mail valida');
+                }
+            } else {
+                alert("Inserire una mail come username");
+            }
+    }
+
+    function validateEmail(sEmail) {
+        //var filter = /^([\w-]+[\+])@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        var filter = /^([\w-+-]+(?:\.[\w-+]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7})$/;
+
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+	function login(){
+        $.ajax({
+                type: "POST",
+                url: json_url +  "users/sign_in",
+                data:{ user_login:{email: $("#id_username").val(), password: $("#id_password").val() }},
+                dataType: "json",
+                success: function(data)
+                {
+                    location.href='home_m.html?key=' + data.auth_token
+                },
+                error: function()
+                {
+                    alert("Username o password errati...");
+                }
+            });
+	}
+
+</script>
+
+
+ </head>
+ <body>
+<div class="containermuseum">
+<img src="images/banner.jpg" class="img-responsive">
+<div class="lineb"></div>
+<div class="linec"></div>
+
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-login" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Sign In</div>
+                    </div>
+
+                     <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                        <form id="loginform" class="form-horizontal" role="form">
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="id_username" type="text" class="form-control" name="username" value="" placeholder="username">
+                                    </div>
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <input id="id_password" type="password" class="form-control" name="password" placeholder="password">
+                                    </div>
+
+
+
+                            <div class="input-group">
+                                      <div class="checkbox">
+                                        <label>
+                                          <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                        </label>
+                                      </div>
+                                    </div>
+
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+
+                                    <div class="col-sm-12 controls">
+                                      <input type="button" class="btn btn-primary" onClick="validateForm()" value="Enter">
+
+
+                                    </div>
+                                </div>
+
+
+                                
+                            </form>
+
+
+
+                        </div>
+                    </div>
+        </div>
+        
+
+
+
+         </div>
+    </div>
+
+ </body>
+</html>

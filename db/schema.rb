@@ -11,170 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140601140332) do
+ActiveRecord::Schema.define(version: 20140606131249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "TabellaSchedeMaps", id: false, force: true do |t|
-    t.string  "idCodScheda",               limit: nil, null: false
-    t.string  "idmuseo",                   limit: nil, null: false
-    t.string  "abito",                     limit: nil
-    t.string  "ad_cristo",                 limit: nil
-    t.string  "altezza",                   limit: nil
-    t.string  "altra_categoria",           limit: nil
-    t.string  "altra_def_oggetto",         limit: nil
-    t.string  "altro_cod",                 limit: nil
-    t.string  "biblio_foto",               limit: nil
-    t.string  "bibliografia",              limit: nil
-    t.string  "binomio1",                  limit: nil
-    t.string  "binomio2",                  limit: nil
-    t.string  "binomio3",                  limit: nil
-    t.string  "binomio4",                  limit: nil
-    t.string  "capacita",                  limit: nil
-    t.string  "cassettiera",               limit: nil
-    t.string  "categoria_pricipale",       limit: nil
-    t.string  "circonferenza",             limit: nil
-    t.string  "classe",                    limit: nil
-    t.string  "cod_univoco_scavo_iccd",    limit: nil
-    t.string  "id_univoco_reperto",        limit: nil
-    t.string  "id_num_inventario",         limit: nil
-    t.string  "collocazione_opera_finale", limit: nil
-    t.string  "colore",                    limit: nil
-    t.string  "coloreb",                   limit: nil
-    t.string  "coloreg",                   limit: nil
-    t.string  "colorer",                   limit: nil
-    t.string  "contesto_ritrovamento",     limit: nil
-    t.string  "continente",                limit: nil
-    t.string  "coor_asse_x",               limit: nil
-    t.string  "coor_asse_Y",               limit: nil
-    t.string  "costruttore",               limit: nil
-    t.string  "creato_da",                 limit: nil
-    t.string  "cronologia_generica",       limit: nil
-    t.string  "cronologia_uso",            limit: nil
-    t.string  "definizione",               limit: nil
-    t.string  "denominazione",             limit: nil
-    t.string  "denominazione_scavo",       limit: nil
-    t.string  "desc_collocazione",         limit: nil
-    t.string  "desc_intervento",           limit: nil
-    t.string  "descrizione",               limit: nil
-    t.string  "dest_prestito",             limit: nil
-    t.string  "diametro",                  limit: nil
-    t.string  "dimensione_base",           limit: nil
-    t.string  "dimensione_max",            limit: nil
-    t.string  "dimensionex",               limit: nil
-    t.string  "dimensioney",               limit: nil
-    t.string  "dimensionez",               limit: nil
-    t.string  "diocesi",                   limit: nil
-    t.string  "disponibilita",             limit: nil
-    t.string  "dt_a",                      limit: nil
-    t.string  "dt_acquisizione",           limit: nil
-    t.string  "dt_assoluta",               limit: nil
-    t.string  "dt_creazione",              limit: nil
-    t.string  "dt_da",                     limit: nil
-    t.string  "dt_esatta_acquisizione",    limit: nil
-    t.string  "dt_modifica",               limit: nil
-    t.string  "dt_restauro",               limit: nil
-    t.string  "dt_scavo",                  limit: nil
-    t.string  "ente_finanziatore_rest",    limit: nil
-    t.string  "ente_responsabile_rest",    limit: nil
-    t.string  "ente_responsabile_scavo",   limit: nil
-    t.string  "epoca",                     limit: nil
-    t.string  "espositore",                limit: nil
-    t.string  "famiglia",                  limit: nil
-    t.string  "fascia_cronologia_rif",     limit: nil
-    t.string  "fenomeni_ottici",           limit: nil
-    t.string  "fluor",                     limit: nil
-    t.string  "foglio_data",               limit: nil
-    t.string  "fornitore",                 limit: nil
-    t.string  "fosfo",                     limit: nil
-    t.string  "funzione",                  limit: nil
-    t.string  "geminato",                  limit: nil
-    t.string  "genere",                    limit: nil
-    t.string  "gruppo",                    limit: nil
-    t.string  "ingombro",                  limit: nil
-    t.string  "inprestito",                limit: nil
-    t.string  "larghezza",                 limit: nil
-    t.string  "loc_estera",                limit: nil
-    t.string  "localita",                  limit: nil
-    t.string  "localita_antica",           limit: nil
-    t.string  "localizz_comune_catasto",   limit: nil
-    t.string  "lunghezza",                 limit: nil
-    t.string  "luogo_acquisizione",        limit: nil
-    t.string  "magnetico",                 limit: nil
-    t.string  "materia_tecnica",           limit: nil
-    t.string  "metodo_scavo",              limit: nil
-    t.string  "mod_conservazione",         limit: nil
-    t.string  "mod_uso",                   limit: nil
-    t.string  "modificato_da",             limit: nil
-    t.string  "motivo",                    limit: nil
-    t.string  "nazione",                   limit: nil
-    t.string  "nome_acquisizione",         limit: nil
-    t.string  "note_acquisizione",         limit: nil
-    t.string  "note_generiche",            limit: nil
-    t.string  "num_campione",              limit: nil
-    t.string  "num_fogli",                 limit: nil
-    t.string  "num_frammenti",             limit: nil
-    t.string  "num_inventario_scavo",      limit: nil
-    t.string  "oldlocalita",               limit: nil
-    t.string  "oldregione",                limit: nil
-    t.string  "oldstato",                  limit: nil
-    t.string  "opera_finale_originale",    limit: nil
-    t.string  "pacco",                     limit: nil
-    t.string  "paese_antico",              limit: nil
-    t.string  "particelle",                limit: nil
-    t.string  "peso",                      limit: nil
-    t.string  "piano",                     limit: nil
-    t.string  "posizione",                 limit: nil
-    t.string  "potenza",                   limit: nil
-    t.string  "profondita",                limit: nil
-    t.string  "provincia",                 limit: nil
-    t.string  "pseudom",                   limit: nil
-    t.string  "quantita",                  limit: nil
-    t.string  "quota",                     limit: nil
-    t.string  "radio",                     limit: nil
-    t.string  "regione",                   limit: nil
-    t.string  "resp_scientifico_scavo",    limit: nil
-    t.string  "restauri",                  limit: nil
-    t.string  "ripiano",                   limit: nil
-    t.string  "sala",                      limit: nil
-    t.string  "secolo",                    limit: nil
-    t.string  "sistema",                   limit: nil
-    t.string  "sottoclasse",               limit: nil
-    t.string  "specie",                    limit: nil
-    t.string  "specifiche_materiale",      limit: nil
-    t.string  "specifiche_scavo",          limit: nil
-    t.string  "spessore",                  limit: nil
-    t.string  "stato_conservazione",       limit: nil
-    t.string  "stima",                     limit: nil
-    t.string  "tipo",                      limit: nil
-    t.string  "tipo_acquisizione",         limit: nil
-    t.string  "unita_misura",              limit: nil
-    t.string  "url_sito_scavo",            limit: nil
-    t.string  "valida",                    limit: nil
-    t.string  "visibile",                  limit: nil
-    t.string  "zonato",                    limit: nil
-    t.string  "stato",                     limit: nil
-    t.boolean "studiato"
-    t.string  "studio",                    limit: nil
-    t.string  "txtspecie",                 limit: nil
-    t.string  "txtitalia",                 limit: nil
-    t.string  "sinonimi",                  limit: nil
-    t.string  "varieta",                   limit: nil
-    t.string  "screditato",                limit: nil
-    t.string  "formula",                   limit: nil
-    t.string  "lt",                        limit: nil
-    t.string  "primasegnalazione",         limit: nil
-    t.string  "tallone",                   limit: nil
-    t.string  "oggetto",                   limit: nil
-    t.string  "calco",                     limit: nil
-    t.string  "collezione",                limit: nil
-    t.string  "erboserie",                 limit: nil
-    t.integer "museum_id"
-    t.integer "id"
-    t.date    "created_at"
-    t.date    "updated_at"
-  end
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -224,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140601140332) do
     t.string  "option_key"
     t.string  "field_type"
     t.boolean "custom"
+    t.boolean "pubblico"
   end
 
   create_table "cards", force: true do |t|
@@ -263,10 +104,10 @@ ActiveRecord::Schema.define(version: 20140601140332) do
     t.string   "cronologia_generica"
     t.string   "cronologia_uso"
     t.string   "definizione"
-    t.string   "denominazione"
-    t.string   "denominazione_scavo"
-    t.string   "desc_collocazione"
-    t.string   "desc_intervento"
+    t.text     "denominazione"
+    t.text     "denominazione_scavo"
+    t.text     "desc_collocazione"
+    t.text     "desc_intervento"
     t.string   "dest_prestito"
     t.float    "diametro"
     t.float    "dimensione_base"
@@ -421,6 +262,7 @@ ActiveRecord::Schema.define(version: 20140601140332) do
     t.integer  "stampa_a"
     t.integer  "stampa_b"
     t.integer  "stampa_c"
+    t.boolean  "pubblico"
   end
 
   create_table "museum_images", force: true do |t|

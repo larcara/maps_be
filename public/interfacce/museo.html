@@ -1,41 +1,43 @@
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
 
-<html>
- 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Museo</title>
-<!-- Fogli di stile -->
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/museo.css" rel="stylesheet" media="screen">
+    <title>Museo</title>
 
-<!-- Modernizr -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
 
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
 
 <script>
-var s= null;
-var cont= 0;
-var ca = 0;
-var a =0;
 
-function urlParams(name){
-    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (!results) {
-        return 0;
-    }
-    return results[1] || 0;
-}
+var s = null;
+var cont = 0;
+var ca = 0;
+var a = 0;
 
 function getMuseum(){$.ajax({
     type: "GET",
-    url: "/api/museums/getMuseumData",
+    url: json_url + "museums/getMuseumData",
     data:{ auth_token: urlParams('key')},
     dataType: "json",
     success: function(data){//alert(data.error);
@@ -53,7 +55,7 @@ function updateMuseum(){
 
     $.ajax({
         type: "POST",
-        url: "/api/museums/setMuseumData",
+        url: json_url + "museums/setMuseumData",
         data:{auth_token:urlParams('key'),museum:{museo_id:$("#museo_id").val(), name: $("#name").val(), city:$("#city").val(),address:$("#address").val(),
             telephone:$("#telephone").val(),logo:$("#logo").val(),website:$("#website").val(),curatore:$("#curatore").val(),
             edificio:$("#edificio").val(),fax:$("#fax").val(),email:$("#email").val(),orario:$("#orario").val(), descrizione:$("#descrizione").val()}},
@@ -69,7 +71,6 @@ function updateMuseum(){
 }
 
 function chiudi_apri(section_name){
-
     if (s==section_name && cont!=0){
         $(".mia").html(" ");
         cont=0;
@@ -79,62 +80,102 @@ function chiudi_apri(section_name){
         getDetail(section_name);
         s=section_name;
     }
-
-
 }
+
+function replaceValueCondition(result, property, search, value){
+    $.each(result, function (i, object) {
+        if(object.position==null){
+            // alert(JSON.stringify(object.position));
+            object.position=100;
+
+        }
+        return result;
+    })
+}
+function sortJsonArrayByProperty(objArray, prop, direction){
+    if (arguments.length<2) throw new Error("sortJsonArrayByProp requires 2 arguments");
+    var direct = arguments.length>2 ? arguments[2] : 1; //Default to ascending
+
+    if (objArray && objArray.constructor===Array){
+        var propPath = (prop.constructor===Array) ? prop : prop.split(".");
+        objArray.sort(function(a,b){
+            for (var p in propPath){
+                if (a[propPath[p]] && b[propPath[p]]){
+                    a = a[propPath[p]];
+                    b = b[propPath[p]];
+                }
+            }
+            // convert numeric strings to integers
+            /*
+             a = a.match(/^\d+$/) ? +a : a;
+             b = b.match(/^\d+$/) ? +b : b;
+             */
+            return ( (a < b) ? -1*direct : ((a > b) ? 1*direct : 0) );
+        });
+    }
+}
+
 
 function getSections(){
 
     $.ajax({
         type: "GET",
-        url: "/api/museums/getSections",
+        url: json_url + "museums/getSections",
         data:{ auth_token:urlParams('key') , "catalog":"default"},
         dataType: "json",
         success: function(data){
+
             var fields = '<div class="well well-lg">' +
                     '<label style="font-weight:bold; color:#781C27" id="new_section" >Elenco sezioni</label><br><br>' +
 
                     '<div class="row">' +
                     '<div class="col-sm-6">';
+            replaceValueCondition(data.data, 'position', null, 0)
+            sortJsonArrayByProperty(data.data, 'position');
+            //alert(JSON.stringify(data.data));
             $.each(data.data, function (i, object) {
                 if(object.custom==false){
-                    fields+='<div class="modal fade" id="'+object.section_name+'_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
-                                '<div class="modal-dialog" style="width: 300px; ">'+
-                                    '<div class="modal-content" style=" background-color:#f5f5f5;">'+
-                                        '<div class="modal-header" style=" background-color:#ffffff; border-radius: 4px;">'+
-                                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-                                            '<h4 class="modal-title" id="'+object.section_name+'_modal" style="color: #781C27">'+object.section_label+'</h4>'+
-                                        '</div>'+
-                                        '<div class="modal-body">'+
-                                            '<div style="margin-bottom: 25px" class="input-group">'+
-                                                '<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>'+
-                                                '<input class="form-control" type="text" id="'+object.section_name+'_etichetta" placeholder="Etichetta" value="'+object.section_label+'">'+
-                                            '</div>'+
-                                        '<div style="margin-bottom: 25px" class="input-group">'+
-                                            '<span class="input-group-addon"><i class="glyphicon glyphicon-sort-by-order"></i></span>'+
-                                            '<input class="form-control" type="text" id="'+object.section_name+'_posizione" placeholder="Posizione"></div>'+
-                                        '</div>'+
 
-                                        '<div class="modal-footer" style=" background-color:#ffffff;border-radius: 4px;">'+
-                                            '<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>'+
-                                            '<button type="button" class="btn btn-primary" onclick="salva_sectionNamePosition(\''+object.id+'\',\''+object.section_name+'\')">Salva</button>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
+                    if (object.position==100){
+                        object.position=0;
+                    }
+
+                    fields+='<div class="modal fade" id="'+object.section_name+'_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+                            '<div class="modal-dialog" style="width: 300px; ">'+
+                            '<div class="modal-content" style=" background-color:#f5f5f5;">'+
+                            '<div class="modal-header" style=" background-color:#ffffff; border-radius: 4px;">'+
+                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                            '<h4 class="modal-title" id="'+object.section_name+'_modal" style="color: #781C27">'+object.section_label+'</h4>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                            '<div style="margin-bottom: 25px" class="input-group">'+
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>'+
+                            '<input class="form-control" type="text" id="'+object.section_name+'_etichetta" placeholder="Etichetta" value="'+object.section_label+'">'+
+                            '</div>'+
+                            '<div style="margin-bottom: 25px" class="input-group">'+
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-sort-by-order"></i></span>'+
+                            '<input class="form-control" type="text" id="'+object.section_name+'_posizione" placeholder="Posizione" value="'+ object.position +'"></div>'+
+                            '</div>'+
+
+                            '<div class="modal-footer" style=" background-color:#ffffff;border-radius: 4px;">'+
+                            '<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>'+
+                            '<button type="button" class="btn btn-primary" onclick="salva_sectionNamePosition(\''+object.id+'\',\''+object.section_name+'\')">Salva</button>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
                             '</div>';
 
                     fields +='<div class="row">' +
-                                            '<div class="col-sm-2">'+
-                                                '<span class="glyphicon glyphicon-pencil" data-toggle="modal" style="color:#781C27" data-target="#'+object.section_name+'_modal" ></span>' +
-                                            '</div>' +
-                                            '<div class="col-sm-10">'+
-                                                    '<div class="flip" id="'+object.section_name+'">' +
-                                                        '<label style="font-weight:normal; color:#781C27" id="'+ object.section_name+'_label" onclick="chiudi_apri(\'' + object.section_name +'\')">' + object.section_label + '</label>' +
-                                                        '<div class="mia" id="'+object.section_name+'_panel"></div>'+
-                                                    '</div>' +
-
-                                            '</div>' +
-                                        '</div>';
+                            '<div class="col-sm-2">'+
+                            '<span class="glyphicon glyphicon-pencil" data-toggle="modal" style="color:#781C27" data-target="#'+object.section_name+'_modal" ></span>' +
+                            '</div>' +
+                            '<div class="col-sm-10">'+
+                            '<div class="flip" id="'+object.section_name+'">' +
+                            '<label style="font-weight:normal; color:#781C27" id="'+ object.section_name+'_label" onclick="chiudi_apri(\'' + object.section_name +'\')">' + object.section_label + '</label>' +
+                            '<div class="mia" id="'+object.section_name+'_panel"></div>'+
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
                 }else{
                     fields+='<div class="modal fade" id="'+object.section_name+'_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
                             '<div class="modal-dialog" style="width: 300px; ">'+
@@ -177,39 +218,42 @@ function getSections(){
                             '</div>' +
                             '</div>';
                 }
-                    });
+            });
 
-                    fields+='</div>' +
-                            '<div class="col-sm-6">'+
+            fields+='</div>' +
+                    '<div class="col-sm-6">'+
 
-                                    '<img id="image" src="images/sapienza.jpg" class="img-thumbnail img-thumbnail">'+
+                    '<img id="image" src="images/sapienza.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">'+
 
 
-                            '</div>' +
+                    '</div>' +
 
-                            '</div>' +
-                            '<br>'+
-                            '<br>';
+                    '</div>' +
+                    '<br>'+
+                    '<br>';
 
-                    fields+='<div class="row">'+
-                            '<div class="col-sm-6">'+
-                                '<div class="col-sm-1" onclick="apri()">'+
-                                    '<span class="glyphicon glyphicon-plus-sign" style="color:#781C27""></span>' +
-                                '</div>' +
-                                '<div class="col-sm-11">' +
-                                    '<label style="font-weight:bold; color:#781C27" id="new_section" >Nuova Sezione</label>' +
-                                '</div>'+
-                            '</div>'+
-                            '</div>'+
+            fields+='<div class="row">'+
+                    '<div class="col-sm-6">'+
+                    '<div class="col-sm-1" onclick="apri()">'+
+                    '<span class="glyphicon glyphicon-plus-sign" style="color:#781C27""></span>' +
+                    '</div>' +
+                    '<div class="col-sm-11">' +
+                    '<label style="font-weight:bold; color:#781C27" id="new_section" >Nuova Sezione</label>' +
+                    '</div>'+
 
-                            '<div class="row">'+
-                                '<div id="new_section_panel" class="col-sm-6">' +
+                    '</div>'+
 
-                                '</div>'+
-                            '</div>'+
-                            '</div>';
+                    '</div>'+
+
+                    '<div class="row">'+
+                    '<div id="new_section_panel" class="col-sm-6">' +
+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
 
             $('#content').html(fields);
+
 
         },
         error: function(){
@@ -221,38 +265,51 @@ function getSections(){
 
 function elimina_sezione(section_name){
 
-    $.ajax({
-        type: "GET",
-        url: "/api/museums/getSectionDetail",
-        data:{auth_token: urlParams('key'), "catalog":"default","section":section_name},
-        dataType: "json",
-        success: function(data){
-            $.each(data.data, function (i, object){
-                $.ajax({
-                    type: "POST",
-                    url: "/api/museums/removeFieldFromSection",
-                    data:{ auth_token: urlParams('key'), "catalog":"default","section":section_name, field_id:object.id},
-                    dataType: "json",
-                    success: function(data){
+    var elimina = confirm("Sei sicuro di voler eliminare "+section_name+"?")
 
-                    },
-                    error: function(){
-                        alert("Chiamata fallita, si prega di riprovare...");
-                    }
+    if(elimina){
+        $.ajax({
+            type: "GET",
+            url: json_url + "museums/getSectionDetail",
+            data:{auth_token: urlParams('key'), "catalog":"default","section":section_name},
+            dataType: "json",
+            success: function(data){
+                if(data.data == null){
+                    //console.log("Sezione Vuota")
+                    elimina_sezione2(section_name);
+                } else {
+                    //console.log("Sezione con Campi")
+                 $.each(data.data, function (i, object){
+                      $.ajax({
+                        type: "POST",
+                        url: json_url + "museums/removeFieldFromSection",
+                        data:{ auth_token: urlParams('key'), "catalog":"default","section":section_name, field_id:object.id},
+                        dataType: "json",
+                        success: function(data){
+                            //alert(JSON.stringify(data));
+                            //console.log(JSON.stringify(data));
+                        },
+                        error: function(){
+                            alert("Chiamata fallita, si prega di riprovare...");
+                        }
+                    });
                 });
-            });
-            elimina_sezione2(section_name);
-        },
-        error: function(){
-            alert("Chiamata fallita, si prega di riprovare...");
-        }
-    });
+                    elimina_sezione2(section_name);
+                }
+            },
+            error: function(){
+                alert("Chiamata fallita, si prega di riprovare...");
+            }
+        });
+    } else {
+        return;
+    }
 
 }
 function elimina_sezione2(section_name){
     $.ajax({
         type: "POST",
-        url: "/api/museums/deleteSection",
+        url: json_url + "museums/deleteSection",
         data:{ auth_token: urlParams('key'), "catalog":"default","section":section_name},
         dataType: "json",
         success: function(data){
@@ -272,7 +329,7 @@ function apri(){
     fields+='<input class="form-control" type="text" id="new_label" placeholder="Nome Sezione">'+
             '<br>'+
             '<input class="form-control" type="text" id="new_pos" placeholder="Posizione">'+
-            '<br>'+
+            '<label style="font-size:10px; color:#781C27;">* Possono essere aggiunte al massimo cinque nuove sezioni</label><br>'+
             '<label>Campi</label>'+
             '<div class="row">'+
             '<div class="col-sm-6">' +
@@ -315,7 +372,7 @@ function aggiungiSezione(){
     var s_name = $('#new_label').val().replace(" ","_");
     $.ajax({
         type: "POST",
-        url: "/api/museums/createSection",
+        url: json_url + "museums/createSection",
         data:{auth_token:urlParams('key'), catalog:"default", section:s_name},
         dataType: "json",
         success: function(data){
@@ -328,7 +385,7 @@ function aggiungiSezione(){
 
     $.ajax({
         type: "POST",
-        url: "/api/museums/updateSection",
+        url: json_url + "museums/updateSection",
         data:{ auth_token: urlParams('key'), "catalog":"default","section":s_name, data:{"section_label":s_nameS, visible:true}},
         dataType: "json",
         success: function(data){
@@ -342,7 +399,7 @@ function aggiungiSezione(){
     for (i=1; i<=ca; i++) {
         $.ajax({
             type: "POST",
-            url: "/api/museums/addFieldToSection",
+            url: json_url + "museums/addFieldToSection",
             data:{auth_token:urlParams('key'), catalog:"default", field_label:$('#'+i+'_ca').val(), section:$('#new_label').val()},
             dataType: "json",
             success: function(data){
@@ -360,42 +417,164 @@ function aggiungiSezione(){
     getSections();
 }
 
+
+/*
+ function getDetail(section){
+
+ $.ajax({
+ type: "GET",
+ url: json_url + "museums/getSectionDetail",
+ data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
+ dataType: "json",
+ success: function(data){
+
+ var fields = '';
+ $.each(data.data, function (i, object) {
+ var en = object.enabled;
+ if(en==true){
+ en='checked';
+ }else{
+ en='';
+ }
+
+ fields+='<div class="checkbox">'+
+ '<label>'+
+ '<input type="checkbox" name="selectId" '+en+' onclick="showOption(\''+object.id+'\',\''+object.label+'\',\''+section+'\')" id="'+object.id+'_check" />'+
+ object.label+
+ '</label>'+
+ '<div id="'+object.id+'_panel">'+
+ '</div>'+
+ '</div>';
+
+ });
+ fields+='<div class="checkbox">'+
+ '<label>'+
+ '<input type="checkbox" id="checkAll" onclick="selectAll(this,\''+section+'\')">'+
+ "Seleziona tutto"+
+ '</input>'+
+ '</label>'+
+ '</div>';
+
+ //fields+='<button type="button" class="btn btn-primary" onclick="salvaDetail(\''+section+'\')">Save</button><br><br>';
+ $('#'+section+'_panel').html(fields);
+ },
+ error: function(){
+ alert("Chiamata fallita, si prega di riprovare...");
+ }
+ });
+ }
+
+
+ function selectAll(source,section) {
+ alert(section);
+ checkboxes = document.getElementsByName('selectId');
+ for(var i=0, n=checkboxes.length;i<n;i++) {
+ checkboxes[i].checked = source.checked;
+ }
+ }
+
+ */
+
 function getDetail(section){
 
     $.ajax({
-       type: "GET",
-       url: "/api/museums/getSectionDetail",
-       data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
-       dataType: "json",
-       success: function(data){
+        type: "GET",
+        url: json_url + "museums/getSectionDetail",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
+        dataType: "json",
+        success: function(data){
 
-           var fields = '';
-           $.each(data.data, function (i, object) {
-               var en = object.enabled;
-               if(en==true){
-                   en='checked';
-               }else{
-                   en='';
-               }
+            var fields = '';
+            var fieldsAll = '';
+            var arrayId = [];
+            var arrayEn = [];
+            var labelSelectAll = "Seleziona tutto";
+            var checkValue = 'checked';
 
-               fields+='<div class="checkbox">'+
+            $.each(data.data, function (i, object) {
+                arrayId.push(object.id);
+                //alert(arrayId);
+                var en = object.enabled;
+                arrayEn.push(object.enabled);
+
+                $.each(arrayEn, function(index, value) {
+                    //alert(index + ': ' + value);
+                    if (value == false) {
+                        checkValue = 'null';
+                        return;
+                    } else {
+                        checkValue = 'checked';
+                        labelSelectAll = "Deseleziona tutto";
+                    }
+                });
+
+                if(en==true){
+                    en='checked';
+                }else{
+                    en='';
+                }
+
+                fields+='<div class="checkbox">'+
                         '<label>'+
-                            '<input type="checkbox" '+en+' onclick="showOption(\''+object.id+'\',\''+object.label+'\',\''+section+'\')" id="'+object.id+'_check" >'+
-                                object.label+
+                        '<input type="checkbox" name="selectId" '+en+' onclick="showOption(\''+object.id+'\',\''+object.label+'\',\''+section+'\')" id="'+object.id+'_check" />'+
+                        object.label+
                         '</label>'+
-                       '<div id="'+object.id+'_panel">'+
-                       '</div>'+
-                       '</div>';
+                        '<div id="'+object.id+'_panel">'+
+                        '</div>'+
+                        '</div>';
+            });
 
-           });
-           //fields+='<button type="button" class="btn btn-primary" onclick="salvaDetail(\''+section+'\')">Save</button><br><br>';
-          $('#'+section+'_panel').html(fields);
-       },
-       error: function(){
-           alert("Chiamata fallita, si prega di riprovare...");
-       }
-   });
+            fieldsAll+='<div class="checkbox">'+
+                    '<input type="checkbox" name="checkAll" id="checkAll" '+checkValue+' onclick="selectAll(this,\''+section+'\',\''+arrayId+'\')">'+
+                    '<div id="labelid">'+
+                    '<label class="text-primary"><strong>'+labelSelectAll+'</strong>'+
+                    '</div>'+
+                    '</label>'+
+                    '</input>'+
+                    '</div>';
+
+            //fields+='<button type="button" class="btn btn-primary" onclick="salvaDetail(\''+section+'\')">Save</button><br><br>';
+            $('#'+section+'_panel').html(fieldsAll+fields);
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
 }
+
+function selectAll(source,section,arrayString) {
+        var id=arrayString.split(',');
+        var enabled;
+        checkboxes = document.getElementsByName('selectId');
+        if (document.getElementById("checkAll").checked){
+            //alert("Checked");
+            $("#labelid").html('<label class="text-primary"><strong>Deseleziona tutto</strong>');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                    checkboxes[i].checked = source.checked;
+                    enabled = true;
+            }
+        } else {
+            //alert("unchecked");
+            $("#labelid").html('<label class="text-primary"><strong>Seleziona tutto</strong>');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                    checkboxes[i].checked = false;
+                    enabled = false;
+            }
+        }
+        for (var x=0, n=id.length;x<n; x++){
+            $.ajax({
+                type: "POST",
+                url: json_url + "museums/setFieldDetails",
+                data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id[x], data:{enabled: enabled}},
+                dataType: "json",
+                success: function(data){
+                },
+                error: function(){
+                    alert("Chiamata fallita, si prega di riprovare...");
+                }
+            });
+        }
+  }
 
 function showOption(id, label, section){
     var enabled =$('#'+id+'_check').prop('checked');
@@ -410,7 +589,7 @@ function showOption(id, label, section){
     }
     $.ajax({
         type: "POST",
-        url: "/api/museums/setFieldDetails",
+        url: json_url + "museums/setFieldDetails",
         data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id, data:{enabled: enabled}},
         dataType: "json",
         success: function(data){
@@ -425,12 +604,14 @@ function showOption(id, label, section){
 function showOption2(id, label, section){
     $.ajax({
         type: "GET",
-        url: "/api/museums/getSectionDetail",
+        url: json_url + "museums/getSectionDetail",
         data:{ auth_token: urlParams('key'), "catalog":"default","section":section, id:id},
         dataType: "json",
         success: function(data){
             $.each(data.data, function (i, object) {
                 if(object.id==id){
+
+                    console.log(object.options);
 
                 var obl = object.mandatory;
                 if(obl==true){
@@ -461,35 +642,47 @@ function showOption2(id, label, section){
 
                 fields=' <div>'+
                         '<div class="row" style="padding-left: 20px; padding-bottom:10px; padding-top:5px">'+
-                        '<div class="col-sm-3">'+
+                        '<div class="col-sm-4">'+
                         '<label>'+
                         '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
                         'Obbligatorio'+
                         '</label>'+
                         '</div>'+
-                        '<div class="col-sm-3">'+
+                        '<div class="col-sm-4">'+
                         '<label>'+
                         '<input type="checkbox" id="'+id+'_visibile" '+hidden+'>'+
-                        'Visibile'+
+                        'Attivo'+
                         '</label>'+
                         '</div>'+
-                        '<div class="col-sm-3">'+
+                        '<div class="col-sm-4">'+
                         '<label>'+
                         '<input type="checkbox" id="'+id+'_mobile" '+mobile+'>'+
                         'Mobile'+
                         '</label>'+
                         '</div>'+
-                        '<div class="col-sm-3" >'+
+                        '</div>'+
+
+                        '<div class="row" style="padding-left: 20px; padding-bottom:10px; padding-top:5px">'+
+
+                        '<div class="col-sm-4" >'+
                         '<label>'+
                         '<input type="checkbox" id="'+id+'_open" '+open+'>'+
                         'Open Data'+
                         '</label>'+
                         '</div>'+
 
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire Pubblico nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Pubblico'+
+                        '</label>'+
                         '</div>'+
+                        '</div>'+
+
                         '<div  class="row">'+
                         '<div class="col-sm-6">'+
-                        '<textarea class="form-control" rows="4" id="'+id+'_valori" placeholder="Lista valori: valore1;valore2;valore3;valore4*" value="'+object.options+'"></textarea>'+
+                        '<textarea class="form-control" rows="4" id="'+id+'_valori" placeholder="Lista valori: valore1;valore2;valore3;valore4*" value="'+object.options+'">'+object.options+'</textarea>'+
                         '<br>'+
                         '</div>'+
                         '<div class="col-sm-6">'+
@@ -505,15 +698,66 @@ function showOption2(id, label, section){
 
                         '</div>'+
                         '</div>'+
+                        '</div>'+
+                        '</div>'+
+
+                        '<label style="font-size:10px; color:#781C27;">'+
+                        '*La lista dei valori deve essere scritta separando i valori con un ";"'+
+                        '</label>'+
+
+                        '</div>'+
+
+
+                        '<div class="row">'+
+                        '<div class="col-sm-5"">'+
+                        '<hr>'+
+                        '</div>'+
+                        '<div class="col-sm-2" style="margin-top: 10px; margin-left: -20px;">'+
+                        '<label class="testol">STAMPA</label>'+
+                        '</div>'+
+                        '<div class="col-sm-5">'+
+                        '<hr>'+
+                        '</div>'+
+                        '</div>'+
+
+                        '<div class="row" style="padding-left: 20px; padding-bottom:10px;">'+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox2 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Scheda'+
+                        '</label>'+
+                        '</div>'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox3 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Cartellino'+
+                        '</label>'+
+                        '</div>'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox4 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Etichetta'+
+                        '</label>'+
+                        '</div>'+
+                        '</div>'+
+
+
+                        '<div  class="row">'+
+                        '<div class="col-sm-6">'+
+                        '</div>'+
+                        '<div class="col-sm-6">'+
                         '<div class="row">'+
                         '<div class="col-sm-5">'+
-                        '<br>'+
                         '<div class="btn-group btn-group-sm">'+
                         '<button type="submit" class="btn btn-primary"  style="background-color:#781C27; border-color:#781C27;">Ripristina</button>'+
                         '</div>'+
                         '</div>'+
                         '<div class="col-sm-5">'+
-                        '<br>'+
                         '<div class="btn-group btn-group-sm">'+
                         '<button type="submit" class="btn btn-primary " onclick="saveOption(\''+id+'\',\''+label+'\',\''+section+'\')">Salva</button>'+
                         '</div>'+
@@ -522,9 +766,8 @@ function showOption2(id, label, section){
                         '</div>'+
                         '</div>'+
 
-                        '<label style="font-size:10px; color:#781C27;">'+
-                        '*La lista dei valori deve essere scritta separando i valori con un ";"'+
-                        '</label>'+
+
+
                         '</div>';
                 }
             });
@@ -574,10 +817,14 @@ function saveOption(id, label, section){
         obl=0;
     }
 
+    var option = $('#'+id+'_valori').val();
+
+    console.log(option);
+
     $.ajax({
         type: "POST",
-        url: "/api/museums/setFieldDetails",
-        data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id, data:{enabled: enabled, label: $('#'+id+'_etichetta').val(), hidden: hidden, position:$('#'+id+'_posizione').val(),mobile:mobile, open_data: open, mandatory: obl,options:$('#'+id+'_valori').val()}},
+        url: json_url + "museums/setFieldDetails",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id, data:{enabled: enabled, label: $('#'+id+'_etichetta').val(), hidden: hidden, position:$('#'+id+'_posizione').val(),mobile:mobile, open_data: open, mandatory: obl, options:option}},
         dataType: "json",
         success: function(data){
             $('#'+id+'_panel').html("");
@@ -593,19 +840,18 @@ function salvaDetail(section){
 
     $.ajax({
         type: "GET",
-        url: "/api/museums/getSectionDetail",
+        url: json_url + "museums/getSectionDetail",
         data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
         dataType: "json",
         success: function(data){
             $.each(data.data, function (i, object) {
                 $.ajax({
                     type: "POST",
-                    url: "/api/museums/setFieldDetails",
+                    url: json_url + "museums/setFieldDetails",
                     data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: object.id, data:{enabled: object.enabled}},
                     dataType: "json",
                     success: function(data){
-
-
+                      //alert(JSON.stringify(data));
                     },
                     error: function(){
                         alert("Chiamata fallita, si prega di riprovare...");
@@ -628,12 +874,20 @@ function salvaDetail(section){
 function salva_sectionNamePosition(id, section){
     $.ajax({
         type: "POST",
-        url: "/api/museums/updateSection",
-        data:{ auth_token: urlParams('key'), "catalog":"default","section":section,"id":id, data:{"section_label":$('#'+section+'_etichetta').val(), visible:true}},
+        url: json_url + "museums/updateSection",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section,"id":id, data:{"section_label":$('#'+section+'_etichetta').val(),"position":$('#'+section+'_posizione').val(), visible:true}},
         dataType: "json",
         success: function(data){
             alert("Sezione modificata");
             $('#'+section+'_label').html($('#'+section+'_etichetta').val());
+            //refresh della pagina
+            $('#'+section+'_modal').on('hidden.bs.modal', function () {
+                $('#content').html('');
+                getSections();
+            })
+            $('#'+section+'_modal').modal('hide');
+
+
         },
         error: function(){
             alert("Chiamata fallita, si prega di riprovare...");
@@ -642,26 +896,30 @@ function salva_sectionNamePosition(id, section){
 }
 
 
-
 function getSectionLabel(data, sectionName){
     var sectionLabel = $.unique($.map(data.data, function(item){if(item.museum_section.section_name == sectionName){return item.museum_section.section_label;}}));
     return sectionLabel;
 }
 function getPreview(){$.ajax({
     type: "GET",
-    url: "/api/museums/getSectionDetail",
+    url: json_url + "museums/getSectionDetail",
     data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
     dataType: "json",
     success: function(data){
         if(data.error != null){
-            //alert(JSON.stringify(data.error));
+            alert(JSON.stringify(data.error));
 
         }
         else{
             //alert(JSON.stringify(data));
             //alert(JSON.stringify(data.data));
-            var sezioni = $.unique($.map(data.data, function(item){return item.museum_section.section_name}));
-            //alert (JSON.stringify(sezioni));
+            
+	    var sezioni1 = $.map(data.data, function(item){return item.museum_section.section_name});
+	    //alert (sezioni1.length);
+
+	    sezioni1 = unique(sezioni1);
+	    //sezioni = $.unique(sezioni);
+	    //alert (JSON.stringify(sezioni1));
             var campi;
             var idsec="";
             var fields="";
@@ -672,14 +930,14 @@ function getPreview(){$.ajax({
                     '<li class="media">' +
                     '<div class="media-body">' +
                     '<a class="pull-right" href="#">' +
-                    '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive">' +
+                    '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">' +
                     '</a>' +
                     '<div style="line-height:20px">' +
                     '&nbsp;' +
                     '</div>'
             $campi = $.map(data.data, function(item){return item.label});
             //alert($campi);
-            $.each(sezioni, function (i, sezione) {
+            $.each(sezioni1, function (i, sezione) {
                 //per ogni elemento stampo l'html della sezione
                 //alert(sezione);
 
@@ -728,7 +986,7 @@ function mostra(id){
 
 function getPreviewMobile(){$.ajax({
     type: "GET",
-    url: "/api/museums/getSectionDetail",
+    url: json_url + "museums/getSectionDetail",
     data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true,"mobile_eq":1}},
     dataType: "json",
     success: function(data){
@@ -739,13 +997,21 @@ function getPreviewMobile(){$.ajax({
         else{
             //alert(JSON.stringify(data));
             //alert(JSON.stringify(data.data));
-            var sezioni = $.unique($.map(data.data, function(item){return item.museum_section.section_name}));
+
+            var sezioni = $.map(data.data, function(item){return item.museum_section.section_name});
+            //alert (sezioni1.length);
             //alert (JSON.stringify(sezioni));
+
+            sezioni = unique(sezioni);
+
             var campi;
             var fields="";
 
             //costruzione html
             fields += '<p><div class="well well-large">' +
+                '<a href="#">' +
+                '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">' +
+                '</a>' +
                     '<ul class="media-list">' +
                     '<li class="media">' +
                     '<div class="media-body">' +
@@ -799,8 +1065,7 @@ function getPreviewMobile(){$.ajax({
 function mostraP(id){
     if(document.getElementById(id+'_pp').style.display=="none"){
         document.getElementById(id+'_pp').style.display="";
-    }
-    else{
+    } else{
         document.getElementById(id+'_pp').style.display="none";
     }
 }
@@ -816,9 +1081,9 @@ function mostraP(id){
 <div class="lineb"></div>
 <div class="linec"></div>
 
-<p>	 
+<p>
 <div class="tabbable"> <!-- Only required for left/right tabs -->
-    <ul class="nav responsive nav-tabs">
+    <ul class="nav responsive nav-tabs visible-lg">
         <li class="active"><a href="#tab_1" data-toggle="tab">Museo</a></li>
         <li><a href="#tab_2" data-toggle="tab" onclick="getSections()">Conf. Scheda</a></li>
         <li><a href="#tab_3" data-toggle="tab" onclick="getPreview()">Anteprima Scheda</a></li>
@@ -826,11 +1091,28 @@ function mostraP(id){
     </ul>
 
 
-    <div class="col-lg-10">
+    <ul class="nav nav-pills nav-stacked hidden-lg" style="text-align: center;">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Museo</a></li>
+        <li><a href="#tab_2" data-toggle="tab" onclick="getSections()">Conf. Scheda</a></li>
+        <li><a href="#tab_3" data-toggle="tab" onclick="getPreview()">Anteprima Scheda</a></li>
+        <li><a href="#tab_4" data-toggle="tab" onclick="getPreviewMobile()">Anteprima Mobile</a></li>
+    </ul>
+
+
+    <div class="col-lg-6">
     </div>
-    <div class="col-lg-2" style="top:-25px; position:relative" align="right">
+    <br class="hidden-lg">
+    <p class="hidden-lg"></p>
+    <div class="col-lg-3 col-md-9 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+        <label class="testol"></label>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="top: -25px; position:relative" align="right" id="nomeLogin">
+        <label class="testol"></label>
+    </div>
+    <div class="col-lg-1" style="top:-25px; position:relative" align="right">
         <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
     </div>
+
 
 
     <div class="tab-content">
@@ -932,9 +1214,10 @@ function mostraP(id){
         </div>
          	
         <div class="col-sm-6">
-            <div class="thumbnail" style="height: 460px; width: 460px; max-height: 625px; max-width: 460px;">
+            <!--<div class="thumbnail" style="height: 460px; width: 460px; max-height: 625px; max-width: 460px;">
             <img alt="450x600" style="height: 450px; width: 450px; max-height:615px; max-width:450px; display: block; background-color:#f5f5f5; text-align:center;">
-            </div>
+            </div>-->
+            <img src="images/sapienza.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">
             <br>
             <br>
             <div class="row">
@@ -964,14 +1247,8 @@ function mostraP(id){
     </div><!-- tab_1 -->
         
         <div class="tab-pane" id="tab_2">
-
-
-            <p>
-            <div id="content">
-
-        	</div>
-
-
+          <p>
+            <div id="content"></div>
 
         </div><!-- tab_2 -->
 

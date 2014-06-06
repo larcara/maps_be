@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<html>
+ <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <title>Home</title>
+	<!-- Fogli di stile -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+ 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+     <script src="js/config.js"></script>
+     <!-- Controllo autenticazione utente -->
+    <script src="js/autentication.js"></script>
+
+    
+
+    <script>
+         function getMuseum(){$.ajax({
+            type: "GET",
+            url: json_url + "museums/getMuseumData",
+            data:{ auth_token: urlParams('key')},
+            dataType: "json",
+            success: function(data){//alert(data.error);
+                var fields = '';
+                $.each(data.data, function (i, object) {
+                    $('#'+i).val(object);
+                });
+            },
+            error: function(){
+                alert("Chiamata fallita, si prega di riprovare...");}
+        });
+        };
+    </script>
+    
+</head>
+<body onload="nomeMuseo(); setAgent('m')">
+  <div class="containermuseum">
+    <img src="images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+    <div class="linec"></div>
+
+      <ul id="litab" class="nav responsive nav-tabs">
+          <li id="litab1" ><label class="testol" onclick="logout()" style="cursor: pointer;">Logout</label></li>
+      </ul>
+      <div class="col-lg-10">
+      </div>
+
+      <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="top:-26px; position:relative" align="right" id="nomeLogin">
+          <label class="testol"></label>
+      </div>
+      <p>
+    <!-- fine header -->
+
+    <div class="well well-lg">
+    	<div class="row">
+ 			
+            <div class="col-lg-4 col-sm-3 col-md-4 col-xs-2">
+                <div class="img-responsive">
+                </div>
+ 			</div>
+		  	
+            <div class="col-lg-4 col-sm-6 col-md-4 col-xs-8">
+
+                <div align="center" id="mus">
+
+                </div>
+                <div align="center">
+                    <em><label style="font-size:12px; color:#781C27; font-family:Georgia, 'Times New Roman', Times, serif" onclick="scrivi()">Catalog Management</label></em>
+                </div>
+                <div style="line-height:10px">
+                        	&nbsp;
+            	</div> 
+
+                <div id="menu">
+
+
+                </div>
+
+                <div style="line-height:5px">
+                        	&nbsp;
+            	</div>  
+            </div>
+ 			
+            <div class="col-lg-4 col-sm-3 col-md-4 col-xs-2">
+  
+ 			</div>
+	    </div>
+
+      <div align="right">
+          <br>
+          <label>
+              <a class="testol" style="font-size: 10px;" href='#' onclick="javascript: location.href='login_password.html?key='+ urlParams('key')+'?id='+idUser">Cambia Password</a>
+          </label>
+      </div>
+
+     </div>
+    </p>
+  </div>
+
+<!-- jQuery e plugin JavaScript  -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

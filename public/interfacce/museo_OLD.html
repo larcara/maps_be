@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Museo</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
+<script>
+var s = null;
+var cont = 0;
+var ca = 0;
+var a = 0;
+
+function getMuseum(){$.ajax({
+    type: "GET",
+    url: json_url + "museums/getMuseumData",
+    data:{ auth_token: urlParams('key')},
+    dataType: "json",
+    success: function(data){//alert(data.error);
+        var fields = '';
+        $.each(data.data, function (i, object) {
+            $('#'+i).val(object);
+        });
+        },
+    error: function(){
+        alert("Chiamata fallita, si prega di riprovare...");}
+});
+}
+
+function updateMuseum(){
+
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/setMuseumData",
+        data:{auth_token:urlParams('key'),museum:{museo_id:$("#museo_id").val(), name: $("#name").val(), city:$("#city").val(),address:$("#address").val(),
+            telephone:$("#telephone").val(),logo:$("#logo").val(),website:$("#website").val(),curatore:$("#curatore").val(),
+            edificio:$("#edificio").val(),fax:$("#fax").val(),email:$("#email").val(),orario:$("#orario").val(), descrizione:$("#descrizione").val()}},
+        dataType: "json",
+        success: function(data){
+            alert("Dati museo aggiornati");
+
+        },
+        error: function(data){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+}
+
+function chiudi_apri(section_name){
+    if (s==section_name && cont!=0){
+        $(".mia").html(" ");
+        cont=0;
+    }else{
+        cont+=1;
+        $(".mia").html(" ");
+        getDetail(section_name);
+        s=section_name;
+    }
+}
+
+function getSections(){
+
+    $.ajax({
+        type: "GET",
+        url: json_url + "museums/getSections",
+        data:{ auth_token:urlParams('key') , "catalog":"default"},
+        dataType: "json",
+        success: function(data){
+					
+            var fields = '<div class="well well-lg">' +
+                    '<label style="font-weight:bold; color:#781C27" id="new_section" >Elenco sezioni</label><br><br>' +
+
+                    '<div class="row">' +
+                    '<div class="col-sm-6">';
+            $.each(data.data, function (i, object) {
+                if(object.custom==false){
+		    
+                    fields+='<div class="modal fade" id="'+object.section_name+'_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+                                '<div class="modal-dialog" style="width: 300px; ">'+
+                                    '<div class="modal-content" style=" background-color:#f5f5f5;">'+
+                                        '<div class="modal-header" style=" background-color:#ffffff; border-radius: 4px;">'+
+                                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                                            '<h4 class="modal-title" id="'+object.section_name+'_modal" style="color: #781C27">'+object.section_label+'</h4>'+
+                                        '</div>'+
+                                        '<div class="modal-body">'+
+                                            '<div style="margin-bottom: 25px" class="input-group">'+
+                                                '<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>'+
+                                                '<input class="form-control" type="text" id="'+object.section_name+'_etichetta" placeholder="Etichetta" value="'+object.section_label+'">'+
+                                            '</div>'+
+                                        '<div style="margin-bottom: 25px" class="input-group">'+
+                                            '<span class="input-group-addon"><i class="glyphicon glyphicon-sort-by-order"></i></span>'+
+                                            '<input class="form-control" type="text" id="'+object.section_name+'_posizione" placeholder="Posizione"></div>'+
+                                        '</div>'+
+
+                                        '<div class="modal-footer" style=" background-color:#ffffff;border-radius: 4px;">'+
+                                            '<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>'+
+                                            '<button type="button" class="btn btn-primary" onclick="salva_sectionNamePosition(\''+object.id+'\',\''+object.section_name+'\')">Salva</button>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                    fields +='<div class="row">' +
+                                            '<div class="col-sm-2">'+
+                                                '<span class="glyphicon glyphicon-pencil" data-toggle="modal" style="color:#781C27" data-target="#'+object.section_name+'_modal" ></span>' +
+                                            '</div>' +
+                                            '<div class="col-sm-10">'+
+                                                    '<div class="flip" id="'+object.section_name+'">' +
+                                                        '<label style="font-weight:normal; color:#781C27" id="'+ object.section_name+'_label" onclick="chiudi_apri(\'' + object.section_name +'\')">' + object.section_label + '</label>' +
+                                                        '<div class="mia" id="'+object.section_name+'_panel"></div>'+
+                                                    '</div>' +
+
+                                            '</div>' +
+                                        '</div>';
+                }else{
+                    fields+='<div class="modal fade" id="'+object.section_name+'_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+                            '<div class="modal-dialog" style="width: 300px; ">'+
+                            '<div class="modal-content" style=" background-color:#f5f5f5;">'+
+                            '<div class="modal-header" style=" background-color:#ffffff; border-radius: 4px;">'+
+                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                            '<h4 class="modal-title" id="'+object.section_name+'_modal" style="color: #781C27">'+object.section_label+'</h4>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                            '<div style="margin-bottom: 25px" class="input-group">'+
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>'+
+                            '<input class="form-control" type="text" id="'+object.section_name+'_etichetta" placeholder="Etichetta" value="'+object.section_label+'">'+
+                            '</div>'+
+                            '<div style="margin-bottom: 25px" class="input-group">'+
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-sort-by-order"></i></span>'+
+                            '<input class="form-control" type="text" id="'+object.section_name+'_posizione" placeholder="Posizione"></div>'+
+                            '</div>'+
+
+                            '<div class="modal-footer" style=" background-color:#ffffff;border-radius: 4px;">'+
+                            '<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>'+
+                            '<button type="button" class="btn btn-primary" onclick="salva_sectionNamePosition(\''+object.id+'\',\''+object.section_name+'\')">Salva</button>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>';
+
+                    fields +='<div class="row">' +
+                            '<div class="col-sm-1">'+
+                            '<span class="glyphicon glyphicon-pencil" data-toggle="modal" style="color:#35618F" data-target="#'+object.section_name+'_modal" ></span>' +
+                            '</div>' +
+                            '<div class="col-sm-1">'+
+                            '<span class="glyphicon glyphicon-remove" data-toggle="modal" style="color:#35618F" onclick="elimina_sezione(\''+object.section_name+'\')"></span>' +
+                            '</div>' +
+                            '<div class="col-sm-10">'+
+                            '<div class="flip" id="'+object.section_name+'">' +
+                            '<label style="font-weight:normal; color:#35618F" id="'+ object.section_name+'_label" onclick="chiudi_apri(\'' + object.section_name +'\')">' + object.section_label + '</label>' +
+                            '<div class="mia" id="'+object.section_name+'_panel"></div>'+
+                            '</div>' +
+
+                            '</div>' +
+                            '</div>';
+                }
+                    });
+
+                    fields+='</div>' +
+                            '<div class="col-sm-6">'+
+
+                                    '<img id="image" src="images/sapienza.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">'+
+
+
+                            '</div>' +
+
+                            '</div>' +
+                            '<br>'+
+                            '<br>';
+
+                    fields+='<div class="row">'+
+                            '<div class="col-sm-6">'+
+                                '<div class="col-sm-1" onclick="apri()">'+
+                                    '<span class="glyphicon glyphicon-plus-sign" style="color:#781C27""></span>' +
+                                '</div>' +
+                                '<div class="col-sm-11">' +
+                                    '<label style="font-weight:bold; color:#781C27" id="new_section" >Nuova Sezione</label>' +
+                                '</div>'+
+
+                            '</div>'+
+
+                            '</div>'+
+
+                            '<div class="row">'+
+                                '<div id="new_section_panel" class="col-sm-6">' +
+
+                                '</div>'+
+                            '</div>'+
+                            '</div>';
+
+            $('#content').html(fields);
+
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+}
+
+function elimina_sezione(section_name){
+
+    $.ajax({
+        type: "GET",
+        url: json_url + "museums/getSectionDetail",
+        data:{auth_token: urlParams('key'), "catalog":"default","section":section_name},
+        dataType: "json",
+        success: function(data){
+            $.each(data.data, function (i, object){
+                $.ajax({
+                    type: "POST",
+                    url: json_url + "museums/removeFieldFromSection",
+                    data:{ auth_token: urlParams('key'), "catalog":"default","section":section_name, field_id:object.id},
+                    dataType: "json",
+                    success: function(data){
+
+                    },
+                    error: function(){
+                        alert("Chiamata fallita, si prega di riprovare...");
+                    }
+                });
+            });
+            elimina_sezione2(section_name);
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+}
+function elimina_sezione2(section_name){
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/deleteSection",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section_name},
+        dataType: "json",
+        success: function(data){
+            alert("Sezione eliminata");
+            getSections();
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+}
+
+function apri(){
+    if(a==0){
+        a=1;
+    var fields='';
+    fields+='<input class="form-control" type="text" id="new_label" placeholder="Nome Sezione">'+
+            '<br>'+
+            '<input class="form-control" type="text" id="new_pos" placeholder="Posizione">'+
+            '<label style="font-size:10px; color:#781C27;">* Possono essere aggiunte al massimo cinque nuove sezioni</label><br>'+
+            '<label>Campi</label>'+
+            '<div class="row">'+
+            '<div class="col-sm-6">' +
+
+            '<div id="c" class="c">' +
+
+
+            '</div>'+
+
+            '</div>'+
+            '</div>'+
+            '<div class="line_campi"></div>'+
+
+            '<div class="row">'+
+            '<div id="new_campo" class="col-sm-6">' +
+                '<input class="form-control" type="text" id="new" placeholder="Campo">'+
+            '</div>'+
+            '<div class="col-sm-6">' +
+                '<button class="btn btn-primary" onclick="aggiungiCampo()">Aggiungi campo</button>'+
+            '</div>'+
+            '</div>'+
+            '<br>'+
+            '<button class="btn btn-primary" onclick="aggiungiSezione()">Salva sezione</button>';
+    $('#new_section_panel').html(fields);
+    }else{
+        a=0;
+        $('#new_section_panel').html("");
+
+    }
+}
+
+function aggiungiCampo(){
+    ca = ca + 1;
+    var fi = '<input id="'+ca+'_ca" class="form-control" type="text" value="'+$('#new').val()+'"><br>';
+    $('#c').append(fi);
+}
+
+function aggiungiSezione(){
+    var s_nameS = $('#new_label').val();
+    var s_name = $('#new_label').val().replace(" ","_");
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/createSection",
+        data:{auth_token:urlParams('key'), catalog:"default", section:s_name},
+        dataType: "json",
+        success: function(data){
+            alert("Nuova sezione inserita correttamente");
+        },
+        error: function(data){
+            ("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/updateSection",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":s_name, data:{"section_label":s_nameS, visible:true}},
+        dataType: "json",
+        success: function(data){
+            $('#'+section+'_label').html($('#'+section+'_etichetta').val());
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+    for (i=1; i<=ca; i++) {
+        $.ajax({
+            type: "POST",
+            url: json_url + "museums/addFieldToSection",
+            data:{auth_token:urlParams('key'), catalog:"default", field_label:$('#'+i+'_ca').val(), section:$('#new_label').val()},
+            dataType: "json",
+            success: function(data){
+
+            },
+            error: function(){
+                alert("Chiamata fallita, si prega di riprovare...");
+            }
+        });
+
+    }
+
+    ca=0;
+    $('#new_section_panel').html("");
+    getSections();
+}
+
+function getDetail(section){
+
+    $.ajax({
+       type: "GET",
+       url: json_url + "museums/getSectionDetail",
+       data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
+       dataType: "json",
+       success: function(data){
+
+           var fields = '';
+           $.each(data.data, function (i, object) {
+               var en = object.enabled;
+               if(en==true){
+                   en='checked';
+               }else{
+                   en='';
+               }
+
+               fields+='<div class="checkbox">'+
+                        '<label>'+
+                            '<input type="checkbox" '+en+' onclick="showOption(\''+object.id+'\',\''+object.label+'\',\''+section+'\')" id="'+object.id+'_check" >'+
+                                object.label+
+                        '</label>'+
+                       '<div id="'+object.id+'_panel">'+
+                       '</div>'+
+                       '</div>';
+
+           });
+           //fields+='<button type="button" class="btn btn-primary" onclick="salvaDetail(\''+section+'\')">Save</button><br><br>';
+          $('#'+section+'_panel').html(fields);
+       },
+       error: function(){
+           alert("Chiamata fallita, si prega di riprovare...");
+       }
+   });
+}
+
+function showOption(id, label, section){
+    var enabled =$('#'+id+'_check').prop('checked');
+    if(enabled== true){
+
+        showOption2(id, label, section);
+
+        enabled=true;
+    }else{
+        $('#'+id+'_panel').html(" ");
+        enabled=false;
+    }
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/setFieldDetails",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id, data:{enabled: enabled}},
+        dataType: "json",
+        success: function(data){
+
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+}
+function showOption2(id, label, section){
+    $.ajax({
+        type: "GET",
+        url: json_url + "museums/getSectionDetail",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section, id:id},
+        dataType: "json",
+        success: function(data){
+            $.each(data.data, function (i, object) {
+                if(object.id==id){
+
+                var obl = object.mandatory;
+                if(obl==true){
+                    obl='checked';
+                }else{
+                    obl='';
+                }
+
+                var hidden = object.hidden;
+                if(hidden==false){
+                    hidden='checked';
+                }else{
+                    hidden='';
+                }
+
+                var open = object.open_data;
+                if(open==1){
+                    open='checked';
+                }else{
+                    open='';
+                }
+                var mobile = object.mobile;
+                if(mobile==1){
+                    mobile='checked';
+                }else{
+                    mobile='';
+                }
+
+                fields=' <div>'+
+                        '<div class="row" style="padding-left: 20px; padding-bottom:10px; padding-top:5px">'+
+                        '<div class="col-sm-4">'+
+                        '<label>'+
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Obbligatorio'+
+                        '</label>'+
+                        '</div>'+
+                        '<div class="col-sm-4">'+
+                        '<label>'+
+                        '<input type="checkbox" id="'+id+'_visibile" '+hidden+'>'+
+                        'Attivo'+
+                        '</label>'+
+                        '</div>'+
+                        '<div class="col-sm-4">'+
+                        '<label>'+
+                        '<input type="checkbox" id="'+id+'_mobile" '+mobile+'>'+
+                        'Mobile'+
+                        '</label>'+
+                        '</div>'+
+                        '</div>'+
+
+                        '<div class="row" style="padding-left: 20px; padding-bottom:10px; padding-top:5px">'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        '<input type="checkbox" id="'+id+'_open" '+open+'>'+
+                        'Open Data'+
+                        '</label>'+
+                        '</div>'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire Pubblico nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_obbligatorio" '+obl+'>'+
+                        'Pubblico'+
+                        '</label>'+
+                        '</div>'+
+                        '</div>'+
+
+
+                        '<div class="row">'+
+                        '<div class="col-sm-5"">'+
+                        '<hr>'+
+                        '</div>'+
+                        '<div class="col-sm-2" style="margin-top: 10px; margin-left: -20px;">'+
+                        '<label class="testol">STAMPA</label>'+
+                        '</div>'+
+                        '<div class="col-sm-5">'+
+                        '<hr>'+
+                        '</div>'+
+                        '</div>'+
+
+                        '<div class="row" style="padding-left: 20px; padding-bottom:10px;">'+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox2 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'stampaa" '+obl+'>'+
+                        'Scheda'+
+                        '</label>'+
+                        '</div>'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox3 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'_stampab" '+obl+'>'+
+                        'Cartellino'+
+                        '</label>'+
+                        '</div>'+
+
+                        '<div class="col-sm-4" >'+
+                        '<label>'+
+                        //Inserire checkbox4 nel db e fare il controllo quando ritorna il json
+                        '<input type="checkbox" id="'+id+'stampac" '+obl+'>'+
+                        'Etichetta'+
+                        '</label>'+
+                        '</div>'+
+
+                        '</div>'+
+
+
+                        '<div  class="row">'+
+                        '<div class="col-sm-6">'+
+                        '<textarea class="form-control" rows="4" id="'+id+'_valori" placeholder="Lista valori: valore1;valore2;valore3;valore4*" value="'+object.options+'"></textarea>'+
+                        '<br>'+
+                        '</div>'+
+                        '<div class="col-sm-6">'+
+                        '<div class=row>'+
+                        '<div class="col-sm-10">'+
+                        '<input class="form-control" type="text" id="'+id+'_etichetta" placeholder="Etichetta" value="'+object.label+'">'+
+                        '</div>'+
+                        '</div>'+
+                        '<br>'+
+                        '<div class=row>'+
+                        '<div class="col-sm-10">'+
+                        '<input class="form-control" type="text" id="'+id+'_posizione" placeholder="Posizione" value="'+object.position+'">'+
+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="row">'+
+                        '<div class="col-sm-5">'+
+                        '<br>'+
+                        '<div class="btn-group btn-group-sm">'+
+                        '<button type="submit" class="btn btn-primary"  style="background-color:#781C27; border-color:#781C27;">Ripristina</button>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="col-sm-5">'+
+                        '<br>'+
+                        '<div class="btn-group btn-group-sm">'+
+                        '<button type="submit" class="btn btn-primary " onclick="saveOption(\''+id+'\',\''+label+'\',\''+section+'\')">Salva</button>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+
+                        '<label style="font-size:10px; color:#781C27;">'+
+                        '*La lista dei valori deve essere scritta separando i valori con un ";"'+
+                        '</label>'+
+                        '</div>';
+                }
+            });
+
+            $('#'+id+'_panel').html(fields);
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+}
+
+function saveOption(id, label, section){
+
+    var enabled =$('#'+id+'_check').prop('checked');
+    if(enabled== true){
+        enabled=true;
+    }else{
+        enabled=false;
+    }
+
+    var hidden =$('#'+id+'_visibile').prop('checked');
+    if(hidden== true){
+        hidden=false;
+    }else{
+        hidden=true;
+    }
+
+    var mobile = $('#'+id+'_mobile').prop('checked');
+    if(mobile==true){
+        mobile = 1;
+    }else{
+        mobile =0;
+    }
+
+    var open = $('#'+id+'_open').prop('checked');
+    if(open== true){
+        open = 1;
+    }else{
+        open=0;
+    }
+
+    var obl = $('#'+id+'_obbligatorio').prop('checked');
+    if(obl== true){
+        obl = 1;
+    }else{
+        obl=0;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/setFieldDetails",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: id, data:{enabled: enabled, label: $('#'+id+'_etichetta').val(), hidden: hidden, position:$('#'+id+'_posizione').val(),mobile:mobile, open_data: open, mandatory: obl,options:$('#'+id+'_valori').val()}},
+        dataType: "json",
+        success: function(data){
+            $('#'+id+'_panel').html("");
+            alert("Opzioni salvate");
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+}
+
+function salvaDetail(section){
+
+    $.ajax({
+        type: "GET",
+        url: json_url + "museums/getSectionDetail",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section},
+        dataType: "json",
+        success: function(data){
+            $.each(data.data, function (i, object) {
+                $.ajax({
+                    type: "POST",
+                    url: json_url + "museums/setFieldDetails",
+                    data:{ auth_token: urlParams('key'), "catalog":"default","section":section, field_id: object.id, data:{enabled: object.enabled}},
+                    dataType: "json",
+                    success: function(data){
+
+
+                    },
+                    error: function(){
+                        alert("Chiamata fallita, si prega di riprovare...");
+                    }
+                });
+
+            });
+            alert("Opzioni salvate");
+            $('#'+section+'_panel').html(" ");
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+
+
+
+}
+
+function salva_sectionNamePosition(id, section){
+    $.ajax({
+        type: "POST",
+        url: json_url + "museums/updateSection",
+        data:{ auth_token: urlParams('key'), "catalog":"default","section":section,"id":id, data:{"section_label":$('#'+section+'_etichetta').val(), visible:true}},
+        dataType: "json",
+        success: function(data){
+            alert("Sezione modificata");
+            $('#'+section+'_label').html($('#'+section+'_etichetta').val());
+        },
+        error: function(){
+            alert("Chiamata fallita, si prega di riprovare...");
+        }
+    });
+}
+
+
+
+function getSectionLabel(data, sectionName){
+    var sectionLabel = $.unique($.map(data.data, function(item){if(item.museum_section.section_name == sectionName){return item.museum_section.section_label;}}));
+    return sectionLabel;
+}
+function getPreview(){$.ajax({
+    type: "GET",
+    url: json_url + "museums/getSectionDetail",
+    data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
+    dataType: "json",
+    success: function(data){
+        if(data.error != null){
+            alert(JSON.stringify(data.error));
+
+        }
+        else{
+            //alert(JSON.stringify(data));
+            //alert(JSON.stringify(data.data));
+            
+	    var sezioni1 = $.map(data.data, function(item){return item.museum_section.section_name});
+	    //alert (sezioni1.length);
+
+	    sezioni1 = unique(sezioni1);
+	    //sezioni = $.unique(sezioni);
+	    //alert (JSON.stringify(sezioni1));
+            var campi;
+            var idsec="";
+            var fields="";
+
+            //costruzione html
+            fields += '<p><div class="well well-large">' +
+                    '<ul class="media-list">' +
+                    '<li class="media">' +
+                    '<div class="media-body">' +
+                    '<a class="pull-right" href="#">' +
+                    '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">' +
+                    '</a>' +
+                    '<div style="line-height:20px">' +
+                    '&nbsp;' +
+                    '</div>'
+            $campi = $.map(data.data, function(item){return item.label});
+            //alert($campi);
+            $.each(sezioni1, function (i, sezione) {
+                //per ogni elemento stampo l'html della sezione
+                //alert(sezione);
+
+                fields += '<div class="row">' +
+                        '<div class="col-sm-5 col-lg-5" style="width: 440px">' +
+                        '<div class="row">' +
+                        '<div class="label label-sezione flip" id="flip_s1" onclick="mostra(\''+sezione+'\')">' +  getSectionLabel(data,sezione)  + '</div>' +
+                        '<div class="sezione_panel" id="'+sezione+'_p" style="display:none">'
+
+
+
+                //genero la lista dei campi della sezione
+                campi = $.map(data.data, function(item){if(item.museum_section.section_name==sezione){return item.label}});
+                //per ogni elemento stampo l'html del campo
+                $.each(campi, function (a, campo) {
+                    //alert(campo);
+
+                    fields +='<span class="testotext">' +  campo  + '</span>' +
+                            '<div style="margin-bottom: 25px; margin-top:10px" class="input-group">' +
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>' +
+                            '<input type="text" class="form-control" style="width: 330px" id="'+ idsec +'" placeholder="' +  campo  + '">' +
+                            '</div>'
+
+                });
+
+                fields += '</div>' +
+                        '</div>' +
+                        '<br>'
+
+            });
+        }
+        $('#anteprima').html(fields);
+    },
+    error: function(){
+        alert("Chiamata fallita, si prega di riprovare...");}
+});
+}
+function mostra(id){
+    if(document.getElementById(id+'_p').style.display=="none"){
+        document.getElementById(id+'_p').style.display="";
+    }
+    else{
+        document.getElementById(id+'_p').style.display="none";
+    }
+}
+
+function getPreviewMobile(){$.ajax({
+    type: "GET",
+    url: json_url + "museums/getSectionDetail",
+    data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true,"mobile_eq":1}},
+    dataType: "json",
+    success: function(data){
+        if(data.error != null){
+            alert(JSON.stringify(data.error));
+
+        }
+        else{
+            //alert(JSON.stringify(data));
+            //alert(JSON.stringify(data.data));
+            var sezioni = $.unique($.map(data.data, function(item){return item.museum_section.section_name}));
+            //alert (JSON.stringify(sezioni));
+            var campi;
+            var fields="";
+
+            //costruzione html
+            fields += '<p><div class="well well-large">' +
+                '<a href="#">' +
+                '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">' +
+                '</a>' +
+                    '<ul class="media-list">' +
+                    '<li class="media">' +
+                    '<div class="media-body">' +
+                    //'<a class="pull-right" href="#">' +
+                    //'<img src="images/reperto.jpg" class="img img-thumbnail img-responsive">' +
+                    //'</a>' +
+                    '<div style="line-height:20px">' +
+                    '&nbsp;' +
+                    '</div>'
+            $campi = $.map(data.data, function(item){return item.label});
+            //alert($campi);
+            $.each(sezioni, function (i, sezione) {
+                //per ogni elemento stampo l'html della sezione
+                //alert(sezione);
+
+                fields +='<div class="row">' +
+                        '<div class="col-sm-5 col-lg-5" style="width: 440px">' +
+                        '<div class="row">' +
+                        '<span class="label label-sezione flip" id="flip_s1" onclick="mostraP(\''+sezione+'\')">' +  getSectionLabel(data,sezione)  + '</span>' +
+                        '<div class="sezione_panel"  id="'+sezione+'_pp" style="display:none">'
+
+
+
+                //genero la lista dei campi della sezione
+                campi = $.map(data.data, function(item){if(item.museum_section.section_name==sezione){return item.label}});
+                //per ogni elemento stampo l'html del campo
+                $.each(campi, function (a, campo) {
+                    //alert(campo);
+
+                    fields +='<span class="testotext">' +  campo  + '</span>' +
+                            '<div style="margin-bottom: 25px; margin-top:10px" class="input-group">' +
+                            '<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>' +
+                            '<input type="text" class="form-control" style="width: 330px" id="" placeholder="' +  campo  + '">' +
+                            '</div>'
+
+                });
+
+                fields += '</div>' +
+                        '</div>' +
+                        '<br>'
+
+            });
+        }
+        $('#anteprimaMobile').html(fields);
+    },
+    error: function(){
+        alert("Chiamata fallita, si prega di riprovare...");}
+});
+}
+
+function mostraP(id){
+    if(document.getElementById(id+'_pp').style.display=="none"){
+        document.getElementById(id+'_pp').style.display="";
+    } else{
+        document.getElementById(id+'_pp').style.display="none";
+    }
+}
+
+</script>
+
+</head>
+
+<body onload="getMuseum()">
+<div class="containermuseum">
+
+<img src="images/banner.jpg" class="img-responsive">
+<div class="lineb"></div>
+<div class="linec"></div>
+
+<p>
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav responsive nav-tabs visible-lg">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Museo</a></li>
+        <li><a href="#tab_2" data-toggle="tab" onclick="getSections()">Conf. Scheda</a></li>
+        <li><a href="#tab_3" data-toggle="tab" onclick="getPreview()">Anteprima Scheda</a></li>
+        <li><a href="#tab_4" data-toggle="tab" onclick="getPreviewMobile()">Anteprima Mobile</a></li>
+    </ul>
+
+
+    <ul class="nav nav-pills nav-stacked hidden-lg" style="text-align: center;">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Museo</a></li>
+        <li><a href="#tab_2" data-toggle="tab" onclick="getSections()">Conf. Scheda</a></li>
+        <li><a href="#tab_3" data-toggle="tab" onclick="getPreview()">Anteprima Scheda</a></li>
+        <li><a href="#tab_4" data-toggle="tab" onclick="getPreviewMobile()">Anteprima Mobile</a></li>
+    </ul>
+
+
+    <div class="col-lg-6">
+    </div>
+    <br class="hidden-lg">
+    <p class="hidden-lg"></p>
+    <div class="col-lg-3 col-md-9 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+        <label class="testol"></label>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="top: -25px; position:relative" align="right" id="nomeLogin">
+        <label class="testol"></label>
+    </div>
+    <div class="col-lg-1" style="top:-25px; position:relative" align="right">
+        <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    </div>
+
+
+
+    <div class="tab-content">
+
+
+    <div class="tab-pane active" id="tab_1">
+        <p>
+        <div class="well well-lg">
+        <div style="line-height:20px">
+           	&nbsp;
+        </div>
+        	<div class="row">
+            <div class="col-sm-6">	
+					<div class="form-group">
+
+                        <p class="testotext">Codice museo</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
+                        <input type="text" class="form-control" id="museo_id" placeholder="Codice museo">
+                        </div>
+
+                        <p class="testotext">Nome Museo</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <input type="text" class="form-control" id="name" placeholder="Nome museo">
+                        </div>
+
+                        <p class="testotext">Curatore</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" class="form-control" id="curatore" placeholder="Curatore">
+                        </div>
+
+                        <p class="testotext">Città</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <input type="text" class="form-control" id="city" placeholder="Città">
+                        </div>
+
+                        <p class="testotext">Indirizzo</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <input type="text" class="form-control" id="address" placeholder="Indirizzo">
+                        </div>
+
+                        <p class="testotext">Edificio/Facoltà</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tower"></i></span>
+                            <input type="text" class="form-control" id="edificio" placeholder="Edificio/Facoltà">
+                        </div>
+
+                        <p class="testotext">Telefono</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                        <input type="text" class="form-control" id="telephone" placeholder="Telefono">
+                        </div>
+
+                        <p class="testotext">Fax</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                            <input type="text" class="form-control" id="fax" placeholder="Fax">
+                        </div>
+
+                        <p class="testotext">Email</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                        </div>
+
+                        <p class="testotext">Logo</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <input type="text" class="form-control" id="logo" placeholder="Logo">
+                        </div>
+
+                        <p class="testotext">Sito web</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+                        <input type="text" class="form-control" id="website" placeholder="Sito web">
+                        </div>
+
+                        <p class="testotext">Orario di apertura</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        <input type="text" class="form-control" id="orario" placeholder="Orario di apertura">
+                        </div>
+
+                        <p class="testotext">Descrizione</p>
+                        <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <textarea class="form-control" rows="4" id="descrizione" placeholder="Descrizione"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-primary " onclick="updateMuseum()">Salva</button>
+                        </div>
+                        <input type="hidden" class="form-control" id="id">
+                </div>
+        </div>
+         	
+        <div class="col-sm-6">
+            <!--<div class="thumbnail" style="height: 460px; width: 460px; max-height: 625px; max-width: 460px;">
+            <img alt="450x600" style="height: 450px; width: 450px; max-height:615px; max-width:450px; display: block; background-color:#f5f5f5; text-align:center;">
+            </div>-->
+            <img src="images/sapienza.jpg" class="img img-thumbnail img-responsive" style="box-shadow: 5px 5px 10px 2px #35618F;">
+            <br>
+            <br>
+            <div class="row">
+                <!--<div class="col-sm-8">
+                </div>
+            <div class="col-sm-4">
+                <button class="btn btn-primary" onclick="carica_immagine()">Carica immagine</button>
+            </div>
+            </div>-->
+
+
+
+
+
+
+            </div>
+        </div>
+        </div>
+
+
+        </div>
+
+
+
+
+
+    </div><!-- tab_1 -->
+        
+        <div class="tab-pane" id="tab_2">
+          <p>
+            <div id="content"></div>
+
+        </div><!-- tab_2 -->
+
+        <!-- tab_3-->
+        <div class="tab-pane" id="tab_3">
+
+            <p id="anteprima"></p>
+        </div><!-- fine tab_3-->
+
+        <!-- tab_4-->
+        <div class="tab-pane" id="tab_4"><p id="anteprimaMobile"></p>
+        </div><!-- fine tab_4-->
+
+    </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Image</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
+
+    <script>
+      function urlParams(name){
+          var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          if (!results) {
+              return 0;
+          }
+          return results[1] || 0;
+      };
+
+      //da fare profilazione utente
+      //curl  -s http://127.0.0.1:3000/api/museums/getUsers?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{}'
+      function role(){
+
+         $.ajax({
+              type: "GET",
+              url: json_url + "museums/getUsers",
+              data:{ auth_token: urlParams('key')},
+              dataType: "json",
+              success: function(data){
+                  //alert(JSON.stringify(data));
+
+                  $.each(data.data,
+                          function (i, object) {
+                              //check auth_token
+                              var chiave = object.authentication_token;
+                              if(chiave==urlParams('key')){
+                                  //alert(object.nome);
+                                  //alert(object.cognome);
+                                  var f='<strong><label class="testol">'+object.nome+" "+object.cognome+'</label></strong>';
+                                  $('#nomeLogin').html(f);
+                              }else{
+                                  //alert("Authorization failed!");
+                              }
+                          }
+                  );
+              },
+              error: function()
+              {
+                  alert("Chiamata fallita, si prega di riprovare...");
+              }
+          });
+      }
+
+  //curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[label]="immagine allegata" -F image_file=@img2.gif
+  function saveImage(){
+
+      //alert("ciao");
+      var image=$('#miofile').val();
+      alert(image);
+      $.ajax({
+          type: "POST",
+          url: json_url + "museums/saveImage",
+
+          //museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[label]="immagine allegata" -F image_file=@img1.png
+          data:{"auth_token":"mc3axXVzHCxWxagts4CV","Content-Type": "multipart/form-data", "card_id":"127", "label":image},
+          dataType: "json",
+          success: function(data){//alert(data.error);
+              alert(JSON.stringify(data));
+              alert("Immagine inserita");
+          },
+          error: function(){
+              alert("Chiamata fallita, si prega di riprovare...");
+              //alert(data.error);
+              // alert(JSON.stringify(data));
+          }
+      });
+
+  }
+
+  </script>
+
+    <!-- Style preview Image Upload -->
+
+    <style type="text/css">
+        #imagePreview {
+            width: 60px;
+            height: 60px;
+            background-position: center center;
+            background-size: cover;
+            -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+            display: inline-block;
+            visibility: hidden;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#uploadFile").on("change", function()
+            {
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+                if (/^image/.test( files[0].type)){ // only image file
+                    var reader = new FileReader(); // instance of the FileReader
+
+                    reader.readAsDataURL(files[0]); // read the local file
+
+                    //alert(reader.readAsText(files));
+
+                    reader.onloadend = function(){ // set image data as background of div
+                        $("#imagePreview").css("background-image", "url("+this.result+")");
+                        $("#imagePreview").css("visibility", "visible");
+
+                        <!-- upload on server -->
+                        //saveImage(reader.readAsDataURL(files[0]));
+                        //saveImage();
+
+                    }
+                }
+            });
+        });
+    </script>
+
+
+</head>
+  <body onload="role()">
+
+  <!-- header -->
+  <div class="containermuseum">
+    <img src="images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+    <div class="linec"></div>
+    <br>
+
+      <ul id="litab" class="nav responsive nav-tabs">
+          <li id="litab1" ></li>
+      </ul>
+      <div class="col-lg-10">
+      </div>
+
+
+      <div class="col-lg-11" style="top:-26px; position:relative" align="right" id="nomeLogin">
+          <em><label class="testol"></label></em>
+      </div>
+      <div class="col-lg2" style="top:-25px; position:relative" align="right">
+          <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+      </div>
+      <br>
+  <!-- fine header -->
+
+
+      <div class="well well-lg">
+
+      <div class="row">
+          <div class="col-md-4"></div>
+            <!-- Show image before upload -->
+            <div class="col-md-2">
+                <input id="uploadFile" type="file" name="image" class="img" />
+            </div>
+            <div class="col-md-1">
+                <div id="imagePreview"></div>
+            </div>
+
+      </div>
+  </div>
+  </div>
+
+</body>
+</html>

@@ -1,47 +1,40 @@
 <!DOCTYPE html>
-
-
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
 
- <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Reperto</title>
 
-  <title>Reperto</title>
-  
-
-	<!-- Fogli di stile -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
- 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/museo.css" rel="stylesheet" media="screen">
 
-     <!-- respond.js per IE8 -->
-     <!--[if lt IE 9]>
-     <script src="js/respond.min.js"></script>
-     <![endif]-->
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-     <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-   
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
   <script>
       var $campi = '';
-      function urlParams(name){
-          var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-          if (!results) {
-              return 0;
-          }
-          return results[1] || 0;
-      };
+
       function loadCard(){
           if(urlParams('id_codscheda')>0){$.ajax({
               type: "GET",
-              url: "/api/museums/getCard",
+              url: json_url + "museums/getCard",
               data:{auth_token: urlParams('key'), id: urlParams('id_codscheda')},
               dataType: "json",
               success: function(data){
@@ -60,17 +53,17 @@
 
       }
 
-      var a=0
 
-      function slide(i){
-          for(var a=0; a==i; a++) {
 
-             // if(i==a) {
-                  $('#'+ i ).toggle();
-                  break;
-              //}
+      function mostra(id){
+          if(document.getElementById(id+'_p').style.display=="none"){
+              document.getElementById(id+'_p').style.display="";
+          }
+          else{
+              document.getElementById(id+'_p').style.display="none";
           }
       }
+
 
 
       function getSectionLabel(data, sectionName){
@@ -84,7 +77,7 @@
 
       function getReperto(){$.ajax({
           type: "GET",
-          url: "/api/museums/getSectionDetail",
+          url: json_url + "museums/getSectionDetail",
           data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
           dataType: "json",
           success: function(data){
@@ -117,12 +110,11 @@
 
                   $.each(sezioni, function (i, sezione) {
                       //per ogni elemento stampo l'html della sezione
-                      fields +='<div id="panel"   class="panel-collapse " onclick="slide('+ i +')">' +
-                              '<div class="row">' +
+                      fields +='<div class="row">' +
                               '<div class="col-sm-5 col-lg-5" style="width: 440px">' +
                               '<div class="row">' +
-                              '<span class="label label-sezione flip" id="flip_s1" >' +  getSectionLabel(data,sezione)  + '</span>' +
-                              '<div class="sezione_panel" id="'+ i +'">'
+                              '<span class="label label-sezione flip" id="flip_s1" onclick="mostra(\''+sezione+'\')" >' +  getSectionLabel(data,sezione)  + '</span>' +
+                              '<div class="sezione_panel" id="'+sezione+'_p" style="display:none">'
 
 
                       //prendo l'id della sezione per passarlo all'id dei campi
@@ -165,18 +157,60 @@
                         '</div>' +
                         '</div>' +
                         '</div>' +
-                        '</div>' +
                         '</div>' +//collapse
                         '</li>' +
                         '</ul>' +
                         '</div>'
               $('#reperto').append(fields);
+
               loadCard();
+              loadtab();
           },
           error: function(){
               alert("Chiamata fallita, si prega di riprovare...");}
       });
       }
+
+      function loadtab(){
+
+          if (urlParams('tab')==1){
+             // document.getElementById(#tab2).style.display="none";
+              alert (urlParams('tab'));
+              $('#litab3').css.hide();
+              $('#litab2').hide();
+
+              //$('.nav-tabs a[href=#tab2]').tab('hide') ;
+              //$('.nav-tabs a[href=#tab3]').tab('hide') ;
+
+              /*
+              $(document).ready(function(){
+                  $('#tabbable div').hide();
+                  $('#tabbable div:first').show();
+                  $('#tabbable ul li:first').addClass('active');
+                  $('#tabbable ul li a').click(function(){
+                              $('#tabbable div').hide();
+                              $('#tabbable ul li').removeClass('active');
+                              $(this).parent().addClass('active');
+                              var currentTab = $(this).attr('href');
+                              if($(currentTab).css('display')=='none'){
+                                  $(currentTab).show();
+                              }else{
+                                  $(currentTab).hide();
+                              }
+
+                          }
+                  );
+              });*/
+
+          }
+
+          //if(urlParams('id_codscheda')>0){$.ajax(
+
+
+      }
+
+
+
 
           function saveCard(){
               var cardData = {};
@@ -207,57 +241,9 @@
 
 
 
-      $(document).ready(function(){
 
-  		$("#flip").click(function(){
-			$("#panel").slideToggle("slow");
-		});
-
-		$("#flip2").click(function(){
-			$("#panel2").slideToggle("slow");
-		});
-
-		$("#flip3").click(function(){
-			$("#panel3").slideToggle("slow");
-		});
-
-		$("#flip4").click(function(){
-			$("#panel4").slideToggle("slow");
-		});
-
-		$("#flip5").click(function(){
-			$("#panel5").slideToggle("slow");
-		});
-
-		$("#flip6").click(function(){
-			$("#panel6").slideToggle("slow");
-		});
-		$("#flip7").click(function(){$("#panel7").slideToggle("slow");});
-		$("#flip8").click(function(){$("#panel8").slideToggle("slow");});
-		$("#flip9").click(function(){$("#panel9").slideToggle("slow");});
-		$("#flip10").click(function(){$("#panel10").slideToggle("slow");});
-		$("#flip11").click(function(){$("#panel11").slideToggle("slow");});
-
-		$("#flip_s1").click(function(){$("#panel_s1").slideToggle("slow");});
-		$("#flip_s2").click(function(){$("#panel_s2").slideToggle("slow");});
-		$("#flip_s3").click(function(){$("#panel_s3").slideToggle("slow");});
-
-	});
   </script>
 <script src="js/search.js"></script>
- <!-- <style type="text/css"> 
-		#panel,#flip,#panel2,#flip2,#panel3,#flip3,#panel4,#flip4,#panel5,#flip5,
-		#panel6,#flip6,#panel7,#flip7,#panel8,#flip8,#panel9,#flip9,#panel10,#flip10,#panel11,#flip11
-		{
-		text-align:left;
-		background-color:#f5f5f5;
-		}
-		#panel,#panel2,#panel3,#panel4,#panel5,#panel6,#panel7,#panel8,#panel9,#panel10,#panel11
-		{
-		display:none;
-		}
-  </style> -->
-
 
  </head>
  <body onload="getReperto()">
@@ -271,17 +257,17 @@
     
     <p>	 
     <div class="tabbable"> <!-- Only required for left/right tabs -->
-    	<ul class="nav responsive nav-tabs">
-    		<li class="active"><a href="#tab1" data-toggle="tab" onclick="getReperto()">Scheda Reperto</a></li>
-            <li><a href="#tab2" data-toggle="tab" onclick="renderFieldSearch()">Ricerca Reperto</a></li>
-            <li><a href="#tab3" data-toggle="tab">Risultati</a></li>
+    	<ul id="litab" class="nav responsive nav-tabs">
+    		<li id="litab1" class="active"><a href="#tab1" data-toggle="tab" onclick="getReperto()">Scheda Reperto</a></li>
+            <li id="litab2"><a href="#tab2" data-toggle="tab" onclick="renderFieldSearch()">Ricerca Reperto</a></li>
+            <li id="litab3 "><a href="#tab3" data-toggle="tab">Risultati</a></li>
              
         </ul>
         
 
      	<div class="col-lg-10">
      	</div>
-     	<div class="col-lg-2" style="top:-25px; position:relative"; align="right">
+     	<div class="col-lg-2" style="top:-25px; position:relative" align="right">
             <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
     	</div>
 
@@ -332,10 +318,6 @@
     </div>           
     
  	</p>
- <!-- jQuery e plugin JavaScript  -->
- <script src="http://code.jquery.com/jquery.js"></script>
- <script src="js/bootstrap.min.js"></script>
-
  </div>
  </body>
 </html>

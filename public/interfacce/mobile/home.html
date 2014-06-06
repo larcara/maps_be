@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestione Reperti</title>
+
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="../css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="../js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="../js/autentication.js"></script>
+
+    <script>
+        function logout_mobile(list) {
+            redirect("../login.html");
+        }
+    </script>
+
+</head>
+<body>
+<!-- cambio password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Cambio Password</h4>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                <form id="loginform" class="form-horizontal" role="form">
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="id_old_password" type="password" class="form-control" name="username" value="" placeholder="password attuale">
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="id_new_password" type="password" class="form-control" name="password" placeholder="nuova password">
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="id_check_password" type="password" class="form-control" name="password" placeholder="conferma nuova password">
+                    </div>
+
+
+
+                    <div class="input-group">
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+            <button type="button" class="btn btn-primary" onClick="changePassword()">Salva</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- fine cambio password -->
+
+<div class="containermuseum">
+    <img src="../images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+    <div class="linec"></div>
+
+    <ul id="litab" class="nav responsive nav-tabs">
+        <li id="litab1" ><label class="testol" onclick="logout_mobile()"  style="cursor: pointer;">Logout</label></li>
+    </ul>
+
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-3 col-md-9 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+        <em><label class="testol"></label></em>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="top: -25px; position:relative" align="right" id="nomeLogin">
+        <em><label class="testol"></label></em>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3" style="top:-25px; position:relative" align="right">
+        <a class="testol" href="#" onclick="javascript: location.href='home_m.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+    </div>
+<p>
+    <div class="well well-lg">
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="img-responsive">
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div align="center">
+                    <strong><label style="font-size:25px; color:#781C27; font-family: 'Arial Black', Gadget, sans-serif">Menù reperti</label></strong>
+                    <br>
+                </div>
+                <div style="line-height:10px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;" >
+                    <li class="active"><a href="#" onclick="javascript: location.href='nuovo_reperto_m.html?key=' + urlParams('key')">NUOVO REPERTO</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='ricerca_reperto_m.html?key=' + urlParams('key')">MODIFICA REPERTO</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
+                    <li class="active"><a href="#" onclick="javascript: location.href='ricerca_reperto_m.html?key=' + urlParams('key')">RICERCA AVANZATA REPERTI</a></li>
+                </ul>
+                <div style="line-height:5px">
+                    &nbsp;
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+
+    <!-- Button trigger modal -->
+    <p align="right">
+        <a href="#" class="ltesto" data-toggle="modal" data-target="#myModal" >Cambio Password</a>
+    </p>
+
+</div>
+    </p>
+</div>
+
+</body>
+</html>

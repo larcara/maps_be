@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ricerca Reperto</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
+<script>
+      var $campi = '';
+
+      function loadCard(){
+          if(urlParams('id_codscheda')>0){$.ajax({
+              type: "GET",
+              url: json_url + "museums/getCard",
+              data:{auth_token: urlParams('key'), id: urlParams('id_codscheda')},
+              dataType: "json",
+              success: function(data){
+                  //alert(JSON.stringify(data.data[0]));
+                  $.each(data.data[0], function (a, campo) {
+                      //alert(a);
+                      //alert(campo);
+                      $('#' + a).val(campo);
+                  });
+
+              },
+              error: function(){
+                  alert("Chiamata fallita, si prega di riprovare...");}
+          });
+          }
+
+      }
+
+
+
+      function mostra(id){
+          if(document.getElementById(id+'_p').style.display=="none"){
+              document.getElementById(id+'_p').style.display="";
+          }
+          else{
+              document.getElementById(id+'_p').style.display="none";
+          }
+      }
+
+
+
+      function getSectionLabel(data, sectionName){
+          var sectionLabel = $.unique($.map(data.data, function(item){if(item.museum_section.section_name == sectionName){return item.museum_section.section_label;}}));
+          return sectionLabel;
+      }
+      function getFieldLabel(data, fieldId){
+          var fieldLabel = $.unique($.map(data.data, function(item){if(item.field_name == fieldId){return item.label;}}));
+          return fieldLabel;
+      }
+
+      function getReperto(){$.ajax({
+          type: "GET",
+          url: json_url + "museums/getSectionDetail",
+          data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
+          dataType: "json",
+          success: function(data){
+              if(data.error != null){
+                  //alert(JSON.stringify(data.error));
+
+              }
+              else{
+                  //alert(JSON.stringify(data));
+                  //alert(JSON.stringify(data.data));
+                  var sezioni = $.unique($.map(data.data, function(item){return item.museum_section.section_name}));
+
+                  //alert (JSON.stringify(sezioni));
+                  var campi;
+                  //var idsezione= $.unique($.map(data.data, function(item){return item.museum_section.museum_section_id}));
+                  var fields="";
+
+                  //costruzione html
+                  fields += '<p><div class="well well-large">' +
+                          '<ul class="media-list">' +
+                          '<li class="media">' +
+                          '<div class="media-body">' +
+                          '<a class="pull-right" href="#">' +
+                          '<img src="images/reperto.jpg" class="img img-thumbnail img-responsive">' +
+                          '</a>' +
+                          '<div style="line-height:20px">' +
+                          '&nbsp;' +
+                          '</div>'
+                  $campi = $.map(data.data, function(item){return item.template_field_id});
+
+                  $.each(sezioni, function (i, sezione) {
+                      //per ogni elemento stampo l'html della sezione
+                      fields +='<div class="row">' +
+                              '<div class="col-sm-5 col-lg-5" style="width: 440px">' +
+                              '<div class="row">' +
+                              '<span class="label label-sezione flip" id="flip_s1" onclick="mostra(\''+sezione+'\')" >' +  getSectionLabel(data,sezione)  + '</span>' +
+                              '<div class="sezione_panel" id="'+sezione+'_p" style="display:none">'
+
+
+                      //prendo l'id della sezione per passarlo all'id dei campi
+
+
+                      //genero la lista dei campi della sezione
+                      campi = $.map(data.data, function(item){if(item.museum_section.section_name==sezione){return item.field_name}});
+                      //per ogni elemento stampo l'html del campo
+                       $.each(campi, function (a, campo) {
+                          //alert(campo);
+
+                          fields +='<span class="testotext">' +  getFieldLabel(data,campo)  + '</span>' +
+                                  '<div style="margin-bottom: 25px; margin-top:10px" class="input-group">' +
+                                  '<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>' +
+                                  '<input type="text" class="form-control" style="width: 330px" id="'+ campo +'" placeholder="' +  getFieldLabel(data,campo)  + '">' +
+                                  '</div>'
+
+                      });
+
+                      fields += '</div>' +
+                                '</div>' +
+
+                                '<br>'
+
+                  });
+              }
+
+
+
+              fields += '<br>' +
+                        '<div class="row">' +
+                        '<div class="col-lg-6">' +
+                        '<div class="input-group">' +
+                        '<button type="button" class="btn btn-primary " onclick="saveCard()">Salva</button>' +
+                        '</div>' +<!-- /input-group -->
+                        '</div>' +<!-- /.col-lg-6 -->
+                        '<div class="col-lg-6" align="right">' +
+                        '<button type="button" class="btn btn-primary ">Export</button>&nbsp;' +
+                        '<button type="button" class="btn btn-primary ">Print</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +//collapse
+                        '</li>' +
+                        '</ul>' +
+                        '</div>'
+              $('#reperto').append(fields);
+
+              loadCard();
+              loadtab();
+          },
+          error: function(){
+              alert("Chiamata fallita, si prega di riprovare...");}
+      });
+      }
+
+      function loadtab(){
+
+          if (urlParams('tab')==1){
+             // document.getElementById(#tab2).style.display="none";
+              alert (urlParams('tab'));
+              $('#litab3').css.hide();
+              $('#litab2').hide();
+
+              //$('.nav-tabs a[href=#tab2]').tab('hide') ;
+              //$('.nav-tabs a[href=#tab3]').tab('hide') ;
+
+              /*
+              $(document).ready(function(){
+                  $('#tabbable div').hide();
+                  $('#tabbable div:first').show();
+                  $('#tabbable ul li:first').addClass('active');
+                  $('#tabbable ul li a').click(function(){
+                              $('#tabbable div').hide();
+                              $('#tabbable ul li').removeClass('active');
+                              $(this).parent().addClass('active');
+                              var currentTab = $(this).attr('href');
+                              if($(currentTab).css('display')=='none'){
+                                  $(currentTab).show();
+                              }else{
+                                  $(currentTab).hide();
+                              }
+
+                          }
+                  );
+              });*/
+
+          }
+
+          //if(urlParams('id_codscheda')>0){$.ajax(
+
+
+      };
+
+
+
+
+          function saveCard(){
+              var cardData = {};
+              var listInput = $('input');
+              $.each(listInput, function (a, campo) {
+                  //alert(campo);
+                  cardData[campo.id] = $('#' + campo.id).val() || '';
+              });
+              //alert(JSON.stringify(cardData));
+              /*
+              $.ajax({
+                  type: "POST",
+                  url: json_url + "museums/saveCard",
+                  data:{"auth_token":urlParams('key'), "id":"", "data":cardData},
+                  dataType: "json",
+                  success: function(data){//alert(data.error);
+                      alert(JSON.stringify(data));
+                  },
+                  error: function(data){
+                      alert("Chiamata fallita, si prega di riprovare...");
+                      alert(data.error);
+                      alert(JSON.stringify(data));
+                  }
+              });
+              */
+          };
+
+  </script>
+<script src="js/search.js"></script>
+
+ </head>
+ <body onload="renderFieldSearch()">
+ <div class="containermuseum">
+ 	
+    
+  	<img src="images/banner.jpg" class="img-responsive">
+    <div class="lineb"></div>
+	<div class="linec"></div>
+
+    
+    <p>	 
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+    	<ul id="litab" class="nav responsive nav-tabs visible-lg">
+    		<!--<li id="litab1" class="active"><a href="#tab1" data-toggle="tab" onclick="getReperto()">Scheda Reperto</a></li>-->
+            <li class="active"><a href="#tab2" data-toggle="tab">Ricerca Reperto</a></li>
+            <li><a href="#tab3" data-toggle="tab">Risultati</a></li>
+             
+        </ul>
+
+
+     <ul class="nav nav-pills nav-stacked hidden-lg" style="text-align: center;">
+         <!--<li id="litab1" class="active"><a href="#tab1" data-toggle="tab" onclick="getReperto()">Scheda Reperto</a></li>-->
+         <li class="active"><a href="#tab2" data-toggle="tab">Ricerca Reperto</a></li>
+         <li><a href="#tab3" data-toggle="tab">Risultati</a></li>
+     </ul>
+
+        <div class="col-lg-5">
+        </div>
+     <br class="hidden-lg">
+     <p class="hidden-lg"></p>
+         <div class="col-lg-3 col-md-8 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+         <em><label class="testol"></label></em>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="top: -25px; position:relative" align="right" id="nomeLogin">
+         <em><label class="testol"></label></em>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-3" style="top:-25px; position:relative" align="right">
+         <a class="testol" href="#" onclick="javascript: location.href='reperti.html?key='+urlParams('key');"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Reperti</a>
+         <span class="testol"> | </span>
+         <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+        </div>
+
+        <div class="tab-content">
+
+    <!--Tab1-->
+
+          <div class="tab-pane" id="tab1"><p id="reperto"> </p></div>
+
+    <!--Tab1-->
+      		
+            
+      <div class="tab-pane active" id="tab2">
+        <p> 
+            <div class="well well-large">
+            	  	
+                <div class="form-group" id="searchParameter">
+
+
+                </div> <!-- chiusura form-group -->
+              <div class="form-group" align="left">
+                  <button type="submit" class="btn btn-primary " onclick="getResult()">Avvia Ricerca</button>
+              </div>
+
+            </div>
+
+      </div>
+ <!-- tab2 -->
+    		
+    		  
+    	<div class="tab-pane" id="tab3">
+            <p>
+            <div class="well well-lg">
+                <p>
+                    <div class="form-group">
+                        <h6><form class="form-horizontal">
+                            <div class="form-group" style="size:5px;" id="searchResultCount"></div>
+                        </form>
+                        </h6>
+                    </div>
+
+                <p>
+                    <div class="form-group" id="searchResultList"></div>
+                </p>
+            </div>
+            </p>
+        </div><!-- tab 4 -->
+          
+    	</div>
+    </div>           
+    
+ 	</p>
+ </div>
+ </body>
+</html>

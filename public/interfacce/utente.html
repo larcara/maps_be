@@ -20,8 +20,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
-  
-  
+     <script src="js/config.js"></script>
+
+     <!-- Controllo autenticazione utente -->
+    <script src="js/autentication.js"></script>
+
+
   
   <style type="text/css">
   body,td,th {
@@ -37,14 +41,6 @@
 
  <script>
      var modify = false;
-
-     function urlParams(name){
-         var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-         if (!results) {
-             return 0;
-         }
-         return results[1] || 0;
-     };
 
      function mail(){
          var id = urlParams('id');
@@ -63,10 +59,10 @@
      function createUser(){
          $.ajax({
          type: "POST",
-         url: "/api/museums/createUser",
-         data:{auth_token:urlParams('key'),user:{nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo").val(),
-             facolta:$("#facolta").val(), nascita_data:$("#bday").val(),nascita_luogo:$("#luogo").val(),
-             residenza_citta:$("#citta").val(), residenza_indirizzo:$("#indirizzo").val(),telefono:$("#telefono").val(),
+         url: json_url + "museums/createUser",
+         data:{auth_token:urlParams('key'),user:{nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo_di_studio").val(),
+             facolta:$("#facolta").val(), nascita_data:$("#nascita_data").val(),nascita_luogo:$("#nascita_luogo").val(),
+             residenza_citta:$("#residenza_citta").val(), residenza_indirizzo:$("#residenza_indirizzo").val(),telefono:$("#telefono").val(),
              email:$("#email").val(), password:$("#password").val(),role:$("#role").val()}},
          dataType: "json",
          success: function(data){//alert(data.error);
@@ -87,7 +83,7 @@
 
          $.ajax({
              type: "GET",
-             url: "/api/museums/getUsers",
+             url: json_url + "museums/getUsers",
              data:{auth_token:urlParams('key')},
              dataType: "json",
              success: function(data){
@@ -98,10 +94,10 @@
 		var fields = '';
                  $.each(data.data,
                          function (i, object) {
-                            fields += "<tr><td id='nome"+i+"'>"+object.nome + "</td>";
-                            fields += "<td id='cognome"+i+"'>"+object.cognome + "</td>";
-                            fields += "<td id='bday"+i+"'>"+object.bday + "</td>";
-                            fields += "<td id='telefono"+i+"'>"+object.telefono + "</td>";
+                            fields += "<tr><td id='nome"+i+"'>"+emptyValue(object.nome) + "</td>";
+                            fields += "<td id='cognome"+i+"'>"+emptyValue(object.cognome) + "</td>";
+                            fields += "<td id='nascita_data"+i+"'>"+emptyValue(object.nascita_data) + "</td>";
+                            fields += "<td id='telefono"+i+"'>"+emptyValue(object.telefono) + "</td>";
                             fields += "<td id='email"+i+"'>"+object.email + "</td>";
                             fields += "<td id='role"+i+"'>"+object.role + "</td>";
                             fields += "<td align= 'center'><a href='#' onclick='vai("+ JSON.stringify(object.email) + "," + JSON.stringify(object.id) +")'><span class='glyphicon glyphicon-pencil'></span></a>";
@@ -122,28 +118,35 @@
      }
 
      function removeUser(mail){
-         $.ajax({
-             type: "POST",
-             url: "/api/museums/destroyUser",
-             data:{auth_token:urlParams('key'), user:{email:mail, confirm_email:mail}},
-             dataType: "json",
-             success: function(data){//alert(data.error);
-                 alert(mail+" è stato eliminato");
-                 showUsers();
-             },
-             error: function(){
-                 alert("Chiamata fallita, si prega di riprovare...");}
-         });
+         var elimina = confirm("Sei sicuro di voler eliminare "+mail+"?")
+
+         if(elimina){
+             $.ajax({
+                 type: "POST",
+                 url: json_url + "museums/destroyUser",
+                 data:{auth_token:urlParams('key'), user:{email:mail, confirm_email:mail}},
+                 dataType: "json",
+                 success: function(data){//alert(data.error);
+                     alert(mail+" è stato eliminato");
+                     showUsers();
+                 },
+                 error: function(){
+                     alert("Chiamata fallita, si prega di riprovare...");}
+             });
+             alert("elimino");
+         } else {
+             return;
+         }
      }
 
      function modifyUser(id){
          $.ajax({
              type: "GET",
-             url: "/api/museums/getUsers",
+             url: json_url + "museums/getUsers",
              data:{auth_token:urlParams('key')},
              dataType: "json",
              success: function(data){
-
+                //alert(JSON.stringify(data.data));
                     $.each(data.data, function (i, object) {
                         if(object.id==id){
 
@@ -165,10 +168,10 @@
          var idUt = $('#id').val();
          $.ajax({
              type: "POST",
-             url: "/api/museums/updateUser",
-             data:{auth_token:urlParams('key'),user:{id: idUt, nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo").val(),
-                 facolta:$("#facolta").val(), nascita_data:$("#bday").val(),nascita_luogo:$("#luogo").val(),
-                 residenza_citta:$("#citta").val(), residenza_indirizzo:$("#indirizzo").val(),telefono:$("#telefono").val(),
+             url: json_url + "museums/updateUser",
+             data:{auth_token:urlParams('key'),user:{id: idUt, nome: $("#nome").val(), cognome:$("#cognome").val(),titolo_di_studio:$("#titolo_di_studio").val(),
+                 facolta:$("#facolta").val(), nascita_data:$("#nascita_data").val(),nascita_luogo:$("#nascita_luogo").val(),
+                 residenza_citta:$("#residenza_citta").val(), residenza_indirizzo:$("#residenza_indirizzo").val(),telefono:$("#telefono").val(),
                  email:$("#email").val(), password:$("#password").val(),role:$("#role").val()}},
              dataType: "json",
              success: function(data){
@@ -194,32 +197,36 @@
   
   <div class="lineb"></div>
   <div class="linec"></div>
-  
-   <!-- inizio  menu mobile -->
-   <!-- visible-xs  -->
 
-    <div class="btn-group visible-xs">
-        <ul class="nav nav-pills">
-            <li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
-            <li><a href="#tab2" data-toggle="tab">Lista</a></li>
-        </ul>
-    </div>
-   
-  
-  
-    <div class="tabbable"> <!-- Only required for left/right tabs -->
-    <ul class="nav nav-tabs hidden-xs">
-    	<li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
-    	<li><a href="#tab2" data-toggle="tab" onclick="showUsers()">Lista Utenti</a></li>
-    </ul>
-  
-     
-     	<div class="col-lg-10">
-     	</div>
-     	<div class="col-lg-2" style="top:-25px; position:relative" align="right">
-        	<a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
-    	</div>
-   
+  <!-- inizio  menu mobile -->
+  <!-- visible-xs  -->
+
+  <div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs visible-lg">
+      <li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
+      <li><a href="#tab2" data-toggle="tab" onclick="showUsers()">Lista Utenti</a></li>
+  </ul>
+
+
+  <ul class="nav nav-pills nav-stacked hidden-lg" style="text-align: center;">
+      <li class="active"><a href="#tab1" data-toggle="tab">Utente</a></li>
+      <li><a href="#tab2" data-toggle="tab" onclick="showUsers()">Lista Utenti</a></li>
+  </ul>
+
+
+  <div class="col-lg-6 col-xs-3">
+  </div>
+  <br class="hidden-lg">
+  <p class="hidden-lg"></p>
+  <div class="col-lg-3 col-md-8 col-sm-7 col-xs-6" style="top:-25px; position:relative" align="right" id="nomeMuseo">
+      <em><label class="testol"></label></em>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="top: -25px; position:relative" align="right" id="nomeLogin">
+      <em><label class="testol"></label></em>
+  </div>
+  <div class="col-lg-1 col-md-2 col-sm-2" style="top:-25px; position:relative" align="right">
+      <a class="testol" href="#" onclick="javascript: location.href='home.html?key='+urlParams('key');"><span class="glyphicon glyphicon-home"></span>&nbsp;Menù</a>
+  </div>
         
      <div class="tab-content">
     	<div class="tab-pane active" id="tab1">
@@ -259,7 +266,7 @@
                     <p class="testotext">Inserisci titolo di studio</p>
                 <div style="margin-bottom: 25px" class="input-group">
 	       			<span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
-	       			<input type="text" class="form-control" id="titolo" placeholder="Inserisci titolo di studio">
+	       			<input type="text" class="form-control" id="titolo_di_studio" placeholder="Inserisci titolo di studio">
              	</div>
                 </div>
                 </div>
@@ -282,7 +289,7 @@
                         <p class="testotext">Data di nascita</p>
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        <input id="bday" type="date" class="form-control" >
+                        <input id="nascita_data" type="date" class="form-control" >
                     </div>
                     </div>
                     </div>
@@ -295,7 +302,7 @@
                <p class="testotext">Inserisci luogo di nascita</p>
            <div style="margin-bottom: 25px" class="input-group">
 	       		<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-	      		<input type="text" class="form-control" id="luogo" placeholder="Inserisci luogo di nascita">
+	      		<input type="text" class="form-control" id="nascita_luogo" placeholder="Inserisci luogo di nascita">
 	       </div>
            </div>
            </div> 
@@ -307,7 +314,7 @@
                 <p class="testotext">Inserisci città di residenza</p>
             <div style="margin-bottom: 25px" class="input-group">
 	       		<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-	       		<input type="text" class="form-control" id="citta" placeholder="Inserisci città di residenza">
+	       		<input type="text" class="form-control" id="residenza_citta" placeholder="Inserisci città di residenza">
 		   </div>
            </div>
            </div>		      
@@ -319,7 +326,7 @@
                 <p class="testotext">Inserisci indirizzo di residenza</p>
             <div style="margin-bottom: 25px" class="input-group">
 	       		<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-	       		<input type="text" class="form-control" id="indirizzo" placeholder="Inserisci indirizzo di residenza">
+	       		<input type="text" class="form-control" id="residenza_indirizzo" placeholder="Inserisci indirizzo di residenza">
 		   	</div>
             </div>
             </div>		      
@@ -390,7 +397,7 @@
             </div>
            <br>
 
-	      <button type="button" class="btn btn-primary " onclick="javascript: if(modify==true){modifyUser2();}else{createUser();}">Submit</button>
+	      <button type="button" class="btn btn-primary " onclick="javascript: if(modify==true){modifyUser2();}else{createUser();}">Salva</button>
 
 
 		   
