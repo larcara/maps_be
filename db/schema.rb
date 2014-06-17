@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140601140332) do
+ActiveRecord::Schema.define(version: 20140617164550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 20140601140332) do
     t.string  "option_key"
     t.string  "field_type"
     t.boolean "custom"
+    t.boolean "pubblico"
   end
 
   create_table "cards", force: true do |t|
@@ -397,6 +398,7 @@ ActiveRecord::Schema.define(version: 20140601140332) do
     t.string   "custom_13"
     t.string   "custom_14"
     t.string   "custom_15"
+    t.string   "custom_0"
   end
 
   add_index "cards", ["id_codscheda", "museum_id"], name: "cards_index_1", unique: true, using: :btree

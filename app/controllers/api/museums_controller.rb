@@ -272,7 +272,7 @@ class API::MuseumsController < ApplicationController
       raise "il nome della sezione non è definito " if @section.blank?
 
 
-      position=params.fetch(:position, 1)
+      position=params.fetch(:position, 0)
       options=params.fetch(:options, nil)
       option_key=params.fetch(:option_key, nil)
       field_label=params.fetch(:field_label, field.field_label)

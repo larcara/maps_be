@@ -171,8 +171,9 @@ sezioni_campi.each_line do |l|
   campi=campi.map{|x| x.strip}
   f=TemplateField.create(field_name: campi[2], field_label: campi[3], field_description: campi[3], field_data_type: "varchar", custom: false)
   CardTemplateField.create(section_name: campi[0], section_label: campi[1] , template_field_id:f.id , label:f.field_label,
-                           enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom: false)
+                           enabled: true, hidden: false, position: 0, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom: false)
 end
+  TemplateField.create(field_name: "custom_0", field_label: "label_custom_0", field_description: "description_custom_0", field_data_type: "varchar",  custom: true)
 15.times do |i|
   TemplateField.create(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar",  custom: true)
 end

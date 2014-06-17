@@ -6,7 +6,23 @@ curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/js
 echo
 read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
 echo;echo;echo "Start saveCard ##############################"
-curl -s http://127.0.0.1:3000/api/museums/saveCard?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "id":"", "data":{"id_codscheda":"test_custom1", "custom_1":"valore2", "custom_2":"valore2"} }'
+curl -s http://127.0.0.1:3000/api/museums/saveCard?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "id":"", "data":{"id_codscheda":"test_custom1", "custom_0":"valore0", "custom_1":"valore2", "custom_2":"valore2"} }'
+echo;echo;echo  "Start getSectionDetail ALL FIELD ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"catalog":"default", "section":"*"}'
+
+echo;echo;echo  "Start getSectionDetail ALL FIELD for geodati_reperto ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"catalog":"default", "section":"geodati_reperto"}'
+
+echo;echo;echo  "Start getSectionDetail ALL FIELD for geodati_reperto ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{"catalog":"default", "section":"*", "filter":{"label_cont":"col"}}'
+
+echo;echo;echo  "Start getSectionDetail per DEFAULT section ubicazione_reperto ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"default", "section":"ubicazione_reperto"}'
+echo;echo;echo  "Start getSectionDetail per MOBILE section nuova_sezione ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"mobile", "section":"nuova_sezione"}'
+echo;echo;echo  "Start getSectionDetail FILTERED ##############################"
+curl  -s http://127.0.0.1:3000/api/museums/getSectionDetail?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{ "catalog":"default","section":"geodati_reperto", "filter":{"hidden_eq":"false"}}'
+
 exit
 clear
 
