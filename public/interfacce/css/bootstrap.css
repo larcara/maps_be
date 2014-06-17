@@ -2052,7 +2052,7 @@ output {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #555555;
+  color: #222222;
   vertical-align: middle;
   background-color: #ffffff;
   background-image: none;
@@ -2072,20 +2072,20 @@ output {
 }
 
 .form-control:-moz-placeholder {
-  color: #999999;
+  color: #bbbbbb;
 }
 
 .form-control::-moz-placeholder {
-  color: #999999;
+  color: #bbbbbb;
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #999999;
+  color: #bbbbbb;
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #999999;
+  color: #bbbbbb;
 }
 
 .form-control[disabled],

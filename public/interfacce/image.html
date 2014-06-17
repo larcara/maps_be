@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Fogli di stile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Image</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/museo.css" rel="stylesheet" media="screen">
+
+    <!-- Script jQuery/Modernizr-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Script di configurazione -->
+    <script src="js/config.js"></script>
+    <!-- Script di autenticazione -->
+    <script src="js/autentication.js"></script>
+
+    <script>
+  //curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[label]="immagine allegata" -F image_file=@img2.gif
+
+  function saveImage(){
+
+      //alert("ciao");
+      var image=$('#miofile').val();
+      alert(image);
+      $.ajax({
+          type: "POST",
+          url: json_url + "museums/saveImage",
+
+          //museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=$card_id -F image_data[label]="immagine allegata" -F image_file=@img1.png
+          data:{"auth_token":"mc3axXVzHCxWxagts4CV","Content-Type": "multipart/form-data", "card_id":"127", "label":image},
+          dataType: "json",
+          success: function(data){//alert(data.error);
+              //alert(JSON.stringify(data));
+              alert("Immagine inserita");
+          },
+          error: function(data){
+              alert("Chiamata fallita, si prega di riprovare...");
+              //alert(data.error);
+              // alert(JSON.stringify(data));
+          }
+      });
+
+  }
+
+</script>
+
+</head>
+  <body>
+
+
+</body>
+</html>

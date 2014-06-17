@@ -18,42 +18,16 @@
     <!-- Modernizr -->
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+     <script src="js/config.js"></script>
+     <!-- Controllo autenticazione utente -->
+    <script src="js/autentication.js"></script>
+
     
 
     <script>
-        function urlParams(name){
-            var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-            if (!results) {
-                return 0;
-            }
-            return results[1] || 0;
-        };
-        var nome;
-        function nomeMuseo(){
-
-            $.ajax({
-                type: "GET",
-                url: "/api/museums/getMuseumData",
-                data:{ auth_token: urlParams('key')},
-                dataType: "json",
-                success: function(data){
-                    nome = data.data.name;
-                    scrivi();
-                },
-                error: function(){
-                    alert("Chiamata fallita, si prega di riprovare...");}
-            });
-            scrivi();
-        };
-
-        function scrivi(){
-            var f='<strong><label style="font-size:25px; color:#781C27; font-family: Arial Black, Gadget, sans-serif">'+nome+'</label></strong>';
-            $('#mus').html(f);
-        };
-
-        function getMuseum(){$.ajax({
+         function getMuseum(){$.ajax({
             type: "GET",
-            url: "/api/museums/getMuseumData",
+            url: json_url + "museums/getMuseumData",
             data:{ auth_token: urlParams('key')},
             dataType: "json",
             success: function(data){//alert(data.error);
@@ -69,21 +43,96 @@
     </script>
     
 </head>
-<body onload="nomeMuseo()">
+<body onload="nomeMuseo(); setAgent('d')">
+
+
+<!-- cambio password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Cambio Password</h4>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                    <form id="loginform" class="form-horizontal" role="form">
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="id_old_password" type="password" class="form-control" name="username" value="" placeholder="password attuale">
+                        </div>
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="id_new_password" type="password" class="form-control" name="password" placeholder="nuova password">
+                        </div>
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="id_check_password" type="password" class="form-control" name="password" placeholder="conferma nuova password">
+                        </div>
+
+
+
+                        <div class="input-group">
+
+
+                    </form>
+
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" onClick="changePassword()">Salva</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fine cambio password -->
+
+
+
   <div class="containermuseum">
     <img src="images/banner.jpg" class="img-responsive">
     <div class="lineb"></div>
     <div class="linec"></div>
-    <p>
+
+
+      <ul id="litab" class="nav responsive nav-tabs">
+          <li id="litab1" ><label class="testol" onclick="logout()"  style="cursor: pointer;">Logout</label></li>
+      </ul>
+      <div class="col-lg-10">
+      </div>
+
+      <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="top:-26px; position:relative" align="right" id="nomeLogin">
+          <label class="testol"></label>
+      </div>
+      <p>
+    <!-- fine header -->
+
     <div class="well well-lg">
     	<div class="row">
  			
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-sm-3 col-md-4 col-xs-2">
                 <div class="img-responsive">
                 </div>
  			</div>
 		  	
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-sm-6 col-md-4 col-xs-8">
+
                 <div align="center" id="mus">
 
                 </div>
@@ -93,37 +142,31 @@
                 <div style="line-height:10px">
                         	&nbsp;
             	</div> 
-       			<ul class="nav nav-pills nav-stacked" style="text-align:center;" >
-                    <li class="active"><a href="#" onclick="javascript: location.href='museo.html?key=' + urlParams('key')">MUSEO</a></li>
-                </ul>
-                <div style="line-height:5px">
-                        	&nbsp;
-            	</div> 
-                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
-                    <li class="active"><a href="#" onclick="javascript: location.href='utente.html?key=' + urlParams('key')">GESTIONE UTENTI</a></li>
-                </ul>
-                <div style="line-height:5px">
-                        	&nbsp;
-            	</div>
-                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
-                    <li class="active"><a href="#" onclick="javascript: location.href='stampa.html?key=' + urlParams('key')">CONFIGURAZIONE STAMPE</a></li>
-                </ul>
-                <div style="line-height:5px">
-                        	&nbsp;
-            	</div>
-                <ul class="nav nav-pills nav-stacked" style="text-align:center;">
-                    <li class="active"><a href="#" onclick="javascript: location.href='reperti.html?key=' + urlParams('key')">GESTIONE REPERTI</a></li>
-                </ul>
+
+                <div id="menu">
+
+
+                </div>
+
                 <div style="line-height:5px">
                         	&nbsp;
             	</div>  
             </div>
  			
-            <div class="col-sm-4">
+            <div class="col-lg-4 col-sm-3 col-md-4 col-xs-2">
   
  			</div>
-	    </div>  
-    	
+	    </div>
+
+
+
+
+
+      <!-- Button trigger modal -->
+      <p align="right">
+        <a href="#" class="ltesto" data-toggle="modal" data-target="#myModal" >Cambio Password</a>
+      </p>
+
      </div>
     </p> 
   </div>

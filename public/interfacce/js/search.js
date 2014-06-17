@@ -19,9 +19,11 @@
             var fieldLabel = $.unique($.map(data.data, function(item){if(item.field_name == fieldId){return item.label;}}));
             return fieldLabel;
         }
-        function renderFieldSearch(){$.ajax({
+        function renderFieldSearch(){
+
+            $.ajax({
             type: "GET",
-            url: "/api/museums/getSectionDetail",
+            url: json_url + "museums/getSectionDetail",
             data:{auth_token: urlParams('key'), catalog: ('default'), section: ('*'),filter:{"enabled_eq":true}},
             dataType: "json",
             success: function(data){
@@ -45,11 +47,16 @@
                     });
                     $campi += '</select>';
                     $campi += '</div>';
+
                     //alert($campi);
                     $('#searchParameter').append('<div class="row"><div class="col-sm-5 col-lg-5"  id="searchRow"></div></div>');
-		    $('#searchRow').html($campi);
+
+		            $('#searchRow').append($campi);
+
                     $('#searchRow').append($operatore);
+
                     $('#searchRow').append($valore);
+
                     //$('#searchParameter').append('</div>');
                 }
             },
@@ -67,6 +74,17 @@
             var input = $('button#' + row.id);
             $.each(input, function(i){$(this).val(i+1);});
         }
+
+        function emptyValue(value) {
+            //alert(value);
+            if (value == null){
+                value = "";
+            } else {
+                value = value;
+            }
+            return value;
+        }
+
         function getResult(){
             $('.nav-tabs a[href=#tab3]').tab('show') ;
             var objFilter = {};
@@ -78,15 +96,15 @@
             }
             $.ajax({
             type: "POST",
-                    url: "/api/museums/findCard",
+                    url: json_url + "museums/findCard",
                     data:{auth_token: urlParams('key'),filter:objFilter},
             dataType: "json",
                     success: function(data){
-                        var fields = '<table class="table table-striped"><thead bgcolor="#CCCCCC"><tr><th>Codice</th><th>Oggetto</th><th>Descrizione</th><th>Link</th></tr></thead><tbody>';
+                        var fields = '<table class="table table-striped"><thead bgcolor="#CCCCCC"><tr><th>Codice</th><th>Oggetto</th><th>Descrizione</th><th>Scheda</th></tr></thead><tbody>';
                         var result = 0
                         $.each(data.data, function (i, object) {
-                            result = i+1
-                            fields +='<tr><td>' + object.id_codscheda + '</td><td>' + object.oggetto + '</td><td>' + object.descrizione + '</td><td><a href="reperto.html?key=' + urlParams('key') + '&id_codscheda=' + object.id + '">' + object.id + '</a></td></tr>';
+                           result = i+1
+                           fields +='<tr><td>' + object.id_codscheda + '</td><td>' + object.oggetto + '</td><td>' + emptyValue(object.descrizione) + '</td><td><a href="modifica_reperto.html?key=' + urlParams('key') + '&id_codscheda=' + object.id + '">' + object.id + '</a></td></tr>';
                         })
                         fields += '</tbody></table>';
                         if(result==1){
