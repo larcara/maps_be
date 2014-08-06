@@ -5,6 +5,14 @@ read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}' 
 echo
 read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
+
+echo;echo;echo "Start deleteCard ##############################"
+curl -s http://127.0.0.1:3000/api/museums/deleteImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"569", "image_id":"1" }'
+echo;echo;echo "Start deleteCard ##############################"
+curl -s http://127.0.0.1:3000/api/museums/deleteImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"5697", "image_id":"10" }'
+echo;echo;echo "Start deleteCard ##############################"
+curl -s http://127.0.0.1:3000/api/museums/deleteImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"5697", "image_id":"1" }'
+exit
 echo;echo;echo "Start saveCard ##############################"
 curl -s http://127.0.0.1:3000/api/museums/saveCard?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "id":"", "data":{"id_codscheda":"test_custom1", "custom_0":"valore0", "custom_1":"valore2", "custom_2":"valore2"} }'
 echo;echo;echo  "Start getSectionDetail ALL FIELD ##############################"

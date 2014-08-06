@@ -3,6 +3,7 @@ class ChangeValida < ActiveRecord::Migration
     remove_column :cards, :valida
     add_column :cards, :valida, :boolean
     Card.update_all(valida: true)
+
   end
   def down
     remove_column :cards, :valida

@@ -13,7 +13,7 @@ class CreateMuseumFields < ActiveRecord::Migration
         t.integer :open_data
         t.boolean :mandatory
         t.boolean :custom
-        t.string  :options
+        t.text  :options
         t.string  :option_key
         t.string  :field_type
       t.timestamps

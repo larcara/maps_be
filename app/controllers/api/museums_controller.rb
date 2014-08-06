@@ -123,7 +123,7 @@ class API::MuseumsController < ApplicationController
   end
   def setMuseumData
     begin
-      data=params.require(:museum).permit(:museo_id,:name,:city,:address,:telephone,:logo,:website, :curatore, :edificio, :fax, :email, :orario, :descrizione)
+      data=params.require(:museum).permit(:museo_id,:name,:city,:address,:telephone,:logo,:website, :curatore, :edificio, :fax, :email, :orario, :descrizione, :nome_direttore, :staff)
       image=params.fetch :image, nil
       delete_image=params.fetch :delete_image, false
 
@@ -446,6 +446,33 @@ class API::MuseumsController < ApplicationController
       end
 
 
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue RuntimeError => e
+      render json:{error: e.message, data: nil}
+    end
+  end
+
+  def deleteImage
+    begin
+      card_id=params.require :card_id
+      image_id=params.require :image_id
+      raise "utente non abilitato" unless @user.is_admin?
+      @card=@museum.cards.find(card_id)
+      raise "identificativo scheda non corretto o utente non abilitato" if @card.blank?
+
+      @image=@card.museum_images.find_by_id(image_id)
+      raise "identificativo immagine non corretto o utente non abilitato" if @image.blank?
+
+
+      if @image.destroy
+        render json: {error: nil, data: "immagine #{image_id} della scheda #{card_id} cancellata correttamente"}
+      else
+        render json: {error: @card.errors.full_messages, data: @card}
+      end
+
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "per il museo corrente non esiste nessuna scheda/imagine con le chiavi richieste", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue RuntimeError => e

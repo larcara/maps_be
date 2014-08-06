@@ -39,6 +39,7 @@ MapsBe::Application.routes.draw do
         post 'saveCard'
         post 'deleteCard'
         post 'saveImage'
+        post 'deleteImage'
       end
 
     end
