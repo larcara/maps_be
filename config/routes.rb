@@ -1,5 +1,6 @@
 MapsBe::Application.routes.draw do
 
+  #devise_for :living_museum_users
   #get "registrations/create"
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -8,6 +9,7 @@ MapsBe::Application.routes.draw do
   namespace :api, defaults: {format: :json} do
 
     devise_for :users,   module: "api"
+    devise_for :living_museum_users,   module: "api",  :controllers => {  :sessions=>"api/living_museum_sessions"}
     resource :museums do
       collection do
         get 'getMuseumData'
@@ -45,8 +47,26 @@ MapsBe::Application.routes.draw do
     end
     resource :config
     resources :options
+
     match "config/getSections", via: [:get, :post]
     match "config/getSectionFieldDetail", via: [:get, :post]
+    match "living_museum/reset", via: [:delete]
+    match "living_museum/createUser", via: [:post]
+    match "living_museum/requestResetPassword", via: [:post]
+    match "living_museum/resetPassword", via: [:post]
+
+    #match "living_museum/deleteUser", via: [:get, :post]
+    #match "living_museum/destroyUser", via: [:get, :post]
+
+    match "living_museum/searchCards", via: [:get]
+    match "living_museum/saveSearch", via: [:post]
+    match "living_museum/getSearch", via: [:get]
+    match "living_museum/listSearch", via: [:get]
+    match "living_museum/deleteSearch", via: [:delete]
+    #match "living_museum/exportCard", via: [:get, :post]
+
+
+
   end
 
 

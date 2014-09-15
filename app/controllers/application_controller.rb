@@ -30,6 +30,23 @@ class ApplicationController < ActionController::Base
       render json: { success: false, message: "Error with token #{auth_token.to_s} login or password"}, status: :unauthorized
     end
   end
+
+  def authenticate_living_museum_user_from_token!
+    auth_token = params[:auth_token].presence
+    @living_museum_user       = auth_token && LivingMuseumUser.find_by_authentication_token(auth_token.to_s)
+
+    if @living_museum_user
+      # Notice we are passing store false, so the user is not
+      # actually stored in the session and a token is needed
+      # for every request. If you want the token to work as a
+      # sign in token, you can simply remove store: false.
+      sign_in( @living_museum_user)
+      current_user=@living_museum_user
+    else
+      render json: { success: false, message: "Error with token #{auth_token.to_s} login or password"}, status: :unauthorized
+    end
+  end
+
   def authenticate_museum
     @museum=@user.museum
   end

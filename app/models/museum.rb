@@ -41,60 +41,60 @@ class Museum < ActiveRecord::Base
   def update_logo
     self.logo=image.url if self.image && self.image_file_name
   end
-def sections(catalog="default")
-  museum_sections.where(form_name: catalog)
-end
-
-def catalog(catalog="default")
-  museum_sections.where(form_name: catalog)
-end
-
-def museum_fields(catalog="default", section="")
-  if section==""
-    MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, form_name: catalog})
-  else
-    MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, section_name: section, form_name: catalog})
-  end
-end
-
-def availables_custom_fields(catalog="default")
-  ids_utilizzati=self.museum_fields(catalog).custom_fields.map(&:template_field_id)
-  if ids_utilizzati.any?
-    free_custom_fields = TemplateField.custom_fields.where(["id not in (?)",ids_utilizzati])
-  else
-    free_custom_fields = TemplateField.custom_fields
+  def sections(catalog="default")
+    museum_sections.where(form_name: catalog)
   end
 
-  free_custom_fields
-end
-
-def initMuseum(catalog="default")
-  #return if self.museum_sections.where(form_name: catalog).count > 0
-  return if self.museum_fields(catalog).count > 0
-
-  CardTemplateField.enabled.each do |t|
-    attrib=t.attributes.clone
-    attrib.delete("id")
-    section = self.museum_sections.find_or_initialize_by(form_name: catalog, section_name: attrib.delete("section_name"))
-    section.section_label=attrib.delete("section_label")
-    section.custom=false
-    section.visible=true
-    section.save
-    f=section.museum_fields.build( attrib)
-    f.card_template_field_id=t.id
-    f.save
+  def catalog(catalog="default")
+    museum_sections.where(form_name: catalog)
   end
-  self.save
-end
 
-def  section_fields(section_name, form_name='default')
-
-  if section_name=="*"
-    museum_fields(form_name)
-  else
-    museum_fields(form_name,section_name)
+  def museum_fields(catalog="default", section="")
+    if section==""
+      MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, form_name: catalog})
+    else
+      MuseumField.joins(:museum_section).where(museum_sections: {museum_id: self.id, section_name: section, form_name: catalog})
+    end
   end
-end
+
+  def availables_custom_fields(catalog="default")
+    ids_utilizzati=self.museum_fields(catalog).custom_fields.map(&:template_field_id)
+    if ids_utilizzati.any?
+      free_custom_fields = TemplateField.custom_fields.where(["id not in (?)",ids_utilizzati])
+    else
+      free_custom_fields = TemplateField.custom_fields
+    end
+
+    free_custom_fields
+  end
+
+  def initMuseum(catalog="default")
+    #return if self.museum_sections.where(form_name: catalog).count > 0
+    return if self.museum_fields(catalog).count > 0
+
+    CardTemplateField.enabled.each do |t|
+      attrib=t.attributes.clone
+      attrib.delete("id")
+      section = self.museum_sections.find_or_initialize_by(form_name: catalog, section_name: attrib.delete("section_name"))
+      section.section_label=attrib.delete("section_label")
+      section.custom=false
+      section.visible=true
+      section.save
+      f=section.museum_fields.build( attrib)
+      f.card_template_field_id=t.id
+      f.save
+    end
+    self.save
+  end
+
+  def  section_fields(section_name, form_name='default')
+
+    if section_name=="*"
+      museum_fields(form_name)
+    else
+      museum_fields(form_name,section_name)
+    end
+  end
 
 
 end

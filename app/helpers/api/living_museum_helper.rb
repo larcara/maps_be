@@ -1,0 +1,2 @@
+module API::LivingMuseumHelper
+end

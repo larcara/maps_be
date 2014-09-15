@@ -7,7 +7,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+AdminUser.create(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
 Museum.create!([
                    {museo_id: "RMSMUS15", name: "Museo di mineralogia", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
                    {museo_id: "RMSMUS06", name: "Museo del Vicino Oriente", city: "Roma", address: nil, telephone: nil, logo: nil, website: nil},
@@ -169,13 +169,22 @@ ubicazione_reperto	Ubicazione Reperto	sala	Sala'
 sezioni_campi.each_line do |l|
   campi=l.split("\t")
   campi=campi.map{|x| x.strip}
-  f=TemplateField.create(field_name: campi[2], field_label: campi[3], field_description: campi[3], field_data_type: "varchar", custom: false)
-  CardTemplateField.create(section_name: campi[0], section_label: campi[1] , template_field_id:f.id , label:f.field_label,
+  begin
+    f=TemplateField.create(field_name: campi[2], field_label: campi[3], field_description: campi[3], field_data_type: "varchar", custom: false)
+    CardTemplateField.create(section_name: campi[0], section_label: campi[1] , template_field_id:f.id , label:f.field_label,
                            enabled: true, hidden: false, position: 0, mobile: true, open_data: true, mandatory: false, options: "", option_key: nil, custom: false)
+  rescue
+  end
 end
+begin
   TemplateField.create(field_name: "custom_0", field_label: "label_custom_0", field_description: "description_custom_0", field_data_type: "varchar",  custom: true)
+rescue
+
+end
+
 15.times do |i|
-  TemplateField.create(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar",  custom: true)
+  t=TemplateField.new(field_name: "custom_#{i}", field_label: "label_custom_#{i}", field_description: "description_custom_#{i}", field_data_type: "varchar",  custom: true)
+  t.save rescue nil
 end
 
 User.create(email: "larcara+m1@gmail.com", password: "password", museum_id:1, role: "amministratore")

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'pg'
 #gem "mysql"
 #gem 'sqlite3'
@@ -11,6 +12,7 @@ gem 'devise'
 gem "paperclip", "~> 4.1"
 gem "ransack"
 gem "prawn"
+gem 'pg_search'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'

@@ -60,7 +60,7 @@ class API::MuseumsController < ApplicationController
       if @new_user.save
         render json: {error: nil, data: @new_user.as_json(except: [:created_at, :updated_at])}
       else
-        render json: {error:@new_user.errors, data: @new_user.as_json(except: [:created_at, :updated_at])}
+        render json: {error:@new_user.errors.full_messages, data: @new_user.as_json(except: [:created_at, :updated_at])}
       end
     rescue ActiveRecord::RecordNotFound => e
       render json:{error: [e.message,"l'id specificato non è valido"], data: nil}

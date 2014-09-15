@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  living_museum_user_id: 1
+  q: MyString
+  filter: MyText
+  sql: MyText
+  card_ids: MyText
+  public: false
+
+two:
+  living_museum_user_id: 1
+  q: MyString
+  filter: MyText
+  sql: MyText
+  card_ids: MyText
+  public: false

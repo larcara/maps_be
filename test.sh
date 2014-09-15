@@ -1,5 +1,78 @@
 #!/bin/bash
 
+
+
+
+#if [ false ]
+#then
+#    curl -s http://127.0.0.1:3000/api/living_museum/reset.json -X DELETE
+#    echo;echo;echo "Start Create User ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum/createUser.json -H "Content-Type: application/json" -X POST -d '{"email":"larcara+l1@gmail.com", "first_name":"nome", "last_name":"cognome", "password":"password"}'
+#    echo;echo;echo "Start Sign In User ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"password"}}'
+#    echo;echo;echo "Start Request Change Password ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum/requestResetPassword.json -H "Content-Type: application/json" -X POST -d '{"email":"larcara+l1@gmail.com"}'
+#    echo;echo;echo "Start Reset Password By Token ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum/resetPassword.json -H "Content-Type: application/json" -X POST -d '{"living_museum_user":{"new_password":"newpassword", "reset_password_token":"token1234"}}'
+#    echo;echo;echo "Start Sign In User with new password ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"newpassword"}}'
+#    echo;
+#    read -e -p "Copy token to contnue: " -i "fwzy9-iwWoRTaG8ojYw3" auth_token
+#    echo;echo;echo "Start Change Password ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum/resetPassword.json?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"living_museum_user":{"new_password":"newpassword2", "reset_password_token":"newpassword"}}'
+#    echo;echo;echo "Start Sign In User with new password ##############################"
+#    curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"newpassword2"}}'
+#    echo
+#    echo
+#    exit
+#fi
+
+
+curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"newpassword2"}}'
+echo
+read -e -p "Copy token to contnue: " -i "NCziBro_SvJ-4QqfenHw" confirm_token
+#echo;echo;echo "Start search for roma  max 5 cards  ##############################"
+#curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "limit":5}'
+echo
+echo;echo;echo "Start search for roma and epoca = Eneolitico max 5 cards  ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "epoca":"Eneolitico", "limit":5}'
+echo
+echo;echo;echo "Start save search for roma max 5 cards  ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/saveSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X POST -d '{"q":"vaso", "limit":5, "is_public":"0"}'
+echo
+echo;echo;echo "Start update search for roma and epoca = Eneolitico max 5 cards  ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/saveSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X POST -d '{"search_id":1,"q":"vaso", "epoca":"Eneolitico", "limit":5 , "is_public":"0"}'
+echo
+echo;echo;echo "Start get search id 1 ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/getSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"search_id":1}'
+echo
+echo;echo;echo "Start get search id 2 (other) ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/getSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"search_id":2}'
+echo
+
+echo;echo;echo "Start get search id 1000 (not found) ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/getSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"search_id":1000}'
+echo
+echo;echo;echo "Start list searches ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/listSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d ''
+echo
+echo;echo;echo "Start Delete search id 2 ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X DELETE -d '{"search_id":1}'
+echo
+echo;echo;echo "Start Delete search id 200 ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X DELETE -d '{"search_id":200}'
+echo
+
+exit
+
+
+
+echo
+curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"api_living_museum_user":{"email":"larcara+l1@gmail.com", "password":"password"}}'
+echo
+
+exit
+
 clear
 read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}' 
