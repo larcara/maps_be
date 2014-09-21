@@ -63,21 +63,27 @@ echo;echo;echo "Start Delete search id 200 ##############################"
 curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X DELETE -d '{"search_id":200}'
 echo
 
-exit
+
+clear
 
 
-
-echo
-curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"api_living_museum_user":{"email":"larcara+l1@gmail.com", "password":"password"}}'
-echo
-
-exit
 
 clear
 read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}' 
 echo
-read -e -p "Copy auth_token to contnue: " -i "KtW-g66iaLqsx-BPcATX" auth_token
+read -e -p "Copy auth_token to contnue: " -i "tyZRctcTg82bAXeHHLGF" auth_token
+
+echo "##### MUSEUM API - START Museum:"
+echo
+echo;echo;echo  "##### Start getMuseumData ##############################";echo
+curl  -s http://127.0.0.1:3000/api/museums/getMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{}'
+
+echo;echo;echo  "#######Start setMuseumData - aggiornamento senza image ##############################";echo
+curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"museum": { "name":"nuovo nome", "city":"Frattocchie", "website":"http://xxxxx" ,"address":"address","telephone":"telephone","logo":"logo", "curatore":"curatore", "edificio":"edificio", "fax":"fax", "email":"email", "orario":"orario", "descrizione":"descrizionedescrizionedescrizione", "nome_direttore":"nome_direttore", "staff":"staffstaffstaffstaffstaffstaffstaff"}}'
+
+exit
+
 
 echo;echo;echo "Start deleteCard ##############################"
 curl -s http://127.0.0.1:3000/api/museums/deleteImage?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{ "card_id":"569", "image_id":"1" }'
@@ -137,7 +143,7 @@ echo;echo;echo  "##### Start getMuseumData ##############################";echo
 curl  -s http://127.0.0.1:3000/api/museums/getMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X GET -d '{}'
 
 echo;echo;echo  "#######Start setMuseumData - aggiornamento senza image ##############################";echo
-curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"museum": { "name":"nuovo nome", "city":"Frattocchie", "website":"http://xxxxx"}}'
+curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -H "Content-Type: application/json" -X POST -d '{"museum": { "name":"nuovo nome", "city":"Frattocchie", "website":"http://xxxxx" ,"address":"address","telephone":telephone,"logo":"logo", "curatore":"curatore", "edificio":"edificio", "fax":"fax", "email":"email", "orario":"orario", "descrizione":"descrizionedescrizionedescrizione", "nome_direttore":"nome_direttore", "staff":"staffstaffstaffstaffstaffstaffstaff"}}'
 
 echo;echo;echo  "Start setMuseumData - aggiornamento con image ##############################"
 curl -s http://127.0.0.1:3000/api/museums/setMuseumData?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F museum[name]="altro nome" -F museum[address]="via roma" -F image=@img1.png
