@@ -17,9 +17,9 @@ class API::LivingMuseumController < ApplicationController
       last_name=params.require(:last_name)
 
       acct=LivingMuseumUser.new
-      password_token="test12345678"
+      #password_token="test12345678"
       acct.password=password
-      acct.reset_password_token= password_token
+      #acct.reset_password_token= password_token
       acct.email=email
       acct.last_name=last_name
       acct.first_name=first_name
@@ -42,7 +42,7 @@ class API::LivingMuseumController < ApplicationController
     begin
     email=params.require(:email)
     @living_museum_user = LivingMuseumUser.find_for_database_authentication(email:email)
-    password_token="token1234"
+    password_token=SecureRandom.uuid
     @living_museum_user.reset_password_token= password_token
     @living_museum_user.reset_password_sent_at = Time.now.utc
 
