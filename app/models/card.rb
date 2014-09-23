@@ -180,7 +180,7 @@ class Card < ActiveRecord::Base
                                    :localita, :localita_antica, :materia_tecnica,:nazione,:oldlocalita, :oldregione, :oldstato,
                                    :paese_antico,:provincia,:regione,:resp_scientifico_scavo,:secolo, :sistema, :sottoclasse, :specie,
                                    :specifiche_scavo,  :tipo,:stato,:txtspecie,:txtitalia, :sinonimi,  :varieta, :screditato, :formula,
-                                   :tallone, :collezione, :erboserie,:associazione, :legit, :stato_conservazione,
+                                   :tallone, :collezione, :erboserie, :legit, :stato_conservazione,
                                    :denominazione, :denominazione_scavo, :note_generiche, :bibliografia, :studio, :stato_conservazione, #TEXT
                                    :custom_0,:custom_1, :custom_2, :custom_3, :custom_4, :custom_5, :custom_6, :custom_7, :custom_8, :custom_9, :custom_10, :custom_11, :custom_12, :custom_13, :custom_14, :custom_15
                                    # NON RICERCATI
