@@ -17,6 +17,7 @@
 #  option_key        :string(255)
 #  field_type        :string(255)
 #  custom            :boolean
+#  pubblico          :boolean
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

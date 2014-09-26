@@ -14,11 +14,15 @@
 #  open_data              :integer
 #  mandatory              :boolean
 #  custom                 :boolean
-#  options                :string(255)
+#  options                :text
 #  option_key             :string(255)
 #  field_type             :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  stampa_a               :integer
+#  stampa_b               :integer
+#  stampa_c               :integer
+#  pubblico               :boolean
 #
 
 class MuseumField < ActiveRecord::Base

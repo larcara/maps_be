@@ -29,13 +29,14 @@ class API::LivingMuseumSessionsController < Devise::SessionsController
 
     def user_param
       unless p=params.require(:user_login).permit(:email,:password)
-        render json:{ success: false, message: "Missing :email,:password  parameter"}, status: :unprocessable_entity
+        render json:{ data: nil, success: false, error: "Missing :email,:password  parameter"}, status: :unprocessable_entity
       end
       p
     end
 
     def invalid_login_attempt
-      render json: { success: false, message: "Error with your login or password"}, status: :unauthorized
+      #render json: { success: false, message: "Error with your login or password"}, status: :unauthorized
+      render json: { success: false, data: nill, error: "Error with your login or password"}, status: :unauthorized
     end
     private
 

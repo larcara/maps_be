@@ -4,6 +4,44 @@ class API::MuseumsController < ApplicationController
   before_filter :authenticate_museum
   before_filter :allow_cross_domain_access
 
+  def import
+    begin
+      excel_file=params.fetch :excel_file, nil
+      raise "E' necessario un file excel per effettuare l'import di massa " if excel_file.nil?
+      #name = "#{Time.now.strftime("%GW%V%uT%H%M%S")}" #params[:file_excel].original_filename
+      filename = "#{Rails.root}/tmp/#{Time.now.strftime("%GW%V%uT%H%M%S")}"
+      #directory = "tmp"
+      #path = File.join(directory, name)
+      File.open(filename, "wb") { |f| f.write(params[:excel_file].read) }
+      @errors=[]
+      book = Spreadsheet.open filename
+      sheet1 = book.worksheet 0
+      counter=0
+      fields="id_codscheda	espositore	bibliografia	biblio_foto	binomio1	binomio2	binomio3	binomio4	denominazione	desc_collocazione	nome_acquisizione	diocesi	coor_asse_x	coor_asse_y	inprestito	cronologia_uso	zonato	sistema	dt_acquisizione	epoca	descrizione	famiglia	genere	gruppo	altra_def_oggetto	localita	nazione	restauri	num_fogli	oggetto	formula	pacco	provincia	quota	tallone	regione	costruttore	funzione	disponibilita	ripiano	sala	sinonimi	sottoclasse	specie	stato	stato_conservazione	tipo	varieta".split("\t")
+
+      row=sheet1.row(1)
+      check_header = row[1..48] != fields
+      raise "l'intestazione del file non è corretta " if check_header
+      sheet1.each 2 do |row|
+        card=@museum.cards.find_or_create_by(id_codscheda: row[1].to_s)
+        (2..48).each do |i|
+          attribute="#{fields[i-1].downcase.to_sym}=".to_sym
+          card.send(attribute, row[i]) if card.respond_to?( attribute)
+          card.save
+        end
+      end
+      File.delete(filename)
+
+      render json:{error: @errors, data: "importazione completata"}
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: [e.message,"l'id specificato non è valido"], data: nil}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s.message}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.message, data: nil}
+    end
+  end
+
   def index
     respond_to do |format|
       format.json {render json:  {error: nil, data: @museum.as_json(except: [:created_at, :updated_at])}}

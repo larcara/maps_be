@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: living_museum_user_searches
+#
+#  id                    :integer          not null, primary key
+#  living_museum_user_id :integer
+#  q                     :string(255)
+#  limit                 :integer
+#  filter                :text
+#  sql                   :text
+#  card_ids              :text
+#  public                :boolean
+#  created_at            :datetime
+#  updated_at            :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

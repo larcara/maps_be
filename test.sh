@@ -1,6 +1,17 @@
 #!/bin/bash
 
+clear
+read -e -p "################## PRESS ENTER KEY TO START ######################"
+curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}'
+echo
+read -e -p "Copy auth_token to contnue: " -i "tyZRctcTg82bAXeHHLGF" auth_token
 
+echo "##### MUSEUM API - START Museum:"
+echo
+echo;echo;echo  "##### Start import excel file  ##############################";echo
+curl  -s http://127.0.0.1:3000/api/museums/import?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F excel_file=@import.xls
+
+exit
 
 
 #if [ false ]

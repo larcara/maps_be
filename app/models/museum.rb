@@ -22,6 +22,8 @@
 #  email              :string(255)
 #  orario             :string(255)
 #  descrizione        :string(255)
+#  nome_direttore     :string(255)
+#  staff              :text
 #
 
 class Museum < ActiveRecord::Base

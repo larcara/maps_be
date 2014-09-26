@@ -42,6 +42,8 @@ MapsBe::Application.routes.draw do
         post 'deleteCard'
         post 'saveImage'
         post 'deleteImage'
+
+        post 'import'
       end
 
     end
