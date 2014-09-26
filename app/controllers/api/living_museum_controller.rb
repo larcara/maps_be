@@ -257,4 +257,47 @@ class API::LivingMuseumController < ApplicationController
 
   def exportCard
   end
+
+  def getCard
+    begin
+      id_card=params.require :id
+
+      raise "e' necessario l'id " if id_card.blank?
+
+      @card=Card.find(id_card)
+
+      museum=@card.museum
+      fields=museum.section_fields("*").where(pubblico: true)
+
+
+
+      render json: {error: nil, data: @card.as_json(only: fields.map{|x| x.field_name.to_sym }, include: :museum_images), fields: fields}
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.to_s, data: nil}
+    end
+
+  end
+  def getSectionDetail
+    begin
+      catalog=params.require :catalog
+      section=params.require :section
+      filter=params[:filter].presence
+
+      @fields=@museum.section_fields(section,catalog)
+      if filter
+        @fields=@fields.search(filter).result()
+      end
+
+      raise "Nessuna sezione con questi parametri" if @fields.blank?
+      render json: {error: nil, data: @fields.as_json(except: [:created_at, :updated_at], include: :museum_section)}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue RuntimeError => e
+      render json:{error: e.message, data: nil}
+    end
+  end
 end

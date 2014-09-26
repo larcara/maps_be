@@ -1,5 +1,18 @@
 #!/bin/bash
 
+
+curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"newpassword2"}}'
+echo
+read -e -p "Copy token to contnue: " -i "NCziBro_SvJ-4QqfenHw" confirm_token
+#echo;echo;echo "Start search for roma  max 5 cards  ##############################"
+#curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "limit":5}'
+echo
+echo;echo;echo "Start getCard for id 1##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/getCard.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"id":"1"}'
+
+exit
+
+
 clear
 read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}'
