@@ -220,11 +220,12 @@ class API::LivingMuseumController < ApplicationController
 
   def listSearch
     begin
-      @searches=LivingMuseumUserSearch.where(["living_museum_user_id = ? or public=true", @living_museum_user.id])
+      @my_searches=@living_museum_user.living_museum_user_searches
+      @public_searches=LivingMuseumUserSearch.where(["living_museum_user_id <> ? and public=true", @living_museum_user.id])
 
-      raise "No search found" if @searches.blank?
+      raise "No search found" if (@my_searches.blank? && @public_searches.blank?)
 
-      render json: {error: nil, data: @searches.as_json(except: [:living_museum_user_id, :sql, :created_at, :updated_at])}
+      render json: {error: nil, private: @my_searches.as_json(except: [:living_museum_user_id, :sql, :created_at, :updated_at]), public: @public_searches.as_json(except: [:living_museum_user_id, :sql, :created_at, :updated_at])}
 
     rescue ActiveRecord::RecordNotFound => e
       render json:{error: "record not found", data: nil}

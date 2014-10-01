@@ -52,7 +52,7 @@ MapsBe::Application.routes.draw do
 
     match "config/getSections", via: [:get, :post]
     match "config/getSectionFieldDetail", via: [:get, :post]
-    match "living_museum/reset", via: [:delete]
+    match "living_museum/reset", via: [:post]
     match "living_museum/createUser", via: [:post]
     match "living_museum/requestResetPassword", via: [:post]
     match "living_museum/resetPassword", via: [:post]
@@ -64,7 +64,7 @@ MapsBe::Application.routes.draw do
     match "living_museum/saveSearch", via: [:post]
     match "living_museum/getSearch", via: [:get]
     match "living_museum/listSearch", via: [:get]
-    match "living_museum/deleteSearch", via: [:delete]
+    match "living_museum/deleteSearch", via: [:post]
     #match "living_museum/exportCard", via: [:get, :post]
     match "living_museum/getCard", via: :get
 

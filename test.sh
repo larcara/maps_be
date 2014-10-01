@@ -81,10 +81,10 @@ echo;echo;echo "Start list searches ##############################"
 curl -s http://127.0.0.1:3000/api/living_museum/listSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d ''
 echo
 echo;echo;echo "Start Delete search id 2 ##############################"
-curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X DELETE -d '{"search_id":1}'
+curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X POST -d '{"search_id":1}'
 echo
 echo;echo;echo "Start Delete search id 200 ##############################"
-curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X DELETE -d '{"search_id":200}'
+curl -s http://127.0.0.1:3000/api/living_museum/deleteSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X POST -d '{"search_id":200}'
 echo
 
 
