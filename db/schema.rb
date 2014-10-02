@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912071051) do
+ActiveRecord::Schema.define(version: 20141002135053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,8 @@ ActiveRecord::Schema.define(version: 20140912071051) do
   end
 
   add_index "cards", ["id_codscheda", "museum_id"], name: "cards_index_1", unique: true, using: :btree
+  add_index "cards", ["nazione", "paese_antico", "provincia", "regione", "resp_scientifico_scavo", "secolo", "sistema", "sottoclasse", "specie", "specifiche_scavo", "tipo", "stato", "txtspecie", "txtitalia", "sinonimi", "varieta", "screditato", "formula", "tallone", "collezione", "erboserie", "legit", "stato_conservazione", "associazione", "denominazione", "denominazione_scavo", "note_generiche", "bibliografia", "studio", "stato_conservazione"], name: "for_fulltext_2", using: :btree
+  add_index "cards", ["regione", "colore", "oggetto", "abito", "ad_cristo", "altra_def_oggetto", "binomio1", "binomio2", "capacita", "classe", "contesto_ritrovamento", "costruttore", "cronologia_generica", "cronologia_uso", "definizione", "diocesi", "epoca", "famiglia", "fascia_cronologia_rif", "genere", "gruppo", "localita", "localita_antica", "materia_tecnica"], name: "for_fulltext_1", using: :btree
 
   create_table "living_museum_user_searches", force: true do |t|
     t.integer  "living_museum_user_id"

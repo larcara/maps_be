@@ -6,7 +6,18 @@ echo
 read -e -p "Copy token to contnue: " -i "NCziBro_SvJ-4QqfenHw" confirm_token
 #echo;echo;echo "Start search for roma  max 5 cards  ##############################"
 #curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "limit":5}'
+
+echo;echo;echo "Start list searches ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/listSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"public_search_limit":10}'
 echo
+echo;echo;echo "Start search for roma and epoca = Neolitico or Eneolitico and regione= Umbria or  Abbruzzo max 5 cards  ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "epoca":["Neolitico","Eneolitico"], "regione":["Umbria","Abruzzo"], "limit":5}'
+exit
+echo
+echo;echo;echo "Start save search for roma max 5 cards  ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/saveSearch.json?auth_token=$confirm_token -H "Content-Type: application/json" -X POST -d '{"q":"vaso", "limit":5, "is_public":"0"}'
+echo
+exit
 echo;echo;echo "Start getCard for id 1##############################"
 curl -s http://127.0.0.1:3000/api/living_museum/getCard.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"id":"1"}'
 

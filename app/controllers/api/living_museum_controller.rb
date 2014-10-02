@@ -206,6 +206,7 @@ class API::LivingMuseumController < ApplicationController
       elsif @user_search.living_museum_user_id != @living_museum_user.id
         raise "User not authorized to access this query"
       end
+      @user_search.touch
       render json: {error: nil, data: @user_search.as_json(except: [:living_museum_user_id, :sql, :created_at, :updated_at])}
 
     rescue ActiveRecord::RecordNotFound => e
@@ -220,8 +221,9 @@ class API::LivingMuseumController < ApplicationController
 
   def listSearch
     begin
+      public_search_limit=params.fetch :public_search_limit, 10
       @my_searches=@living_museum_user.living_museum_user_searches
-      @public_searches=LivingMuseumUserSearch.where(["living_museum_user_id <> ? and public=true", @living_museum_user.id])
+      @public_searches=LivingMuseumUserSearch.where(["living_museum_user_id <> ? and public=true", @living_museum_user.id]).order("updated_at desc").limit(public_search_limit)
 
       raise "No search found" if (@my_searches.blank? && @public_searches.blank?)
 
