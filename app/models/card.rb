@@ -223,4 +223,8 @@ class Card < ActiveRecord::Base
 
   :using => {:tsearch => {:prefix => true}}
 
+  def image_link
+    return "" if museum_images.blank?
+    museum_images.first.link
+  end
 end

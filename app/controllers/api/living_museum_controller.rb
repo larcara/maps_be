@@ -258,7 +258,27 @@ class API::LivingMuseumController < ApplicationController
     end
   end
 
-  def exportCard
+  def exportCards
+    begin
+      card_ids=params.require :card_ids
+      @cards=Card.find(card_ids)
+
+      xml = Builder::XmlMarkup.new(:indent=>2)
+
+
+      respond_to do |format|
+        format.json {render json: {error: "the export is avaiable only in xml", data: nil}}# index.html.erb
+        format.xml  # index.builder
+      end
+
+    rescue ActiveRecord::RecordNotFound => e
+      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+    rescue ActionController::ParameterMissing => e
+      render json:{error: {missing_parameter: e.to_s}, data: nil}
+    rescue  RuntimeError => e
+      render json:{error: e.to_s, data: nil}
+    end
+
   end
 
   def getCard
