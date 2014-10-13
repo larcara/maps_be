@@ -8,6 +8,9 @@ read -e -p "Copy token to contnue: " -i "NCziBro_SvJ-4QqfenHw" confirm_token
 #curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "limit":5}'
 echo;echo;echo "export XML Lido ##############################"
 curl -s http://127.0.0.1:3000/api/living_museum/exportCards.xml?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"card_ids":[100,200,300]}'
+#curl -s http://127.0.0.1:3000/api/living_museum/searchCards.json?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"q":"vaso", "limit":5}'
+echo;echo;echo "download  XML Lido ##############################"
+curl -s http://127.0.0.1:3000/api/living_museum/exportCards.xml?auth_token=$confirm_token -H "Content-Type: application/json" -X GET -d '{"card_ids":[100,200,300]}'
 echo
 exit
 

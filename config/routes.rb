@@ -66,6 +66,7 @@ MapsBe::Application.routes.draw do
     match "living_museum/listSearch", via: [:get]
     match "living_museum/deleteSearch", via: [:post]
     match "living_museum/exportCards", via: [:get, :post]
+    match "living_museum/downloadLidoXml", via: [:get, :post]
     match "living_museum/getCard", via: :get
 
 
