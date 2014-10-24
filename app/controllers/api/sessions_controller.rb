@@ -1,5 +1,5 @@
 class API::SessionsController < Devise::SessionsController
-  before_filter :authenticate_user!, except: [:create]
+  before_filter :authenticate_user!, except: [:new, :create]
   before_filter :allow_cross_domain_access
   #before_filter :ensure_user_login_param_exists, only: [:create]
   #before_filter :ensure_email_param_exists, only: [:create]

@@ -5,7 +5,7 @@ class API::LivingMuseumController < ApplicationController
 
 
   def reset
-    LivingMuseumUser.destroy_all
+    LivingMuseumUser.destroy_all if Rails.env.development?
     render json: {data: "reset ok"}
   end
 
@@ -274,7 +274,7 @@ class API::LivingMuseumController < ApplicationController
       end
 
     rescue ActiveRecord::RecordNotFound => e
-      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+      render json:{error: "alcune chiavi fornite non sono relative a schede valide", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue  RuntimeError => e
