@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class API::MuseumsController - Rails Application Documentation</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../ApplicationController.html">ApplicationController</a>
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-addFieldToSection">#addFieldToSection</a>
+    
+    <li ><a href="#method-i-createCatalog">#createCatalog</a>
+    
+    <li ><a href="#method-i-createSection">#createSection</a>
+    
+    <li ><a href="#method-i-createUser">#createUser</a>
+    
+    <li ><a href="#method-i-deleteCard">#deleteCard</a>
+    
+    <li ><a href="#method-i-deleteImage">#deleteImage</a>
+    
+    <li ><a href="#method-i-deleteSection">#deleteSection</a>
+    
+    <li ><a href="#method-i-destroyUser">#destroyUser</a>
+    
+    <li ><a href="#method-i-findCard">#findCard</a>
+    
+    <li ><a href="#method-i-getCard">#getCard</a>
+    
+    <li ><a href="#method-i-getCatalogs">#getCatalogs</a>
+    
+    <li ><a href="#method-i-getMuseumData">#getMuseumData</a>
+    
+    <li ><a href="#method-i-getProfile">#getProfile</a>
+    
+    <li ><a href="#method-i-getSectionDetail">#getSectionDetail</a>
+    
+    <li ><a href="#method-i-getSections">#getSections</a>
+    
+    <li ><a href="#method-i-getUsers">#getUsers</a>
+    
+    <li ><a href="#method-i-import">#import</a>
+    
+    <li ><a href="#method-i-index">#index</a>
+    
+    <li ><a href="#method-i-removeFieldFromSection">#removeFieldFromSection</a>
+    
+    <li ><a href="#method-i-saveCard">#saveCard</a>
+    
+    <li ><a href="#method-i-saveImage">#saveImage</a>
+    
+    <li ><a href="#method-i-setFieldDetails">#setFieldDetails</a>
+    
+    <li ><a href="#method-i-setMuseumData">#setMuseumData</a>
+    
+    <li ><a href="#method-i-updateSection">#updateSection</a>
+    
+    <li ><a href="#method-i-updateUser">#updateUser</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-API::MuseumsController">
+  <h1 id="class-API::MuseumsController" class="class">
+    class API::MuseumsController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-addFieldToSection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">addFieldToSection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="addFieldToSection-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 298</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addFieldToSection</span>
+  <span class="ruby-comment">#toDO se il nome è di default da nascondere</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+
+
+    <span class="ruby-identifier">field</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">availables_custom_fields</span>(<span class="ruby-identifier">catalog</span>).<span class="ruby-identifier">first</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;non ci sono campi custom disponibili&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-ivar">@section</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_sections</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">form_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">catalog</span>, <span class="ruby-identifier">section_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;il nome della sezione non è definito &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">blank?</span>
+
+
+    <span class="ruby-identifier">position</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:position</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">options</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:options</span>, <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">option_key</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:option_key</span>, <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">field_label</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:field_label</span>, <span class="ruby-identifier">field</span>.<span class="ruby-identifier">field_label</span>)
+
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">permit</span>(<span class="ruby-value">:field_label</span>, <span class="ruby-value">:enabled</span>, <span class="ruby-value">:hidden</span>, <span class="ruby-value">:position</span>,<span class="ruby-value">:mobile</span>, <span class="ruby-value">:open_data</span>, <span class="ruby-value">:mandatory</span>,<span class="ruby-value">:options</span>,<span class="ruby-value">:option_key</span>,<span class="ruby-value">:stampa_a</span>, <span class="ruby-value">:stampa_b</span>, <span class="ruby-value">:stampa_c</span>, <span class="ruby-value">:pubblico</span>)
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:label</span>]=<span class="ruby-identifier">data</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:field_label</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">data</span>[<span class="ruby-value">:field_label</span>]
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:template_field_id</span>]=<span class="ruby-identifier">field</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:enabled</span>]<span class="ruby-operator">||=</span><span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:mobile</span>]<span class="ruby-operator">||=</span><span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:custom</span>]=<span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:open_data</span>]<span class="ruby-operator">||=</span><span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:hidden</span>]<span class="ruby-operator">||=</span><span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-value">:mandatory</span>]<span class="ruby-operator">||=</span><span class="ruby-keyword">false</span>
+
+
+
+
+    <span class="ruby-comment">#@field=@section.museum_fields.build(template_field_id:field.id , label:field_label,</span>
+    <span class="ruby-comment">#                                    enabled: true, hidden: false, position: position, mobile: true, open_data: true,</span>
+    <span class="ruby-comment">#                                    mandatory: false, options: options, option_key: option_key, custom: true)</span>
+
+    <span class="ruby-ivar">@field</span>=<span class="ruby-ivar">@section</span>.<span class="ruby-identifier">museum_fields</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">data</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>], <span class="ruby-identifier">include</span><span class="ruby-operator">:</span> <span class="ruby-value">:museum_section</span>)}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-createCatalog" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">createCatalog</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="createCatalog-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">createCatalog</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value">:catalog</span>].<span class="ruby-identifier">presence</span>
+    <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">initMuseum</span>(<span class="ruby-identifier">catalog</span>)
+    <span class="ruby-identifier">getSections</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-createSection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">createSection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="createSection-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 253</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">createSection</span>
+  <span class="ruby-comment">#toDO se il nome è di default da nascondere</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-comment">#field=@museum.availables_custom_fields.first</span>
+
+    <span class="ruby-comment">#raise &quot;non ci sono campi custom disponibili&quot; if field.blank?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;il nome della sezione e' già utilizzato &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">sections</span>(<span class="ruby-identifier">catalog</span>).<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">include?</span> (<span class="ruby-identifier">section</span>)
+    <span class="ruby-ivar">@section</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_sections</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">form_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">catalog</span>, <span class="ruby-identifier">section_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>, <span class="ruby-identifier">section_label</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>, <span class="ruby-identifier">custom</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">visible</span><span class="ruby-value">:true</span>)
+    <span class="ruby-comment">#@field=@section.museum_fields.build(template_field_id:field.id , label:field.field_label,enabled: true, hidden: false, position: 1, mobile: true, open_data: true, mandatory: false, options: &quot;&quot;, option_key: nil, custom:true)</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-createUser" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">createUser</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="createUser-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">createUser</span>
+  <span class="ruby-keyword">begin</span>
+  <span class="ruby-identifier">p</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:user</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:email</span>,<span class="ruby-value">:password</span>,<span class="ruby-value">:role</span>,<span class="ruby-value">:nome</span>, <span class="ruby-value">:cognome</span>, <span class="ruby-value">:titolo_di_studio</span>, <span class="ruby-value">:facolta</span>, <span class="ruby-value">:nascita_data</span>, <span class="ruby-value">:nascita_luogo</span>, <span class="ruby-value">:residenza_indirizzo</span>, <span class="ruby-value">:residenza_citta</span>, <span class="ruby-value">:telefono</span>)
+  <span class="ruby-identifier">email</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:email</span>
+  <span class="ruby-identifier">password</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:password</span>
+  <span class="ruby-identifier">role</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:role</span>
+  <span class="ruby-ivar">@new_user</span>= <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">p</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@new_user</span>}
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-value">:@new_user</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-deleteCard" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleteCard</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="deleteCard-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 472</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deleteCard</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:id</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;utente non abilitato&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">is_admin?</span>
+    <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">id</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;identificativo scheda non corretto o utente non abilitato&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;scheda #{id} cancellata correttamente&quot;</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-deleteImage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleteImage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="deleteImage-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 493</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deleteImage</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">card_id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:card_id</span>
+    <span class="ruby-identifier">image_id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:image_id</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;utente non abilitato&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">is_admin?</span>
+    <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">card_id</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;identificativo scheda non corretto o utente non abilitato&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-ivar">@image</span>=<span class="ruby-ivar">@card</span>.<span class="ruby-identifier">museum_images</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">image_id</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;identificativo immagine non corretto o utente non abilitato&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">blank?</span>
+
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;immagine #{image_id} della scheda #{card_id} cancellata correttamente&quot;</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>}
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;per il museo corrente non esiste nessuna scheda/imagine con le chiavi richieste&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-deleteSection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleteSection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="deleteSection-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 276</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deleteSection</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-ivar">@section</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_sections</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">form_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">catalog</span>, <span class="ruby-identifier">section_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;utente non abilitato &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">is_admin?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;è possibile eliminare solo sezioni custom&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">is_custom?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;è possibile eliminare solo sezioni vuote&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">museum_fields</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;sezione eliminata con success&quot;</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-destroyUser" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroyUser</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="destroyUser-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroyUser</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">p</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:user</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:email</span>,<span class="ruby-value">:confirm_email</span>)
+    <span class="ruby-identifier">email</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:email</span>
+    <span class="ruby-identifier">confirm_email</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:confirm_email</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;le email non coincidono&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">confirm_email</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">email</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;utente non abilitato &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">is_admin?</span>
+
+    <span class="ruby-ivar">@new_user</span>= <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">email</span><span class="ruby-value">:email</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;utente non trovato &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">destroy!</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;utente #{email} eliminato&quot;</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-value">:@new_user</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-findCard" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">findCard</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="findCard-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 423</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">findCard</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">filter</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:filter</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-ivar">@cards</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">filter</span>).<span class="ruby-identifier">result</span>().<span class="ruby-identifier">limit</span>(<span class="ruby-value">100</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cards</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@cards</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">include</span><span class="ruby-operator">:</span> <span class="ruby-value">:museum_images</span>)}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;nessuna scheda con i filtri indicati&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;per il museo corrente non esiste nessuna scheda con la chiave richiesta&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getCard" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getCard</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getCard-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 400</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getCard</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">id_card</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:id</span>, <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">id_codscheda</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:id_codscheda</span>, <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;e' necessario un id o un codice_scheda &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">id_card</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">id_codscheda</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">id_card</span>
+      <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">id</span><span class="ruby-value">:id_card</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">id_codscheda</span><span class="ruby-operator">:</span> <span class="ruby-identifier">id_codscheda</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;le chiavi di ricerca specificate non corrispondono ad alcuna scheda del museo&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">include</span><span class="ruby-operator">:</span> <span class="ruby-value">:museum_images</span>)}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;per il museo corrente non esiste nessuna scheda con la chiave richiesta&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getCatalogs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getCatalogs</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getCatalogs-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getCatalogs</span>
+  <span class="ruby-identifier">catalogs</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_sections</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;distinct form_name&quot;</span>).<span class="ruby-identifier">to_a</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-identifier">catalogs</span>}
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getMuseumData" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getMuseumData</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getMuseumData-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 152</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getMuseumData</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getProfile" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getProfile</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getProfile-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getProfile</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getSectionDetail" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getSectionDetail</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getSectionDetail-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 212</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getSectionDetail</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">filter</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value">:filter</span>].<span class="ruby-identifier">presence</span>
+
+    <span class="ruby-ivar">@fields</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">section_fields</span>(<span class="ruby-identifier">section</span>,<span class="ruby-identifier">catalog</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-ivar">@fields</span>=<span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">filter</span>).<span class="ruby-identifier">result</span>()
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Nessuna sezione con questi parametri&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>], <span class="ruby-identifier">include</span><span class="ruby-operator">:</span> <span class="ruby-value">:museum_section</span>)}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getSections" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getSections</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getSections-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getSections</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:catalog</span>)
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value">:catalog</span>].<span class="ruby-identifier">presence</span>
+    <span class="ruby-identifier">filter</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value">:filter</span>].<span class="ruby-identifier">presence</span>
+
+    <span class="ruby-ivar">@sections</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">sections</span>(<span class="ruby-identifier">catalog</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-ivar">@sections</span>=<span class="ruby-ivar">@sections</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">filter</span>).<span class="ruby-identifier">result</span>()
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@sections</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-getUsers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getUsers</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getUsers-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getUsers</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-comment">#raise &quot;utente non abilitato &quot; unless @user.is_admin?</span>
+    <span class="ruby-ivar">@users</span>= <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">users</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@users</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-import" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">import</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="import-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">import</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">excel_file</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:excel_file</span>, <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;E' necessario un file excel per effettuare l'import di massa &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">excel_file</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-comment">#name = &quot;#{Time.now.strftime(&quot;%GW%V%uT%H%M%S&quot;)}&quot; #params[:file_excel].original_filename</span>
+    <span class="ruby-identifier">filename</span> = <span class="ruby-node">&quot;#{Rails.root}/tmp/#{Time.now.strftime(&quot;%GW%V%uT%H%M%S&quot;)}&quot;</span>
+    <span class="ruby-comment">#directory = &quot;tmp&quot;</span>
+    <span class="ruby-comment">#path = File.join(directory, name)</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-string">&quot;wb&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:excel_file</span>].<span class="ruby-identifier">read</span>) }
+    <span class="ruby-ivar">@errors</span>=[]
+    <span class="ruby-identifier">book</span> = <span class="ruby-constant">Spreadsheet</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>
+    <span class="ruby-identifier">sheet1</span> = <span class="ruby-identifier">book</span>.<span class="ruby-identifier">worksheet</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">counter</span>=<span class="ruby-value">0</span>
+    <span class="ruby-identifier">fields</span>=<span class="ruby-string">&quot;id_codscheda      espositore   bibliografia      biblio_foto  binomio1 binomio2        binomio3       binomio4      denominazione        desc_collocazione      nome_acquisizione    diocesi    coor_asse_x        coor_asse_y    inprestito cronologia_uso  zonato   sistema   dt_acquisizione   epoca     descrizione famiglia        genere gruppo  altra_def_oggetto        localita       nazione       restauri      num_fogli    oggetto    formula    pacco      provincia    quota      tallone      regione      costruttore  funzione disponibilita   ripiano   sala      sinonimi     sottoclasse specie  stato    stato_conservazione        tipo   varieta&quot;</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\t&quot;</span>)
+
+    <span class="ruby-identifier">row</span>=<span class="ruby-identifier">sheet1</span>.<span class="ruby-identifier">row</span>(<span class="ruby-value">1</span>)
+    <span class="ruby-identifier">check_header</span> = <span class="ruby-identifier">row</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">48</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">fields</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;l'intestazione del file non è corretta &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">check_header</span>
+    <span class="ruby-identifier">sheet1</span>.<span class="ruby-identifier">each</span> <span class="ruby-value">2</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">find_or_create_by</span>(<span class="ruby-identifier">id_codscheda</span><span class="ruby-operator">:</span> <span class="ruby-identifier">row</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_s</span>)
+      (<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">48</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">attribute</span>=<span class="ruby-node">&quot;#{fields[i-1].downcase.to_sym}=&quot;</span>.<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-identifier">card</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">row</span>[<span class="ruby-identifier">i</span>]) <span class="ruby-keyword">if</span> <span class="ruby-identifier">card</span>.<span class="ruby-identifier">respond_to?</span>( <span class="ruby-identifier">attribute</span>)
+        <span class="ruby-identifier">card</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">filename</span>)
+
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@errors</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;importazione completata&quot;</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> [<span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>,<span class="ruby-string">&quot;l'id specificato non è valido&quot;</span>], <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">message</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> {<span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span>  {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-removeFieldFromSection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">removeFieldFromSection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="removeFieldFromSection-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 348</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">removeFieldFromSection</span>
+  <span class="ruby-comment">#toDO se il nome è di default da nascondere</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">field_id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:field_id</span>
+
+    <span class="ruby-ivar">@field</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_fields</span>(<span class="ruby-identifier">catalog</span>,<span class="ruby-identifier">section</span>).<span class="ruby-identifier">custom_fields</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">id</span><span class="ruby-value">:field_id</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;l'utente non è abilitato &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">is_admin?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;il campo custom richiesto non esiste nella scheda specificata&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-ivar">@field</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">fields</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">field_id</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;l'id specificatonon è valido&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-saveCard" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">saveCard</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="saveCard-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 444</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">saveCard</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:data</span>
+    <span class="ruby-identifier">id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:id</span>, <span class="ruby-value">0</span>
+    <span class="ruby-identifier">errors</span>=[]
+    <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_i</span>)
+    <span class="ruby-ivar">@card</span><span class="ruby-operator">||=</span><span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">build</span>
+    <span class="ruby-identifier">data</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-comment"># nome_campo_db: valore1</span>
+      <span class="ruby-identifier">attribute</span>=<span class="ruby-node">&quot;#{k.downcase.to_sym}=&quot;</span>.<span class="ruby-identifier">to_sym</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">respond_to?</span>( <span class="ruby-identifier">attribute</span>)
+        <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">v</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;il campo #{attribute} non esite&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> [<span class="ruby-identifier">errors</span>, <span class="ruby-ivar">@card</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>], <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@card</span>}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-saveImage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">saveImage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="saveImage-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 520</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">saveImage</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">card_id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:card_id</span>
+
+    <span class="ruby-identifier">image_data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:image_data</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:label</span>, <span class="ruby-value">:link</span>, <span class="ruby-value">:id</span>, <span class="ruby-value">:tipologia</span>)
+    <span class="ruby-identifier">image_file</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:image_file</span>, <span class="ruby-keyword">nil</span>
+
+
+
+    <span class="ruby-ivar">@card</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">cards</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">card_id</span>)
+    <span class="ruby-ivar">@image</span>=<span class="ruby-ivar">@card</span>.<span class="ruby-identifier">museum_images</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">image_data</span>[<span class="ruby-value">:id</span>])
+
+    <span class="ruby-ivar">@image</span><span class="ruby-operator">||=</span><span class="ruby-ivar">@card</span>.<span class="ruby-identifier">museum_images</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">label</span><span class="ruby-operator">:</span> <span class="ruby-identifier">image_data</span>[<span class="ruby-value">:label</span>], <span class="ruby-identifier">tipologia</span><span class="ruby-operator">:</span> <span class="ruby-identifier">image_data</span>[<span class="ruby-value">:tipologia</span>])
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">image_file</span>
+      <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">image</span>=<span class="ruby-identifier">image_file</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">image</span>=<span class="ruby-keyword">nil</span>
+      <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">link</span>=<span class="ruby-identifier">image_data</span>[<span class="ruby-value">:link</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@image</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@image</span>}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;per il museo corrente non esiste nessuna scheda con la chiave richiesta&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-setFieldDetails" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setFieldDetails</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="setFieldDetails-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 375</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setFieldDetails</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">field_id</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:field_id</span>
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:data</span>
+    <span class="ruby-ivar">@field</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_fields</span>(<span class="ruby-identifier">catalog</span>).<span class="ruby-identifier">where</span>(<span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">field_id</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;il campo richiesto non esiste nella scheda specificata&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value">:data</span>]
+    <span class="ruby-ivar">@field</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">fields</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@field</span>.<span class="ruby-identifier">id</span>)
+    <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">data</span>.<span class="ruby-identifier">permit</span>(<span class="ruby-value">:label</span>, <span class="ruby-value">:enabled</span>, <span class="ruby-value">:hidden</span>, <span class="ruby-value">:position</span>,<span class="ruby-value">:mobile</span>, <span class="ruby-value">:open_data</span>, <span class="ruby-value">:mandatory</span>,<span class="ruby-value">:options</span>,<span class="ruby-value">:option_key</span>,<span class="ruby-value">:stampa_a</span>, <span class="ruby-value">:stampa_b</span>, <span class="ruby-value">:stampa_c</span>,<span class="ruby-value">:pubblico</span>))
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@field</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;l'id specificatonon è valido&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-setMuseumData" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setMuseumData</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="setMuseumData-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 161</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setMuseumData</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:museum</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:museo_id</span>,<span class="ruby-value">:name</span>,<span class="ruby-value">:city</span>,<span class="ruby-value">:address</span>,<span class="ruby-value">:telephone</span>,<span class="ruby-value">:logo</span>,<span class="ruby-value">:website</span>, <span class="ruby-value">:curatore</span>, <span class="ruby-value">:edificio</span>, <span class="ruby-value">:fax</span>, <span class="ruby-value">:email</span>, <span class="ruby-value">:orario</span>, <span class="ruby-value">:descrizione</span>, <span class="ruby-value">:nome_direttore</span>, <span class="ruby-value">:staff</span>)
+    <span class="ruby-identifier">image</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:image</span>, <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">delete_image</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:delete_image</span>, <span class="ruby-keyword">false</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;non è possibile specificare contemporaneamente logo ed effettuare l'upload di un immagine&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">image</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">data</span>[<span class="ruby-value">:logo</span>].<span class="ruby-identifier">blank?</span>
+
+
+    <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">attributes</span>=<span class="ruby-identifier">data</span>
+
+    <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">image</span>=<span class="ruby-identifier">image</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">image</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">delete_image</span>
+      <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">image</span>=<span class="ruby-keyword">nil</span>
+      <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">logo</span>=<span class="ruby-identifier">data</span>[<span class="ruby-value">:logo</span>]
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;per il museo corrente non esiste nessuna scheda con la chiave richiesta&quot;</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-updateSection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">updateSection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="updateSection-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">updateSection</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">catalog</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:catalog</span>
+    <span class="ruby-identifier">section</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">data</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:data</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:section_label</span>, <span class="ruby-value">:visible</span>, <span class="ruby-value">:position</span>)
+    <span class="ruby-ivar">@section</span>=<span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">museum_sections</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">form_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">catalog</span>, <span class="ruby-identifier">section_name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">section</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Sezione non disponibile nel catalogo indicato&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">data</span>)
+      <span class="ruby-identifier">render</span>  <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span>  <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-updateUser" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">updateUser</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="updateUser-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/museums_controller.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">updateUser</span>
+  <span class="ruby-keyword">begin</span>
+
+
+    <span class="ruby-identifier">p</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:user</span>).<span class="ruby-identifier">permit</span>(<span class="ruby-value">:id</span>,<span class="ruby-value">:email</span>,<span class="ruby-value">:password</span>,<span class="ruby-value">:role</span>,<span class="ruby-value">:nome</span>, <span class="ruby-value">:cognome</span>, <span class="ruby-value">:titolo_di_studio</span>, <span class="ruby-value">:facolta</span>, <span class="ruby-value">:nascita_data</span>, <span class="ruby-value">:nascita_luogo</span>, <span class="ruby-value">:residenza_indirizzo</span>, <span class="ruby-value">:residenza_citta</span>, <span class="ruby-value">:telefono</span>)
+    <span class="ruby-identifier">id</span>=<span class="ruby-identifier">p</span>.<span class="ruby-identifier">require</span> <span class="ruby-value">:id</span>
+
+    <span class="ruby-identifier">password</span>=<span class="ruby-identifier">p</span>[<span class="ruby-value">:password</span>].<span class="ruby-identifier">presence</span>
+    <span class="ruby-identifier">role</span>=<span class="ruby-identifier">p</span>[<span class="ruby-value">:role</span>].<span class="ruby-identifier">presence</span>
+
+    <span class="ruby-ivar">@new_user</span>= <span class="ruby-ivar">@museum</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+
+    <span class="ruby-comment">#raise &quot;utente non abilitato &quot; if (!@user.is_admin? ||  @new_user.id === @user.id)</span>
+
+    <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">p</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">error</span><span class="ruby-value">:@new_user</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>])}
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> [<span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>,<span class="ruby-string">&quot;l'id specificato non è valido&quot;</span>], <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">ParameterMissing</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">missing_parameter</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">message</span>}, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">rescue</span>  <span class="ruby-constant">RuntimeError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span>{{<span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>}
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

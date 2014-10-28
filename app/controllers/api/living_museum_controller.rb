@@ -288,10 +288,15 @@ class API::LivingMuseumController < ApplicationController
       card_ids=params.require :card_ids
       @cards=Card.find(card_ids)
 
-      xml = Builder::XmlMarkup.new(:indent=>2)
+      final=""
+      xml = Builder::XmlMarkup.new(target: final, :indent=>2)
+      #def xml.inspect; target!; end
+      #def xml.to_s; target!; end
       xml.instruct! :xml, :version=>"1.0", :encoding=>"UTF-8"
-      xml.tag!('lido:lidoWrap', {"xmlns:lido"=>"http://www.lido-schema.org",
-                                 "xsi:schemaLocation"=>"http://www.lido-schema.org/schema/v1.0/lido-v1.0.xsd"}) do
+      #xml.tag!('lido:lidoWrap', {"xmlns:lido"=>"http://www.lido-schema.org","xsi:schemaLocation"=>"http://www.lido-schema.org/schema/v1.0/lido-v1.0.xsd"}) do
+      xml.tag!('lido:lidoWrap', {"xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instance",
+                                 "xsi:schemaLocation"=>"http://www.lido-schema.org http://www.lido-schema.org/schema/v1.0/lido-v1.0.xsd",
+                                 "xmlns:lido"=>"http://www.lido-schema.org"}) do
         @cards.each do |card|
           xml.tag!("lido:lido") do
             xml.tag!("lido:lidoRecID", {"lido:type"=>"local" , "lido:source"=>card.museum.name}, "PMS-#{card.museum.museo_id}/obj#{card.id_codscheda}")
@@ -377,9 +382,13 @@ class API::LivingMuseumController < ApplicationController
       end
 
 
-      send_data xml, :type => xml.content_type, :disposition => 'attach', :filename => 'file.xml'
+
+      send_data final, :type => 'text/xml; charset=UTF-8;', :disposition => 'attachment; filename=file.xml'
 
 
+
+
+    return
 
     rescue ActiveRecord::RecordNotFound => e
       render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
