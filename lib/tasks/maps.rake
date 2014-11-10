@@ -49,6 +49,8 @@ namespace :maps do
 
   desc "genera xml open data - usage: rake genera_open_data "
   task :genera_open_data => :environment do
+    include Rails.application.routes.url_helpers
+    Rails.application.routes.default_url_options[:host]="digilab4.let.uniroma1.it:8080"
     Museum.all.each do |m|
       f=File.open("public/open_data/#{m.museo_id}.xml", "w")
       xml = Builder::XmlMarkup.new(target: f, :indent=>2)
@@ -112,7 +114,7 @@ namespace :maps do
                   xml.lido :legalBodyWeblink, "#{card.museum.website}"
                 end
                 xml.lido :recordInfoSet do
-                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"},  "#{card.museum.name}"
+                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"}, "#{root_url(:only_path => false)}/api/living_museum/getCard?id=#{card.id}"
                 end
               end
 

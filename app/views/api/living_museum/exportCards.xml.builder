@@ -57,7 +57,7 @@ xml.tag!('lido:lidoWrap', {"xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instan
             xml.lido :legalBodyWeblink, "#{card.museum.website}"
           end
           xml.lido :recordInfoSet do
-            xml.lido :recordInfoLink, {"lido:formatResource"=>"html"},  "#{card.museum.name}"
+            xml.lido :recordInfoLink, {"lido:formatResource"=>"html"},  "#{url_for(controller: :living_museum, action: :getCard, id:card.id, :only_path => false)}"
           end
         end
 

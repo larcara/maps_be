@@ -1,4 +1,5 @@
 class API::LivingMuseumController < ApplicationController
+  include Rails.application.routes.url_helpers
   skip_before_filter :verify_authenticity_token
 
   before_filter :authenticate_living_museum_user_from_token!, except: [:reset, :createUser, :requestResetPassword, :resetPassword, :getCard]
@@ -352,7 +353,7 @@ class API::LivingMuseumController < ApplicationController
                   xml.lido :legalBodyWeblink, "#{card.museum.website}"
                 end
                 xml.lido :recordInfoSet do
-                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"},  "#{card.museum.name}"
+                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"},  "#{url_for(controller: :living_museum, action: :getCard, id:card.id, :only_path => false)}"
                 end
               end
 

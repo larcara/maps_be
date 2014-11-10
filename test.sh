@@ -1,5 +1,6 @@
 #!/bin/bash
 
+curl -s http://127.0.0.1:3000/open_data/RMSMUS06.xml
 
 read -e -p "################## PRESS ENTER KEY TO START ######################"
 curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}'
