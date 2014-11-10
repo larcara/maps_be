@@ -1,6 +1,23 @@
 #!/bin/bash
 
 
+read -e -p "################## PRESS ENTER KEY TO START ######################"
+curl -s http://127.0.0.1:3000/api/users/sign_in -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+m1@gmail.com", "password":"password"}}'
+
+read -e -p "Copy auth_token to contnue: " -i "tyZRctcTg82bAXeHHLGF" auth_token
+
+
+echo;echo;echo "Start saveImage - image ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=14726 -F image_data[label]="immagine allegata" -F image_file=@img1.png
+echo;echo;echo "Start saveImage - image2 ##############################"
+curl -s http://127.0.0.1:3000/api/museums/saveImage?auth_token=$auth_token -H "Content-Type: multipart/form-data" -X POST -F card_id=14726 -F image_data[label]="immagine allegata" -F image_file=@img2.gif
+
+exit
+
+
+
+
+
 curl -s http://127.0.0.1:3000/api/living_museum_users/sign_in.json -H "Content-Type: application/json" -X POST -d '{"user_login":{"email":"larcara+l1@gmail.com", "password":"newpassword2"}}'
 echo
 read -e -p "Copy token to contnue: " -i "NCziBro_SvJ-4QqfenHw" confirm_token

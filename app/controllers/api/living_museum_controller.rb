@@ -1,6 +1,8 @@
 class API::LivingMuseumController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_filter :authenticate_living_museum_user_from_token!, except: [:reset, :createUser, :requestResetPassword, :resetPassword]
+
+  before_filter :authenticate_living_museum_user_from_token!, except: [:reset, :createUser, :requestResetPassword, :resetPassword, :getCard]
+
   before_filter :allow_cross_domain_access
 
 
@@ -415,7 +417,7 @@ class API::LivingMuseumController < ApplicationController
 
       render json: {error: nil, data: @card.as_json(only: fields.map{|x| x.field_name.to_sym }, include: :museum_images), fields: fields}
     rescue ActiveRecord::RecordNotFound => e
-      render json:{error: "per il museo corrente non esiste nessuna scheda con la chiave richiesta", data: nil}
+      render json:{error: " non esiste nessuna scheda con la chiave richiesta", data: nil}
     rescue ActionController::ParameterMissing => e
       render json:{error: {missing_parameter: e.to_s}, data: nil}
     rescue  RuntimeError => e
