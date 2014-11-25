@@ -18,7 +18,7 @@
 
 class MuseumImage < ActiveRecord::Base
 
-  has_attached_file :image , :path => "public/card_images/:museo_id/:id_codscheda.:extension"
+  has_attached_file :image , :path => "public/card_images/:museo_id/:base_name.:extension", url:"/card_images/:museo_id/:base_name.:extension"
 
 
       ##, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
@@ -35,6 +35,7 @@ class MuseumImage < ActiveRecord::Base
   Paperclip.interpolates :museo_id do |image, style|
     image.instance.museo_id
   end
+
   Paperclip.interpolates :id_codscheda do |image, style|
     if image.instance.prog.to_i == 0
       "#{image.instance.id_codscheda}"
