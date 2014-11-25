@@ -18,7 +18,7 @@
 
 class MuseumImage < ActiveRecord::Base
 
-  has_attached_file :image , :path => "public/card_images/:museo_id/:id_codscheda.:extension", url:"/card_images/:museo_id/:id_codscheda.:extension"
+  has_attached_file :image #, :path => "public/card_images/:museo_id/:id_codscheda.:extension", url:"/card_images/:museo_id/:id_codscheda.:extension"
 
 
       ##, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
