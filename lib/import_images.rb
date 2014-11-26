@@ -3,7 +3,7 @@ def import_images(museuo_id)
   m=Museum.where(museo_id: museuo_id).first
   return if m.nil?
 
-  base_path="/user/maps/img_tmp/#{m.museo_id}/JPG"
+  base_path="/user/maps/img_tmp/#{m.museo_id}/JPG/"
   Dir.entries(base_path).each do |f|
     id_codscheda=f.scan(/(.*)\.(.*)$/)[0].first
     card=m.cards.where(id_codscheda: id_codscheda).first
@@ -19,7 +19,7 @@ def import_images(museuo_id)
         Rails.logger.warn "#### IMPORT_IMAGES #{t0.to_s}: File #{f} => CARD #{id_codscheda}  does not exist "
       end
   end
-  base_path="/user/maps/img_tmp/#{m.museo_id}/TIFF"
+  base_path="/user/maps/img_tmp/#{m.museo_id}/TIFF/"
   Dir.entries(base_path).each do |f|
     id_codscheda=f.scan(/(.*)\.(.*)$/)[0].first
     card=m.cards.where(id_codscheda: id_codscheda).first
