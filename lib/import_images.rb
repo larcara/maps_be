@@ -15,7 +15,9 @@ def import_images(museuo_id)
       end
       image.image = File.new("#{base_path}/f", "r")
       image.save
-    end
+      else
+        Rails.logger.warn "#### IMPORT_IMAGES #{t0.to_s}: File #{f} => CARD #{id_codscheda}  does not exist "
+      end
   end
   base_path="/user/maps/img_tmp/#{m.museo_id}/TIFF"
   Dir.entries(base_path).each do |f|
@@ -29,7 +31,9 @@ def import_images(museuo_id)
       end
       image.image = File.new("#{base_path}/f", "r")
       image.save
-    end
+    else
+      Rails.logger.warn "#### IMPORT_IMAGES #{t0.to_s}: File #{f} => CARD #{id_codscheda}  does not exist "
+      end
   end
 
 
