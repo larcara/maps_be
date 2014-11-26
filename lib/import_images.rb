@@ -13,7 +13,7 @@ def import_images(museuo_id)
       if image.link.to_s.downcase.start_with? "http"
         Rails.logger.warn "#### IMPORT_IMAGES #{t0.to_s}: museum_image with external link =>  #{image.to_yaml}"
       end
-      image.image = File.new("#{base_path}/f", "r")
+      image.image = File.new("#{base_path}/#{f}", "r")
       image.save
       else
         Rails.logger.warn "#### IMPORT_IMAGES #{t0.to_s}: File #{f} => CARD #{id_codscheda}  does not exist "
