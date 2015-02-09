@@ -226,4 +226,8 @@ class Card < ActiveRecord::Base
     return "" if museum_images.blank?
     museum_images.first.link
   end
+  def image_file_name
+    return "" if museum_images.blank?
+    museum_images.first.file_name
+  end
 end
