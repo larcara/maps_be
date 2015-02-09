@@ -20,9 +20,7 @@ xml.tag!('lido:lidoWrap', {"xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instan
         xml.lido :objectIdentificationWrap do
           xml.lido :titleWrap do
             xml.lido (:titleSet )  do
-              xml.lido :appellationValue, {"xml:lang"=>"it",  "lido:pref"=>"preferred"} do
-                "#{card.oggetto}"
-              end
+              xml.lido :appellationValue, "#{card.oggetto}", {"xml:lang"=>"it",  "lido:pref"=>"preferred"}
             end
           end
 
@@ -35,9 +33,7 @@ xml.tag!('lido:lidoWrap', {"xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instan
                   xml.lido :appellationValue, "#{card.museum.name}"
                  end
               end
-              xml.lido :workID, {"lido:type"=>"inventory number"} do
-                card.id_num_inventario
-              end
+              xml.lido :workID, {"lido:type"=>"inventory number"}, card.id_num_inventario
             end
           end
 
@@ -72,7 +68,7 @@ xml.tag!('lido:lidoWrap', {"xmlns:xsi"=>"http://www.w3.org/2001/XMLSchema-instan
           xml.lido :resourceSet do
             xml.lido :resourceID, "#{card.image_link}", {"lido:type"=>"local"}
             xml.lido :resourceRepresentation, {"lido:type"=>"image_thumb"} do
-              xml.lido :linkResource, {"lido:formatResource"=>"JPG"}, "#{card.image_link}"
+              xml.lido :linkResource, {"lido:formatResource"=>"JPG"}, "http://digilab4.let.uniroma1.it:8080#{card.image_link}"
             end
             xml.lido :rightsResource do
               xml.lido :rightsType do

@@ -77,9 +77,7 @@ namespace :maps do
               xml.lido :objectIdentificationWrap do
                 xml.lido :titleWrap do
                   xml.lido (:titleSet )  do
-                    xml.lido :appellationValue, {"xml:lang"=>"it",  "lido:pref"=>"preferred"} do
-                      "#{card.oggetto}"
-                    end
+                    xml.lido :appellationValue, "#{card.oggetto}", {"xml:lang"=>"it",  "lido:pref"=>"preferred"}
                   end
                 end
 
@@ -92,9 +90,7 @@ namespace :maps do
                         xml.lido :appellationValue, "#{card.museum.name}"
                       end
                     end
-                    xml.lido :workID, {"lido:type"=>"inventory number"} do
-                      card.id_num_inventario
-                    end
+                    xml.lido :workID, {"lido:type"=>"inventory number"}, card.id_num_inventario
                   end
                 end
 
