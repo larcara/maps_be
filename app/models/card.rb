@@ -187,20 +187,19 @@ class Card < ActiveRecord::Base
 
   scope :valide, -> {where(valida: true)}
   pg_search_scope :search_by_full_text,
-                      :against => [:colore, :oggetto,
-                                   :abito, :ad_cristo,
-                                   :altra_def_oggetto, :altro_cod, :biblio_foto, :binomio1, :binomio2,
-
-                                   :capacita, :classe,:id_univoco_reperto, :id_num_inventario,
-                                   :coloreb, :coloreg, :colorer,
-                                   :contesto_ritrovamento,:continente,:costruttore,:cronologia_generica, :cronologia_uso,
-                                   :definizione, :diocesi,:dt_acquisizione, :dt_creazione,:dt_assoluta,:dt_scavo,:epoca,:famiglia, :fascia_cronologia_rif, :genere, :gruppo,
-                                   :localita, :localita_antica, :materia_tecnica,:nazione,:oldlocalita, :oldregione, :oldstato,
-                                   :paese_antico,:provincia,:regione,:resp_scientifico_scavo,:secolo, :sistema, :sottoclasse, :specie,
-                                   :specifiche_scavo,  :tipo,:stato,:txtspecie,:txtitalia, :sinonimi,  :varieta, :screditato, :formula,
-                                   :tallone, :collezione, :erboserie, :legit, :stato_conservazione, :associazione,
-                                   :denominazione, :denominazione_scavo, :note_generiche, :bibliografia, :studio, :stato_conservazione, #TEXT
-                                   :custom_0,:custom_1, :custom_2, :custom_3, :custom_4, :custom_5, :custom_6, :custom_7, :custom_8, :custom_9, :custom_10, :custom_11, :custom_12, :custom_13, :custom_14, :custom_15
+                      :against => [:oggetto,:epoca,:descrizione,:ad_cristo,:continente,:definizione,:genere,:gruppo,:localita, 
+:localita_antica,:nazione,:provincia,:regione,:secolo,:specie,:denominazione,:note_generiche
+                                   #:altra_def_oggetto, :altro_cod, :biblio_foto, :binomio1, :binomio2,
+                                   #:capacita, :classe,:id_univoco_reperto, :id_num_inventario,
+                                   #:coloreb, :coloreg, :colorer,:colore,:abito, 
+                                   #:contesto_ritrovamento,:costruttore,:cronologia_generica, :cronologia_uso,
+                                   #:diocesi,:dt_acquisizione, :dt_creazione,:dt_assoluta,:dt_scavo,:epoca,:famiglia, :fascia_cronologia_rif,
+                                   #:materia_tecnica,:oldlocalita, :oldregione, :oldstato,
+                                   #:paese_antico,:resp_scientifico_scavo, :sistema, :sottoclasse, 
+                                   #:specifiche_scavo,  :tipo,:stato,:txtspecie,:txtitalia, :sinonimi,  :varieta, :screditato, :formula,
+                                   #:tallone, :collezione, :erboserie, :legit, :stato_conservazione, :associazione,
+                                   #:denominazione_scavo,  :bibliografia, :studio, :stato_conservazione, #TEXT
+                                   #:custom_0,:custom_1, :custom_2, :custom_3, :custom_4, :custom_5, :custom_6, :custom_7, :custom_8, :custom_9, :custom_10, :custom_11, :custom_12, :custom_13, :custom_14, :custom_15
                                    # NON RICERCATI
                                    # :id_codscheda, :altra_categoria,:binomio3,:binomio4
                                    # :cassettiera, :categoria_pricipale, :circonferenza, :cod_univoco_scavo_iccd,  :collocazione_opera_finale,
