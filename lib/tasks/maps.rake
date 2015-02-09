@@ -114,7 +114,7 @@ namespace :maps do
                   xml.lido :legalBodyWeblink, "#{card.museum.website}"
                 end
                 xml.lido :recordInfoSet do
-                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"}, "#{root_url(:only_path => false)}/api/living_museum/getCard?id=#{card.id}"
+                  xml.lido :recordInfoLink, {"lido:formatResource"=>"html"}, "http://digilab4.let.uniroma1.it:8080/interfacce/living/getCard.html?idcards=#{card.id}"
                 end
               end
 
